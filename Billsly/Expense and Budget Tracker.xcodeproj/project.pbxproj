@@ -29,7 +29,7 @@
 		0B87F57D270B83510003FB98 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B87F57C270B83510003FB98 /* SwiftUI.framework */; };
 		0B87F580270B83510003FB98 /* BillslyWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B87F57F270B83510003FB98 /* BillslyWidgets.swift */; };
 		0B87F582270B83530003FB98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B87F581270B83530003FB98 /* Assets.xcassets */; };
-		0B87F586270B83530003FB98 /* BillslyWidgetsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0B87F579270B83510003FB98 /* BillslyWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0B87F586270B83530003FB98 /* BillslyWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0B87F579270B83510003FB98 /* BillslyWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0B8B697925DB646000B9F55E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8B697825DB646000B9F55E /* AppDelegate.swift */; };
 		0B8B697B25DB646000B9F55E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8B697A25DB646000B9F55E /* SceneDelegate.swift */; };
 		0B8B698025DB646000B9F55E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B8B697E25DB646000B9F55E /* Main.storyboard */; };
@@ -69,15 +69,15 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0B87F587270B83530003FB98 /* Embed App Extensions */ = {
+		0B87F587270B83530003FB98 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				0B87F586270B83530003FB98 /* BillslyWidgetsExtension.appex in Embed App Extensions */,
+				0B87F586270B83530003FB98 /* BillslyWidgetsExtension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -324,7 +324,7 @@
 				0B8B697225DB646000B9F55E /* Frameworks */,
 				0B8B697325DB646000B9F55E /* Resources */,
 				0B480B6925F1BAC80036FC10 /* Embed Frameworks */,
-				0B87F587270B83530003FB98 /* Embed App Extensions */,
+				0B87F587270B83530003FB98 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -346,8 +346,9 @@
 		0B8B696D25DB646000B9F55E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1230;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					0B87F578270B83510003FB98 = {
 						CreatedOnToolsVersion = 12.5;
@@ -560,6 +561,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -621,6 +623,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
