@@ -5,19 +5,17 @@
 //  Created by Clayton Watkins on 2/15/21.
 //
 
-import UIKit
+import SwiftUI
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+class AppDelegate: UIResponder, UIApplicationDelegate {    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         try! FileManager.default.removeItem(atPath: NSHomeDirectory()+"/Library/SplashBoard")
         do {
             sleep(1)
         }
         IAPManager.shared.fetchProducts()
+        
         return true
     }
 
