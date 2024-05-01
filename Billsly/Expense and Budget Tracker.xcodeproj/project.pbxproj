@@ -39,6 +39,7 @@
 		0B9DEC9A260D0B20006F0EC6 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9DEC99260D0B20006F0EC6 /* SettingsTableViewController.swift */; };
 		0B9EE7E32605AACE005DCE6C /* UIVewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9EE7E22605AACE005DCE6C /* UIVewExtension.swift */; };
 		0B9EE7E52605BE78005DCE6C /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9EE7E42605BE78005DCE6C /* UIButtonExtension.swift */; };
+		0BAF00362BE2B16900A92A5D /* ColorsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6AB4C72605D5F6005F2CF6 /* ColorsHelper.swift */; };
 		0BBE988F2616AA64009DDF96 /* SwiftConfettiView in Frameworks */ = {isa = PBXBuildFile; productRef = 0BBE988E2616AA64009DDF96 /* SwiftConfettiView */; };
 		0BBE98932616E892009DDF96 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BBE98922616E892009DDF96 /* StoreKit.framework */; };
 		0BF254E925F0C5A90078BD9F /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254E825F0C5A90078BD9F /* Bill.swift */; };
@@ -445,6 +446,7 @@
 				0B6A7AB6270BC94B001C4194 /* Bill.swift in Sources */,
 				0B87F580270B83510003FB98 /* BillslyWidgets.swift in Sources */,
 				0B6A7AB7270BCE99001C4194 /* Category.swift in Sources */,
+				0BAF00362BE2B16900A92A5D /* ColorsHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
