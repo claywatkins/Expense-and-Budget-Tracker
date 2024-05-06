@@ -19,6 +19,7 @@
 		0B6A7AB6270BC94B001C4194 /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254E825F0C5A90078BD9F /* Bill.swift */; };
 		0B6A7AB7270BCE99001C4194 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2A16425F9873800308C04 /* Category.swift */; };
 		0B6AB4C82605D5F6005F2CF6 /* ColorsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6AB4C72605D5F6005F2CF6 /* ColorsHelper.swift */; };
+		0B6C482B2BE9643800D4CB9C /* ManageBillsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6C482A2BE9643800D4CB9C /* ManageBillsView.swift */; };
 		0B6EA1A7260D0F460020060C /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6EA1A6260D0F460020060C /* UIApplicationExtension.swift */; };
 		0B6EA1A9260D0F6C0020060C /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6EA1A8260D0F6C0020060C /* UIDeviceExtension.swift */; };
 		0B727304270CCF7E00704549 /* userController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254E425F0C5430078BD9F /* userController.swift */; };
@@ -40,6 +41,7 @@
 		0B9EE7E32605AACE005DCE6C /* UIVewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9EE7E22605AACE005DCE6C /* UIVewExtension.swift */; };
 		0B9EE7E52605BE78005DCE6C /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9EE7E42605BE78005DCE6C /* UIButtonExtension.swift */; };
 		0BAF00362BE2B16900A92A5D /* ColorsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6AB4C72605D5F6005F2CF6 /* ColorsHelper.swift */; };
+		0BBA18D72BE981DF004D3267 /* FluidGradient in Frameworks */ = {isa = PBXBuildFile; productRef = 0BBA18D62BE981DF004D3267 /* FluidGradient */; };
 		0BBE988F2616AA64009DDF96 /* SwiftConfettiView in Frameworks */ = {isa = PBXBuildFile; productRef = 0BBE988E2616AA64009DDF96 /* SwiftConfettiView */; };
 		0BBE98932616E892009DDF96 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BBE98922616E892009DDF96 /* StoreKit.framework */; };
 		0BF254E925F0C5A90078BD9F /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254E825F0C5A90078BD9F /* Bill.swift */; };
@@ -92,6 +94,7 @@
 		0B6884152BD2FA2C00574E4B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0B6884182BE2ACA300574E4B /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		0B6AB4C72605D5F6005F2CF6 /* ColorsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsHelper.swift; sourceTree = "<group>"; };
+		0B6C482A2BE9643800D4CB9C /* ManageBillsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageBillsView.swift; sourceTree = "<group>"; };
 		0B6EA1A6260D0F460020060C /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		0B6EA1A8260D0F6C0020060C /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
 		0B727305270CDA8F00704549 /* WidgetDataBills.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetDataBills.swift; sourceTree = "<group>"; };
@@ -143,6 +146,7 @@
 				0BBE98932616E892009DDF96 /* StoreKit.framework in Frameworks */,
 				0B57467F25F690F500EC81DA /* FSCalendar in Frameworks */,
 				0BBE988F2616AA64009DDF96 /* SwiftConfettiView in Frameworks */,
+				0BBA18D72BE981DF004D3267 /* FluidGradient in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +165,7 @@
 		0B6884112BD2F5A900574E4B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0B6C48292BE9642600D4CB9C /* Manage Bills */,
 				0B6884122BD2F5AD00574E4B /* Home Screen */,
 			);
 			path = Views;
@@ -169,6 +174,7 @@
 		0B6884122BD2F5AD00574E4B /* Home Screen */ = {
 			isa = PBXGroup;
 			children = (
+				0BBA18D22BE97E1E004D3267 /* Components */,
 				0B6884132BD2F5C400574E4B /* HomeScreenView.swift */,
 			);
 			path = "Home Screen";
@@ -215,6 +221,14 @@
 				0B8B697825DB646000B9F55E /* AppDelegate.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		0B6C48292BE9642600D4CB9C /* Manage Bills */ = {
+			isa = PBXGroup;
+			children = (
+				0B6C482A2BE9643800D4CB9C /* ManageBillsView.swift */,
+			);
+			path = "Manage Bills";
 			sourceTree = "<group>";
 		};
 		0B87F57E270B83510003FB98 /* BillslyWidgets */ = {
@@ -278,6 +292,13 @@
 				0B8B698325DB646200B9F55E /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		0BBA18D22BE97E1E004D3267 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		0BBE98912616E892009DDF96 /* Frameworks */ = {
@@ -370,6 +391,7 @@
 			packageProductDependencies = (
 				0B57467E25F690F500EC81DA /* FSCalendar */,
 				0BBE988E2616AA64009DDF96 /* SwiftConfettiView */,
+				0BBA18D62BE981DF004D3267 /* FluidGradient */,
 			);
 			productName = "Expense and Budget Tracker";
 			productReference = 0B8B697525DB646000B9F55E /* Expense and Budget Tracker.app */;
@@ -405,6 +427,7 @@
 			packageReferences = (
 				0B57467D25F690F500EC81DA /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				0BBE988D2616AA64009DDF96 /* XCRemoteSwiftPackageReference "SwiftConfettiView" */,
+				0BBA18D52BE981DF004D3267 /* XCRemoteSwiftPackageReference "FluidGradient" */,
 			);
 			productRefGroup = 0B8B697625DB646000B9F55E /* Products */;
 			projectDirPath = "";
@@ -454,6 +477,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B6C482B2BE9643800D4CB9C /* ManageBillsView.swift in Sources */,
 				0BF254F325F0CF510078BD9F /* BillTableViewCell.swift in Sources */,
 				0B9EE7E32605AACE005DCE6C /* UIVewExtension.swift in Sources */,
 				0B18D660260D85F2004F908D /* IAPManager.swift in Sources */,
@@ -682,6 +706,7 @@
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = XR5S8WV6LB;
 				INFOPLIST_FILE = "Expense and Budget Tracker/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -707,6 +732,7 @@
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = XR5S8WV6LB;
 				INFOPLIST_FILE = "Expense and Budget Tracker/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -761,6 +787,14 @@
 				minimumVersion = 2.8.2;
 			};
 		};
+		0BBA18D52BE981DF004D3267 /* XCRemoteSwiftPackageReference "FluidGradient" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Cindori/FluidGradient";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		0BBE988D2616AA64009DDF96 /* XCRemoteSwiftPackageReference "SwiftConfettiView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/theoriginalbit/SwiftConfettiView.git";
@@ -776,6 +810,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0B57467D25F690F500EC81DA /* XCRemoteSwiftPackageReference "FSCalendar" */;
 			productName = FSCalendar;
+		};
+		0BBA18D62BE981DF004D3267 /* FluidGradient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0BBA18D52BE981DF004D3267 /* XCRemoteSwiftPackageReference "FluidGradient" */;
+			productName = FluidGradient;
 		};
 		0BBE988E2616AA64009DDF96 /* SwiftConfettiView */ = {
 			isa = XCSwiftPackageProductDependency;
