@@ -5,14 +5,14 @@
 //  Created by Clayton Watkins on 3/3/21.
 //
 
-import UIKit
+import SwiftUI
 
-class UserController {
+class UserController: ObservableObject {
     // MARK: - Properties
     static let shared = UserController()
     let df = DateFormatter()
     let nf = NumberFormatter()
-    var userBills: [Bill] = []
+   @Published var userBills: [Bill] = []
     var userCategories: [Category] = []
     let defaults = UserDefaults.standard
     var isLoggedIn: Bool?
@@ -100,6 +100,44 @@ class UserController {
     }
     
     // MARK: - Methods
+    func loadDefaultCategories() async {
+        if userCategories.isEmpty {
+            let defaultCategories: [Category] = [
+                Category(name: "Subscription"),
+                Category(name: "Utility"),
+                Category(name: "Rent"),
+                Category(name: "Mortgage"),
+                Category(name: "Loan"),
+                Category(name: "Credit Card"),
+                Category(name: "Insurance"),
+                Category(name: "Car Loan")
+            ]
+            for i in defaultCategories {
+                userCategories.append(i)
+            }
+            saveCategoriesToPersistentStore()
+        }
+    }
+    
+    func generateTestBills() async {
+        var bills: [Bill] = []
+        
+        for i in 0..<7 {
+            let bill = Bill(identifier: UUID().uuidString,
+                            name: "Test",
+                            dollarAmount: 12.22,
+                            dueByDate: Date.now,
+                            category: userCategories[i],
+                            isOn30th: false,
+                            hasImage: nil)
+            bills.append(bill)
+        }
+        DispatchQueue.main.async {
+            self.userBills = bills
+            
+        }
+    }
+    
     func sendDataToWidget(bill: Bill) {
         if #available(iOS 14, *) {
             let billToSend = WidgetData(billToWidget: bill)
@@ -120,6 +158,34 @@ class UserController {
                                hasImage: false)
             sendDataToWidget(bill: nilBill)
         }
+    }
+    
+    func getColors() -> [Color]{
+        var colors: [Color] = []
+        
+        for category in userCategories {
+            switch category.name {
+            case "Subscription":
+                colors.append(.cyan)
+            case "Utility":
+                colors.append(.green)
+            case "Rent":
+                colors.append(.orange)
+            case "Mortgage":
+                colors.append(.purple)
+            case "Loan":
+                colors.append(.mint)
+            case "Credit Card":
+                colors.append(.pink)
+            case "Insurance":
+                colors.append(.teal)
+            case "Car Loan":
+                colors.append(.yellow)
+            default:
+                colors.append(.indigo)
+            }
+        }
+        return colors
     }
     
     // MARK: - CRUD
