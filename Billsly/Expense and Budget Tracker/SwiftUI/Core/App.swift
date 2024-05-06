@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct Billsly: App {
+    
+    @StateObject var userService = UserController()
+    
     var body: some Scene {
         WindowGroup {
             HomeScreenView()
+                .environmentObject(userService)
         }
     }
 }
