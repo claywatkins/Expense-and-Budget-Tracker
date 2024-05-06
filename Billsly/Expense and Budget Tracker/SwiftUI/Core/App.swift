@@ -14,7 +14,7 @@ struct Billsly: App {
     
     var body: some Scene {
         WindowGroup {
-            HomeScreenView()
+            MainView()
                 .environmentObject(userService)
         }
     }
