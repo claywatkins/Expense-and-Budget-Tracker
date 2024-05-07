@@ -37,6 +37,9 @@ struct HomeScreenView: View {
             await userService.loadDefaultCategories()
             await userService.generateTestBills()
         }
+        .onAppear {
+            userService.loadUsername()
+        }
     }
 }
 
