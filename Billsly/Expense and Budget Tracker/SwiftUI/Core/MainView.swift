@@ -24,6 +24,8 @@ struct MainView: View {
             
             NavigationStack() {
                 SettingsView()
+                    .navigationTitle("Settings")
+                    .environmentObject(userService)
             }
             .tabItem {
                 Label("Settings", systemImage: "gearshape")
@@ -31,8 +33,4 @@ struct MainView: View {
             .tag(3)
         }
     }
-}
-
-#Preview {
-    MainView()
 }
