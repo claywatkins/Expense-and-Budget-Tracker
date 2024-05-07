@@ -38,8 +38,7 @@ struct HomeScreenHeaderView: View {
                         
                         HStack {
                             Rectangle()
-                                .foregroundStyle(.background)
-                                .opacity(0.6)
+                                .foregroundStyle(.thinMaterial)
                                 .cornerRadius(12)
                                 .modifier(ShadowViewModifier())
                                 .overlay {
@@ -55,8 +54,7 @@ struct HomeScreenHeaderView: View {
                                 }
 
                             Rectangle()
-                                .foregroundStyle(.background)
-                                .opacity(0.6)
+                                .foregroundStyle(.thinMaterial)
                                 .cornerRadius(12)
                                 .modifier(ShadowViewModifier())
                                 .overlay {
@@ -116,4 +114,11 @@ struct HomeScreenHeaderView: View {
             }
         }
     }
+}
+
+#Preview {
+    @StateObject var userService = UserController()
+    
+    return HomeScreenHeaderView(showingPaidBills: .constant(false))
+        .environmentObject(userService)
 }
