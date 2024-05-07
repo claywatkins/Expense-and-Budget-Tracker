@@ -130,15 +130,19 @@ class UserController: ObservableObject {
         }
     }
     
+    func getRandomInt() -> Int {
+         return Int.random(in: 0...7)
+    }
+    
     func generateTestBills() async {
         var bills: [Bill] = []
         
-        for i in 0..<7 {
+        for i in 0..<200 {
             let bill = Bill(identifier: UUID().uuidString,
-                            name: "Test",
+                            name: "Test \(i)",
                             dollarAmount: 12.22,
                             dueByDate: Date.now,
-                            category: userCategories[i],
+                            category: userCategories[getRandomInt()],
                             isOn30th: false,
                             hasImage: nil)
             bills.append(bill)

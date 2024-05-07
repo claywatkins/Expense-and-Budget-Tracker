@@ -13,20 +13,24 @@ struct QuickPaidBillView: View {
     @State private var selectedBill: Bill?
     
     var body: some View {
-        VStack(spacing: 40) {
-            Text("What bill did you pay?")
-                .font(.title2)
-                .foregroundStyle(.primary)
-            
-            if let selectedBill = selectedBill {
+        ScrollView {
+            VStack(spacing: 30) {
+                Text("What bill did you pay?")
+                    .font(.title2)
+                    .foregroundStyle(.primary)
+                
                 Picker("What bill did you pay?", selection: $selectedBill) {
-                    ForEach(userService.unpaidBills, id: \.identifier) { bill in
+                    Text("Choose a bill").tag(nil as Bill?)
+                    ForEach(userService.unpaidBills, id: \.self) { bill in
                         Text(bill.name)
+                            .tag(bill as Bill?)
                     }
                 }
                 
                 Button {
-                    userService.updateBillHasBeenPaid(bill: selectedBill)
+                    if let selectedBill = selectedBill {
+                        userService.updateBillHasBeenPaid(bill: selectedBill)
+                    }
                     dismiss()
                 } label: {
                     Rectangle()
@@ -38,14 +42,10 @@ struct QuickPaidBillView: View {
                         .cornerRadius(12)
                         .frame(height: 50)
                     
+                    
                 }
             }
-        }
-        .padding()
-        .onAppear {
-            if let firstBill = userService.userBills.first {
-                self.selectedBill = firstBill
-            }
+            .padding()
         }
     }
 }

@@ -19,7 +19,7 @@ struct HomeScreenListView: View {
                     .foregroundStyle(.foreground)
                 Spacer()
             }
-            List(userService.userBills.prefix(3), id: \.identifier) { bill in
+            List(userService.unpaidBills.prefix(3), id: \.identifier) { bill in
                 HStack {
                     VStack(alignment: .leading) {
                         Text(bill.name)

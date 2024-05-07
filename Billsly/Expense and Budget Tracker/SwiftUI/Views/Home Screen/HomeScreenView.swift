@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeScreenView: View {
     @EnvironmentObject var userService: UserController
     @State private var showingPaidBills = false
-    @State private var presentationDetent = PresentationDetent.medium
+    @State private var presentationDetent = PresentationDetent.fraction(0.3)
     var horizontalPadding: CGFloat = 12
     
     var body: some View {
@@ -29,7 +29,7 @@ struct HomeScreenView: View {
             QuickPaidBillView()
                 .environmentObject(userService)
                 .presentationDetents(
-                    [.medium],
+                    [.fraction(0.3)],
                     selection: $presentationDetent
                 )
         }
