@@ -46,6 +46,9 @@
 		0BBE98932616E892009DDF96 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BBE98922616E892009DDF96 /* StoreKit.framework */; };
 		0BD8462A2BE994F400139ED5 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD846292BE994F400139ED5 /* MainView.swift */; };
 		0BD8462C2BEA8AD400139ED5 /* ShadowViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD8462B2BEA8AD400139ED5 /* ShadowViewModifier.swift */; };
+		0BD8462E2BEA8ED400139ED5 /* QuickPaidBillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD8462D2BEA8ED400139ED5 /* QuickPaidBillView.swift */; };
+		0BD846302BEA9FE500139ED5 /* HomeScreenHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD8462F2BEA9FE500139ED5 /* HomeScreenHeaderView.swift */; };
+		0BD846322BEAA10200139ED5 /* HomeScreenListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD846312BEAA10200139ED5 /* HomeScreenListView.swift */; };
 		0BF254E925F0C5A90078BD9F /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254E825F0C5A90078BD9F /* Bill.swift */; };
 		0BF254F025F0CCEB0078BD9F /* BillsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254EF25F0CCEB0078BD9F /* BillsViewController.swift */; };
 		0BF254F325F0CF510078BD9F /* BillTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254F225F0CF510078BD9F /* BillTableViewCell.swift */; };
@@ -125,6 +128,9 @@
 		0BBE98922616E892009DDF96 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0BD846292BE994F400139ED5 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		0BD8462B2BEA8AD400139ED5 /* ShadowViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowViewModifier.swift; sourceTree = "<group>"; };
+		0BD8462D2BEA8ED400139ED5 /* QuickPaidBillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickPaidBillView.swift; sourceTree = "<group>"; };
+		0BD8462F2BEA9FE500139ED5 /* HomeScreenHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenHeaderView.swift; sourceTree = "<group>"; };
+		0BD846312BEAA10200139ED5 /* HomeScreenListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenListView.swift; sourceTree = "<group>"; };
 		0BF254E425F0C5430078BD9F /* userController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userController.swift; sourceTree = "<group>"; };
 		0BF254E825F0C5A90078BD9F /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
 		0BF254EF25F0CCEB0078BD9F /* BillsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsViewController.swift; sourceTree = "<group>"; };
@@ -303,6 +309,9 @@
 			isa = PBXGroup;
 			children = (
 				0BD8462B2BEA8AD400139ED5 /* ShadowViewModifier.swift */,
+				0BD8462D2BEA8ED400139ED5 /* QuickPaidBillView.swift */,
+				0BD8462F2BEA9FE500139ED5 /* HomeScreenHeaderView.swift */,
+				0BD846312BEAA10200139ED5 /* HomeScreenListView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -483,6 +492,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BD846322BEAA10200139ED5 /* HomeScreenListView.swift in Sources */,
 				0B6C482B2BE9643800D4CB9C /* ManageBillsView.swift in Sources */,
 				0BF254F325F0CF510078BD9F /* BillTableViewCell.swift in Sources */,
 				0B9EE7E32605AACE005DCE6C /* UIVewExtension.swift in Sources */,
@@ -492,9 +502,11 @@
 				0BF254E925F0C5A90078BD9F /* Bill.swift in Sources */,
 				0B4E71E725F95BE000461B15 /* CategoryPopoverViewController.swift in Sources */,
 				0B7B904525FB240D0059CC6E /* UIViewControllerExtension.swift in Sources */,
+				0BD846302BEA9FE500139ED5 /* HomeScreenHeaderView.swift in Sources */,
 				0B9EE7E52605BE78005DCE6C /* UIButtonExtension.swift in Sources */,
 				0B6884192BE2ACA300574E4B /* App.swift in Sources */,
 				0B7B904325FAEC810059CC6E /* EditBillViewController.swift in Sources */,
+				0BD8462E2BEA8ED400139ED5 /* QuickPaidBillView.swift in Sources */,
 				0B8B697925DB646000B9F55E /* AppDelegate.swift in Sources */,
 				0B7B904125FADD510059CC6E /* HomeViewController.swift in Sources */,
 				0B727304270CCF7E00704549 /* userController.swift in Sources */,
@@ -714,7 +726,7 @@
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = XR5S8WV6LB;
 				INFOPLIST_FILE = "Expense and Budget Tracker/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -740,7 +752,7 @@
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = XR5S8WV6LB;
 				INFOPLIST_FILE = "Expense and Budget Tracker/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
