@@ -49,6 +49,7 @@
 		0BD8462E2BEA8ED400139ED5 /* QuickPaidBillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD8462D2BEA8ED400139ED5 /* QuickPaidBillView.swift */; };
 		0BD846302BEA9FE500139ED5 /* HomeScreenHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD8462F2BEA9FE500139ED5 /* HomeScreenHeaderView.swift */; };
 		0BD846322BEAA10200139ED5 /* HomeScreenListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD846312BEAA10200139ED5 /* HomeScreenListView.swift */; };
+		0BD846382BEAC15900139ED5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD846372BEAC15900139ED5 /* SettingsView.swift */; };
 		0BF254E925F0C5A90078BD9F /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254E825F0C5A90078BD9F /* Bill.swift */; };
 		0BF254F025F0CCEB0078BD9F /* BillsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254EF25F0CCEB0078BD9F /* BillsViewController.swift */; };
 		0BF254F325F0CF510078BD9F /* BillTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254F225F0CF510078BD9F /* BillTableViewCell.swift */; };
@@ -131,6 +132,7 @@
 		0BD8462D2BEA8ED400139ED5 /* QuickPaidBillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickPaidBillView.swift; sourceTree = "<group>"; };
 		0BD8462F2BEA9FE500139ED5 /* HomeScreenHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenHeaderView.swift; sourceTree = "<group>"; };
 		0BD846312BEAA10200139ED5 /* HomeScreenListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenListView.swift; sourceTree = "<group>"; };
+		0BD846372BEAC15900139ED5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		0BF254E425F0C5430078BD9F /* userController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userController.swift; sourceTree = "<group>"; };
 		0BF254E825F0C5A90078BD9F /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
 		0BF254EF25F0CCEB0078BD9F /* BillsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsViewController.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 		0B6884112BD2F5A900574E4B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0BD846362BEAC14600139ED5 /* Settings */,
 				0B6C48292BE9642600D4CB9C /* Manage Bills */,
 				0B6884122BD2F5AD00574E4B /* Home Screen */,
 			);
@@ -324,6 +327,14 @@
 				0B87F57C270B83510003FB98 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0BD846362BEAC14600139ED5 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				0BD846372BEAC15900139ED5 /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		0BF254DC25F0C46D0078BD9F /* Model */ = {
@@ -517,6 +528,7 @@
 				0BF2A16525F9873800308C04 /* Category.swift in Sources */,
 				0BD8462A2BE994F400139ED5 /* MainView.swift in Sources */,
 				0B968E3725FE91A700B7AE84 /* DateExtension.swift in Sources */,
+				0BD846382BEAC15900139ED5 /* SettingsView.swift in Sources */,
 				0B6EA1A9260D0F6C0020060C /* UIDeviceExtension.swift in Sources */,
 				0B9DEC9A260D0B20006F0EC6 /* SettingsTableViewController.swift in Sources */,
 				0B727306270CDA8F00704549 /* WidgetDataBills.swift in Sources */,

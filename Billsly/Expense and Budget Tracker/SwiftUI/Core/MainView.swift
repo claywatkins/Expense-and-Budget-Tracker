@@ -21,6 +21,14 @@ struct MainView: View {
                 Label("Home", systemImage: "house")
             }
             .tag(0)
+            
+            NavigationStack() {
+                SettingsView()
+            }
+            .tabItem {
+                Label("Settings", systemImage: "gearshape")
+            }
+            .tag(3)
         }
     }
 }
