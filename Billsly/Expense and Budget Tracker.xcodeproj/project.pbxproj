@@ -45,6 +45,7 @@
 		0BBE988F2616AA64009DDF96 /* SwiftConfettiView in Frameworks */ = {isa = PBXBuildFile; productRef = 0BBE988E2616AA64009DDF96 /* SwiftConfettiView */; };
 		0BBE98932616E892009DDF96 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BBE98922616E892009DDF96 /* StoreKit.framework */; };
 		0BD8462A2BE994F400139ED5 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD846292BE994F400139ED5 /* MainView.swift */; };
+		0BD8462C2BEA8AD400139ED5 /* ShadowViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD8462B2BEA8AD400139ED5 /* ShadowViewModifier.swift */; };
 		0BF254E925F0C5A90078BD9F /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254E825F0C5A90078BD9F /* Bill.swift */; };
 		0BF254F025F0CCEB0078BD9F /* BillsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254EF25F0CCEB0078BD9F /* BillsViewController.swift */; };
 		0BF254F325F0CF510078BD9F /* BillTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254F225F0CF510078BD9F /* BillTableViewCell.swift */; };
@@ -123,6 +124,7 @@
 		0BBE98902616E2AB009DDF96 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 		0BBE98922616E892009DDF96 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0BD846292BE994F400139ED5 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		0BD8462B2BEA8AD400139ED5 /* ShadowViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowViewModifier.swift; sourceTree = "<group>"; };
 		0BF254E425F0C5430078BD9F /* userController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userController.swift; sourceTree = "<group>"; };
 		0BF254E825F0C5A90078BD9F /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
 		0BF254EF25F0CCEB0078BD9F /* BillsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsViewController.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 		0BBA18D22BE97E1E004D3267 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				0BD8462B2BEA8AD400139ED5 /* ShadowViewModifier.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				0B6C482B2BE9643800D4CB9C /* ManageBillsView.swift in Sources */,
 				0BF254F325F0CF510078BD9F /* BillTableViewCell.swift in Sources */,
 				0B9EE7E32605AACE005DCE6C /* UIVewExtension.swift in Sources */,
+				0BD8462C2BEA8AD400139ED5 /* ShadowViewModifier.swift in Sources */,
 				0B18D660260D85F2004F908D /* IAPManager.swift in Sources */,
 				0B6884142BD2F5C400574E4B /* HomeScreenView.swift in Sources */,
 				0BF254E925F0C5A90078BD9F /* Bill.swift in Sources */,
