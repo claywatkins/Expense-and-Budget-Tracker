@@ -15,7 +15,7 @@ struct HomeScreenView: View {
     var horizontalPadding: CGFloat = 12
     var df: DateFormatter {
         let df = DateFormatter()
-        df.dateStyle = .short
+        df.dateStyle = .medium
         df.timeStyle = .none
         return df
     }
@@ -38,11 +38,13 @@ struct HomeScreenView: View {
                             HStack {
                                 Text("Billsly")
                                     .font(.title2)
+                                    .foregroundStyle(.primary)
                                 Spacer()
                             }
                             HStack {
                                 Text(userService.username == nil ? "Welcome back!" : "Welcome back, \(userService.username)!")
                                     .font(.title2)
+                                    .foregroundStyle(.primary)
                                 Spacer()
                             }
                             Spacer()
@@ -55,10 +57,12 @@ struct HomeScreenView: View {
                                     .overlay {
                                         VStack(alignment: .center, spacing: 9) {
                                             Text("Expenses tracked this month:")
+                                                .foregroundStyle(.primary)
                                                 .multilineTextAlignment(.center)
                                             Text("\(userService.userBills.count)")
                                                 .font(.title)
                                                 .fontWeight(.bold)
+                                                .foregroundStyle(.primary)
                                         }
                                     }
                                 Rectangle()
@@ -69,9 +73,11 @@ struct HomeScreenView: View {
                                         VStack(alignment: .center, spacing: 9) {
                                             Text("Bills left to pay this month:")
                                                 .multilineTextAlignment(.center)
+                                                .foregroundStyle(.primary)
                                             Text("\(userService.userBills.count)")
                                                 .font(.title)
                                                 .fontWeight(.bold)
+                                                .foregroundStyle(.primary)
                                         }
                                     }
                             }
@@ -80,6 +86,8 @@ struct HomeScreenView: View {
                             HStack {
                                 Spacer()
                                 Text(df.string(from: Date.now))
+                                    .foregroundStyle(.primary)
+                                
                             }
                         }
                         .padding(12)
@@ -89,32 +97,59 @@ struct HomeScreenView: View {
                 .cornerRadius(12)
                 .frame(height: 220)
                 .padding(.horizontal, horizontalPadding)
+                .modifier(ShadowViewModifier())
             
             HStack {
                 Button {
                     showingManageBills.toggle()
                 } label: {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundStyle(Color(uiColor: ColorsHelper.celadonGreen))
+                        .foregroundStyle(.secondary)
                         .overlay {
                             Text("Add new expense")
                                 .foregroundStyle(.background)
                         }
                         .frame(height: 50)
                 }
+                .modifier(ShadowViewModifier())
                 
                 Button {
                     showingManageBills.toggle()
                 } label: {
                     RoundedRectangle(cornerRadius: 12)
-                        .foregroundStyle(Color(uiColor: ColorsHelper.celadonGreen))
+                        .foregroundStyle(.secondary)
                         .overlay {
                             Text("I paid a bill")
                                 .foregroundStyle(.background)
                         }
                         .frame(height: 50)
                 }
+                .modifier(ShadowViewModifier())
             }
+            .padding(.horizontal, horizontalPadding)
+            
+            VStack {
+                HStack {
+                    Text("Your last few expenses at a glance")
+                        .font(.subheadline)
+                        .foregroundStyle(.foreground)
+                    Spacer()
+                }
+                List(userService.userBills.prefix(3), id: \.identifier) { bill in
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(bill.name)
+                            Text("Due: " + df.string(from: bill.dueByDate))
+                        }
+                        Spacer()
+                        Text("\(bill.dollarAmount as NSNumber, formatter: nf)")
+                    }
+                }
+                .listStyle(.inset)
+                .cornerRadius(12)
+                .modifier(ShadowViewModifier())
+            }
+            
             .padding(.horizontal, horizontalPadding)
             
             VStack {
@@ -136,29 +171,7 @@ struct HomeScreenView: View {
                 }
                 .listStyle(.inset)
                 .cornerRadius(12)
-            }
-            
-            .padding(.horizontal, horizontalPadding)
-            
-            VStack {
-                HStack {
-                    Text("Your next few bills at a glance")
-                        .font(.subheadline)
-                        .foregroundStyle(.foreground)
-                    Spacer()
-                }
-                List(userService.userBills.prefix(3), id: \.identifier) { bill in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(bill.name)
-                            Text("Due: " + df.string(from: bill.dueByDate))
-                        }
-                        Spacer()
-                        Text("\(bill.dollarAmount as NSNumber, formatter: nf)")
-                    }
-                }
-                .listStyle(.inset)
-                .cornerRadius(12)
+                .modifier(ShadowViewModifier())
             }
             .padding(.horizontal, horizontalPadding)
             
