@@ -98,6 +98,17 @@ class UserController: ObservableObject {
         }
         return numberStr
     }
+    var mediumDf: DateFormatter {
+        let df = DateFormatter()
+        df.dateStyle = .medium
+        df.timeStyle = .none
+        return df
+    }
+    var currencyNf: NumberFormatter {
+        let nf = NumberFormatter()
+        nf.numberStyle = .currency
+        return nf
+    }
     
     // MARK: - Methods
     func loadDefaultCategories() async {
