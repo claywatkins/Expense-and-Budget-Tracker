@@ -29,9 +29,15 @@ struct HomeScreenHeaderView: View {
                             Spacer()
                         }
                         HStack {
-                            Text(userService.username == nil ? "Welcome back!" : "Welcome back, \(userService.username)!")
-                                .font(.title2)
-                                .foregroundStyle(.primary)
+                            if let username = userService.username {
+                                Text("Welcome back, \(username)!")
+                                    .font(.title2)
+                                    .foregroundStyle(.primary)
+                            } else {
+                                Text("Welcome back!")
+                                    .font(.title2)
+                                    .foregroundStyle(.primary)
+                            }                                
                             Spacer()
                         }
                         Spacer()
