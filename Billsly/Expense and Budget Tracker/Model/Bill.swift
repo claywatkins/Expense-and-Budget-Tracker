@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Bill: Codable, Equatable{
+struct Bill: Codable, Equatable, Hashable {
     var identifier: String
     var name: String
     var dollarAmount: Double
@@ -32,5 +32,9 @@ struct Bill: Codable, Equatable{
         self.category = category
         self.isOn30th = isOn30th
         self.hasImage = hasImage
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
     }
 }
