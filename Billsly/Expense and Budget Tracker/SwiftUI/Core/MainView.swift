@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct MainView: View {
-    @State private var selectedIndex = 0
     @EnvironmentObject var userService: UserController
+    @EnvironmentObject var settingsService: SettingsService
+    @State private var selectedIndex = 0
     
     var body: some View {
         TabView(selection: $selectedIndex) {
@@ -26,6 +27,7 @@ struct MainView: View {
                 SettingsView()
                     .navigationTitle("Settings")
                     .environmentObject(userService)
+                    .environmentObject(settingsService)
             }
             .tabItem {
                 Label("Settings", systemImage: "gearshape")
