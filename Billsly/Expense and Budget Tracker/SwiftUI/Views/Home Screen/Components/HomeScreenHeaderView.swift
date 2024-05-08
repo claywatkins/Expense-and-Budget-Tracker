@@ -10,6 +10,7 @@ import FluidGradient
 
 struct HomeScreenHeaderView: View {
     @EnvironmentObject var userService: UserController
+    @Binding var colors: [Color]
     @Binding var showingPaidBills: Bool
     var horizontalPadding: CGFloat = 12
     
@@ -17,7 +18,7 @@ struct HomeScreenHeaderView: View {
         Rectangle()
             .overlay {
                 ZStack {
-                    FluidGradient(blobs: userService.getColors(),
+                    FluidGradient(blobs: colors,
                                   speed: 0.25,
                                   blur: 0.75)
                     
@@ -125,6 +126,7 @@ struct HomeScreenHeaderView: View {
 #Preview {
     @StateObject var userService = UserController()
     
-    return HomeScreenHeaderView(showingPaidBills: .constant(false))
+    return HomeScreenHeaderView(colors: .constant([.red, .blue, .yellow]),
+                                showingPaidBills: .constant(false))
         .environmentObject(userService)
 }
