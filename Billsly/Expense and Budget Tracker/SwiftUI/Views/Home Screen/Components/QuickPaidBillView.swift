@@ -11,6 +11,7 @@ struct QuickPaidBillView: View {
     @EnvironmentObject var userService: UserController
     @Environment(\.dismiss) var dismiss
     @State private var selectedBill: Bill?
+    @Binding var counter: Int
     
     var body: some View {
         ScrollView {
@@ -30,6 +31,7 @@ struct QuickPaidBillView: View {
                 Button {
                     if let selectedBill = selectedBill {
                         userService.updateBillHasBeenPaid(bill: selectedBill)
+                        counter += 1
                     }
                     dismiss()
                 } label: {
@@ -41,8 +43,6 @@ struct QuickPaidBillView: View {
                         }
                         .cornerRadius(12)
                         .frame(height: 50)
-                    
-                    
                 }
             }
             .padding()
