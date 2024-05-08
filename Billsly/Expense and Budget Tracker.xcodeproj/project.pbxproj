@@ -28,6 +28,7 @@
 		0B7B904325FAEC810059CC6E /* EditBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7B904225FAEC810059CC6E /* EditBillViewController.swift */; };
 		0B7B904525FB240D0059CC6E /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7B904425FB240D0059CC6E /* UIViewControllerExtension.swift */; };
 		0B7D91F02BEC04F000FB91B3 /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0B7D91EF2BEC04F000FB91B3 /* ConfettiSwiftUI */; };
+		0B7D91F22BEC074700FB91B3 /* BillsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7D91F12BEC074700FB91B3 /* BillsView.swift */; };
 		0B87F57B270B83510003FB98 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B87F57A270B83510003FB98 /* WidgetKit.framework */; };
 		0B87F57D270B83510003FB98 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B87F57C270B83510003FB98 /* SwiftUI.framework */; };
 		0B87F580270B83510003FB98 /* BillslyWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B87F57F270B83510003FB98 /* BillslyWidgets.swift */; };
@@ -113,6 +114,7 @@
 		0B7B904025FADD510059CC6E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		0B7B904225FAEC810059CC6E /* EditBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBillViewController.swift; sourceTree = "<group>"; };
 		0B7B904425FB240D0059CC6E /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		0B7D91F12BEC074700FB91B3 /* BillsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsView.swift; sourceTree = "<group>"; };
 		0B87F538270B7FF80003FB98 /* Expense and Budget Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Expense and Budget Tracker.entitlements"; sourceTree = "<group>"; };
 		0B87F579270B83510003FB98 /* BillslyWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BillslyWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B87F57A270B83510003FB98 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -255,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				0B6C482A2BE9643800D4CB9C /* ManageBillsView.swift */,
+				0B7D91F12BEC074700FB91B3 /* BillsView.swift */,
 			);
 			path = "Manage Bills";
 			sourceTree = "<group>";
@@ -553,6 +556,7 @@
 				0B727304270CCF7E00704549 /* userController.swift in Sources */,
 				0B8B697B25DB646000B9F55E /* SceneDelegate.swift in Sources */,
 				0B6EA1A7260D0F460020060C /* UIApplicationExtension.swift in Sources */,
+				0B7D91F22BEC074700FB91B3 /* BillsView.swift in Sources */,
 				0B53E94C25FE81C9001DD4FB /* BillPaidPopoverViewController.swift in Sources */,
 				0B6AB4C82605D5F6005F2CF6 /* ColorsHelper.swift in Sources */,
 				0BF2A16525F9873800308C04 /* Category.swift in Sources */,
