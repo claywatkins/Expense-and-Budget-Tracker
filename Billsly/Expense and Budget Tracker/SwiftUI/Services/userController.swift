@@ -12,11 +12,11 @@ class UserController: ObservableObject {
     static let shared = UserController()
     let df = DateFormatter()
     let nf = NumberFormatter()
-   @Published var userBills: [Bill] = []
+    @Published var userBills: [Bill] = []
     var userCategories: [Category] = []
     let defaults = UserDefaults.standard
     var isLoggedIn: Bool?
-    var username: String?
+    @Published var username: String?
     var persistentBillsFileURL: URL? {
         let fm = FileManager.default
         guard let documents = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
@@ -111,6 +111,15 @@ class UserController: ObservableObject {
     }
     
     // MARK: - Methods
+    func setUsername(_ username: String) {
+        UserDefaults.standard.setValue(username, forKey: "username")
+    }
+    
+    func loadUsername() {
+        guard let username = UserDefaults.standard.value(forKey: "username") as? String else { return }
+        self.username = username
+    }
+    
     func loadDefaultCategories() async {
         if userCategories.isEmpty {
             let defaultCategories: [Category] = [
@@ -131,7 +140,7 @@ class UserController: ObservableObject {
     }
     
     func getRandomInt() -> Int {
-         return Int.random(in: 0...7)
+        return Int.random(in: 0...7)
     }
     
     func generateTestBills() async {
@@ -175,7 +184,7 @@ class UserController: ObservableObject {
         }
     }
     
-    func getColors() -> [Color]{
+    func getColors() async -> [Color]{
         var colors: [Color] = []
         
         for category in userCategories {

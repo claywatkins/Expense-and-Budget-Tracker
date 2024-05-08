@@ -11,11 +11,12 @@ struct HomeScreenView: View {
     @EnvironmentObject var userService: UserController
     @State private var showingPaidBills = false
     @State private var presentationDetent = PresentationDetent.fraction(0.3)
+    @State private var colors: [Color] = []
     var horizontalPadding: CGFloat = 12
     
     var body: some View {
         VStack(spacing: 20) {
-            HomeScreenHeaderView(showingPaidBills: $showingPaidBills)
+            HomeScreenHeaderView(colors: $colors, showingPaidBills: $showingPaidBills)
                 .environmentObject(userService)
             HomeScreenListView(headerText: "Your next few bills at a glance")
                 .environmentObject(userService)
@@ -35,7 +36,12 @@ struct HomeScreenView: View {
         }
         .task {
             await userService.loadDefaultCategories()
-            await userService.generateTestBills()
+            self.colors = await userService.getColors()
+//            await userService.generateTestBills()
+        }
+        .onAppear {
+            userService.loadBillData()
+            userService.loadUsername()
         }
     }
 }

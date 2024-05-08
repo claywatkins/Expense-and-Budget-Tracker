@@ -1,0 +1,85 @@
+//
+//  SettingsView.swift
+//  Expense and Budget Tracker
+//
+//  Created by Clayton Watkins on 5/7/24.
+//
+
+import SwiftUI
+import StoreKit
+import MessageUI
+
+struct SettingsView: View {
+    @EnvironmentObject var userService: UserController
+    @EnvironmentObject var settingsService: SettingsService
+    @Environment(\.requestReview) var requestReview
+    @State private var username: String = ""
+    @State private var showingActivitySheet: Bool = false
+    @State private var showingMailSheet: Bool = false
+    @State private var result: Result<MFMailComposeResult, Error>? = nil
+    
+    var body: some View {
+        List {
+            Section {
+                HStack {
+                    TextField((userService.username != nil ? "Your name is \(userService.username ?? "unknown")" : "Enter your name"), text: $username)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    
+                    Button {
+                        userService.setUsername(username)
+                    } label : {
+                        RoundedRectangle(cornerRadius: 12)
+                            .foregroundStyle(.secondary)
+                            .overlay {
+                                Text("Save")
+                                    .foregroundStyle(Color(.label))
+                            }
+                            .frame(width: 80)
+                    }
+                }
+            } header: {
+                Text("User Information")
+            }
+            
+            Section {
+                    SettingsSupportCell(image: "hand.thumbsup",
+                                        text: "Leave a rating",
+                                        subtext: "Support my app by leaving a review!") {
+                        requestReview()
+                    }
+    
+                    SettingsSupportCell(image: "paperplane",
+                                        text: "Share the app",
+                                        subtext: "Know someone with bills? Send this app their way!"){
+                        showingActivitySheet.toggle()
+                    }
+                
+
+                    SettingsSupportCell(image: "envelope",
+                                        text: "Send feedback",
+                                        subtext: "Email thoughts, bugs, or questions.") {
+                        showingMailSheet.toggle()
+                    }
+            } header: {
+                Text("Support the Developer")
+            }
+            
+            SettingsFooter()
+                .environmentObject(settingsService)
+        }
+        .sheet(isPresented: $showingActivitySheet) {
+            ActivityView(url: settingsService.appURLForSharing)
+                .presentationDetents([.medium])
+        }
+        .sheet(isPresented: $showingMailSheet) {
+            MailView(result: $result)
+        }
+    }
+}
+
+#Preview {
+    @StateObject var userService = UserController()
+    
+    return SettingsView()
+        .environmentObject(userService)
+}
