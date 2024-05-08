@@ -53,11 +53,13 @@
 		0BD8463D2BEAD59700139ED5 /* SettingsFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD8463C2BEAD59700139ED5 /* SettingsFooter.swift */; };
 		0BD8463F2BEAD5EF00139ED5 /* SettingsSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD8463E2BEAD5EF00139ED5 /* SettingsSupportCell.swift */; };
 		0BD846422BEAD92900139ED5 /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD846412BEAD92900139ED5 /* SettingsService.swift */; };
+		0BD97F6F2BEB376400C7A222 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD97F6E2BEB376400C7A222 /* MailView.swift */; };
 		0BF254E925F0C5A90078BD9F /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254E825F0C5A90078BD9F /* Bill.swift */; };
 		0BF254F025F0CCEB0078BD9F /* BillsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254EF25F0CCEB0078BD9F /* BillsViewController.swift */; };
 		0BF254F325F0CF510078BD9F /* BillTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF254F225F0CF510078BD9F /* BillTableViewCell.swift */; };
 		0BF2A16525F9873800308C04 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2A16425F9873800308C04 /* Category.swift */; };
 		0BF2A16925F9CBFC00308C04 /* CategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2A16825F9CBFC00308C04 /* CategoryTableViewCell.swift */; };
+		0BFC45042BEB339100635785 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC45032BEB339100635785 /* ActivityView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,12 +141,14 @@
 		0BD8463C2BEAD59700139ED5 /* SettingsFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsFooter.swift; sourceTree = "<group>"; };
 		0BD8463E2BEAD5EF00139ED5 /* SettingsSupportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSupportCell.swift; sourceTree = "<group>"; };
 		0BD846412BEAD92900139ED5 /* SettingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
+		0BD97F6E2BEB376400C7A222 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		0BF254E425F0C5430078BD9F /* userController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userController.swift; sourceTree = "<group>"; };
 		0BF254E825F0C5A90078BD9F /* Bill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bill.swift; sourceTree = "<group>"; };
 		0BF254EF25F0CCEB0078BD9F /* BillsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsViewController.swift; sourceTree = "<group>"; };
 		0BF254F225F0CF510078BD9F /* BillTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillTableViewCell.swift; sourceTree = "<group>"; };
 		0BF2A16425F9873800308C04 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		0BF2A16825F9CBFC00308C04 /* CategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewCell.swift; sourceTree = "<group>"; };
+		0BFC45032BEB339100635785 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -349,6 +353,8 @@
 			children = (
 				0BD8463C2BEAD59700139ED5 /* SettingsFooter.swift */,
 				0BD8463E2BEAD5EF00139ED5 /* SettingsSupportCell.swift */,
+				0BFC45032BEB339100635785 /* ActivityView.swift */,
+				0BD97F6E2BEB376400C7A222 /* MailView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -522,9 +528,11 @@
 			files = (
 				0BD846322BEAA10200139ED5 /* HomeScreenListView.swift in Sources */,
 				0B6C482B2BE9643800D4CB9C /* ManageBillsView.swift in Sources */,
+				0BD97F6F2BEB376400C7A222 /* MailView.swift in Sources */,
 				0BF254F325F0CF510078BD9F /* BillTableViewCell.swift in Sources */,
 				0B9EE7E32605AACE005DCE6C /* UIVewExtension.swift in Sources */,
 				0BD8462C2BEA8AD400139ED5 /* ShadowViewModifier.swift in Sources */,
+				0BFC45042BEB339100635785 /* ActivityView.swift in Sources */,
 				0BD846422BEAD92900139ED5 /* SettingsService.swift in Sources */,
 				0B18D660260D85F2004F908D /* IAPManager.swift in Sources */,
 				0B6884142BD2F5C400574E4B /* HomeScreenView.swift in Sources */,
