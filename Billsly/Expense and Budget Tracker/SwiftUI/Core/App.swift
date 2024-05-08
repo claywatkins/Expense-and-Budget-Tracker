@@ -9,13 +9,14 @@ import SwiftUI
 
 @main
 struct Billsly: App {
-    
     @StateObject var userService = UserController()
+    @StateObject var settingsService = SettingsService()
     
     var body: some Scene {
         WindowGroup {
             MainView()
                 .environmentObject(userService)
+                .environmentObject(settingsService)
         }
     }
 }
