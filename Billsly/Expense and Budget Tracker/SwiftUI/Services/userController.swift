@@ -184,7 +184,7 @@ class UserController: ObservableObject {
         }
     }
     
-    func getColors() -> [Color]{
+    func getColors() async -> [Color]{
         var colors: [Color] = []
         
         for category in userCategories {
