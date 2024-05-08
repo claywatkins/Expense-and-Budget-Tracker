@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import ConfettiSwiftUI
 
 struct HomeScreenView: View {
     @EnvironmentObject var userService: UserController
     @State private var showingPaidBills = false
     @State private var presentationDetent = PresentationDetent.fraction(0.3)
     @State private var colors: [Color] = []
+    @State var counter: Int = 0
     var horizontalPadding: CGFloat = 12
     
     var body: some View {
@@ -27,7 +29,7 @@ struct HomeScreenView: View {
         .padding(.horizontal, horizontalPadding)
         .background(.quaternary)
         .sheet(isPresented: $showingPaidBills) {
-            QuickPaidBillView()
+            QuickPaidBillView(counter: $counter)
                 .environmentObject(userService)
                 .presentationDetents(
                     [.fraction(0.3)],
@@ -37,12 +39,13 @@ struct HomeScreenView: View {
         .task {
             await userService.loadDefaultCategories()
             self.colors = await userService.getColors()
-//            await userService.generateTestBills()
+            await userService.generateTestBills()
         }
         .onAppear {
             userService.loadBillData()
             userService.loadUsername()
         }
+        .confettiCannon(counter: $counter, confettiSize: 20, rainHeight: 750, radius: 400)
     }
 }
 
