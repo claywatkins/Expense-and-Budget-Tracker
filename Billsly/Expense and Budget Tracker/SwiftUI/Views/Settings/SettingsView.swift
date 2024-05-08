@@ -6,10 +6,17 @@
 //
 
 import SwiftUI
+import StoreKit
+import MessageUI
 
 struct SettingsView: View {
     @EnvironmentObject var userService: UserController
+    @EnvironmentObject var settingsService: SettingsService
+    @Environment(\.requestReview) var requestReview
     @State private var username: String = ""
+    @State private var showingActivitySheet: Bool = false
+    @State private var showingMailSheet: Bool = false
+    @State private var result: Result<MFMailComposeResult, Error>? = nil
     
     var body: some View {
         List {
@@ -38,26 +45,34 @@ struct SettingsView: View {
                     SettingsSupportCell(image: "hand.thumbsup",
                                         text: "Leave a rating",
                                         subtext: "Support my app by leaving a review!") {
-                        
+                        requestReview()
                     }
+    
                     SettingsSupportCell(image: "paperplane",
                                         text: "Share the app",
-                                        subtext: "Know someone with bills? Send this app their way!") {
-                        
+                                        subtext: "Know someone with bills? Send this app their way!"){
+                        showingActivitySheet.toggle()
                     }
+                
 
                     SettingsSupportCell(image: "envelope",
                                         text: "Send feedback",
                                         subtext: "Email thoughts, bugs, or questions.") {
-                        
+                        showingMailSheet.toggle()
                     }
-                    
-                
             } header: {
                 Text("Support the Developer")
             }
             
             SettingsFooter()
+                .environmentObject(settingsService)
+        }
+        .sheet(isPresented: $showingActivitySheet) {
+            ActivityView(url: settingsService.appURLForSharing)
+                .presentationDetents([.medium])
+        }
+        .sheet(isPresented: $showingMailSheet) {
+            MailView(result: $result)
         }
     }
 }
