@@ -53,10 +53,10 @@ extension Date {
         Calendar.current.component(.day, from: endOfMonth)
     }
     
-    var sundayBeforeStart: Date {
+    var firstWeekDayBeforeStart: Date {
         let startOfMonthWeekday = Calendar.current.component(.weekday, from: startOfMonth)
-        let numberFromPrevoiusMonth = startOfMonthWeekday - 1
-        return Calendar.current.date(byAdding: .day, value: -numberFromPrevoiusMonth, to: startOfMonth)!
+        let numberFromPreviousMonth = startOfMonthWeekday - Self.firstDayOfWeek
+        return Calendar.current.date(byAdding: .day, value: -numberFromPreviousMonth, to: startOfMonth)!
     }
     
     var calendarDisplayDays: [Date] {
@@ -74,7 +74,7 @@ extension Date {
             days.append(newDay)
         }
         
-        return days.filter { $0 >= sundayBeforeStart && $0 <= endOfMonth }.sorted(by: <)
+        return days.filter { $0 >= firstWeekDayBeforeStart && $0 <= endOfMonth }.sorted(by: <)
         
     }
     
