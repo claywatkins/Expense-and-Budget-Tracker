@@ -8,22 +8,21 @@
 import SwiftUI
 
 struct ManageBillsView: View {
-    
     @EnvironmentObject var userService: UserController
+    @Binding var billList: [Bill]
     
     var body: some View {
-        List(userService.userBills, id: \.identifier) { bill in
+        List(billList, id: \.identifier) { bill in
             HStack {
-                VStack {
+                VStack(alignment: .leading) {
                     Text(bill.name)
-                    Text(userService.df.string(from: bill.dueByDate))
+                        .foregroundStyle(.primary)
+                    Text("Due: " + userService.mediumDf.string(from: bill.dueByDate))
+                        .foregroundStyle(.primary)
                 }
-                
                 Spacer()
-                
-                VStack {
-                    Text(String(bill.dollarAmount))
-                }
+                Text("\(bill.dollarAmount as NSNumber, formatter: userService.currencyNf)")
+                    .foregroundStyle(.primary)
             }
         }
     }
