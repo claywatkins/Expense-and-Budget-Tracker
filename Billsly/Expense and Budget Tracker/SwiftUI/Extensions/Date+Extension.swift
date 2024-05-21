@@ -8,14 +8,20 @@
 import Foundation
 
 extension Date {
+    static var firstDayOfWeek = Calendar.current.firstWeekday
+    
     static var capitalizedFirstLettersOfWeekdays: [String] {
         let calendar = Calendar.current
-        let weekdays = calendar.shortWeekdaySymbols
-
-        return weekdays.map { weekday in
-            guard let firstLetter = weekday.first else { return "" }
-            return String(firstLetter).capitalized
+        var weekdays = calendar.shortWeekdaySymbols
+        if firstDayOfWeek > 1 {
+            for _ in 1..<firstDayOfWeek {
+                if let first = weekdays.first {
+                    weekdays.append(first)
+                    weekdays.removeFirst()
+                }
+            }
         }
+        return weekdays.map { $0.capitalized }
     }
     
     static var fullMonthNames: [String] {
@@ -69,5 +75,14 @@ extension Date {
         }
         
         return days.filter { $0 >= sundayBeforeStart && $0 <= endOfMonth }.sorted(by: <)
+        
+    }
+    
+    var monthInt: Int {
+        Calendar.current.component(.month, from: self)
+    }
+    
+    var startOfDay: Date {
+        Calendar.current.startOfDay(for: self)
     }
 }
