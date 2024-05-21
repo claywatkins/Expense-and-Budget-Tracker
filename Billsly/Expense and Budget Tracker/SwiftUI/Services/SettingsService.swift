@@ -19,4 +19,7 @@ class SettingsService: ObservableObject {
             return ""
         }
     }
+    
+    @Published var calendarColor: Color = .blue
+    @Published var currendDayColor: Color = .red
 }
