@@ -26,6 +26,7 @@ struct MainView: View {
             NavigationStack() {
                 BillsView()
                     .environmentObject(userService)
+                    .environmentObject(settingsService)
             }
             .tabItem {
                 Label("Bills", systemImage: "doc.text")

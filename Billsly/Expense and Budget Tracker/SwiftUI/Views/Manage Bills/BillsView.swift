@@ -9,22 +9,19 @@ import SwiftUI
 
 struct BillsView: View {
     @EnvironmentObject var userService: UserController
+    @EnvironmentObject var settingsService: SettingsService
     @State private var date = Date()
     @State private var expandListView = false
     
     var body: some View {
         VStack {
-                
+            CalendarHeaderView()
+                .environmentObject(userService)
+                .environmentObject(settingsService)
             BillListSection(billList: userService.unpaidBills,
                             expandListView: $expandListView,
                             date: $date,
                             sectionTitle: "Unpaid Bills")
-                .environmentObject(userService)
-            
-            BillListSection(billList: userService.paidBills,
-                            expandListView: $expandListView,
-                            date: $date,
-                            sectionTitle: "Paid Bills")
                 .environmentObject(userService)
         }
         .background(.quaternary)
@@ -37,8 +34,11 @@ struct BillsView: View {
 
 #Preview {
     @StateObject var userService = UserController()
+    @StateObject var settingsService = SettingsService()
+    
     return BillsView()
         .environmentObject(userService)
+        .environmentObject(settingsService)
 }
 
 
