@@ -17,6 +17,7 @@ class UserController: ObservableObject {
     let defaults = UserDefaults.standard
     var isLoggedIn: Bool?
     @Published var username: String?
+    @Published var currentList: [Bill] = []
     var persistentBillsFileURL: URL? {
         let fm = FileManager.default
         guard let documents = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
