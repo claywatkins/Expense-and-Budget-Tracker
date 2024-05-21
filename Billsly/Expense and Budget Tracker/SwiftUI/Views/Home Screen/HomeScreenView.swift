@@ -39,7 +39,7 @@ struct HomeScreenView: View {
         .task {
             await userService.loadDefaultCategories()
             self.colors = await userService.getColors()
-            await userService.generateTestBills()
+//            await userService.generateTestBills()
         }
         .onAppear {
             userService.loadBillData()
