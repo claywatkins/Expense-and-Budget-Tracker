@@ -111,6 +111,14 @@ class UserController: ObservableObject {
         return nf
     }
     
+    var billsInYear: [Int] {
+        var yearInts: [Int] = []
+        for bill in userBills {
+            yearInts.append(bill.dueByDate.yearInt)
+        }
+        return Array(Set(yearInts).sorted())
+    }
+    
     // MARK: - Methods
     func setUsername(_ username: String) {
         UserDefaults.standard.setValue(username, forKey: "username")
