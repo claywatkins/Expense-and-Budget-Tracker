@@ -52,4 +52,22 @@ extension Date {
         let numberFromPrevoiusMonth = startOfMonthWeekday - 1
         return Calendar.current.date(byAdding: .day, value: -numberFromPrevoiusMonth, to: startOfMonth)!
     }
+    
+    var calendarDisplayDays: [Date] {
+        var days: [Date] = []
+        
+        // Current month
+        for dayOffset in 0..<numberOfDaysInMonth {
+            let newDay = Calendar.current.date(byAdding: .day, value: dayOffset, to: startOfMonth)!
+            days.append(newDay)
+        }
+        
+        // Previous month
+        for dayOffset in 0..<startOfPreviousMonth.numberOfDaysInMonth {
+            let newDay = Calendar.current.date(byAdding: .day, value: dayOffset, to: startOfPreviousMonth)!
+            days.append(newDay)
+        }
+        
+        return days.filter { $0 >= sundayBeforeStart && $0 <= endOfMonth }.sorted(by: <)
+    }
 }
