@@ -28,4 +28,28 @@ extension Date {
             return date.map { dateFormatter.string(from: $0) }
         }
     }
+    
+    var startOfMonth: Date {
+        Calendar.current.dateInterval(of: .month, for: self)!.start
+    }
+    
+    var endOfMonth: Date {
+        let lastDay = Calendar.current.dateInterval(of: .month, for: self)!.end
+        return Calendar.current.date(byAdding: .day, value: -1, to: lastDay)!
+    }
+    
+    var startOfPreviousMonth: Date {
+        let dayInPreviousMonth = Calendar.current.date(byAdding: .month, value: -1, to: self)!
+        return dayInPreviousMonth.startOfMonth
+    }
+    
+    var numberOfDaysInMonth: Int {
+        Calendar.current.component(.day, from: endOfMonth)
+    }
+    
+    var sundayBeforeStart: Date {
+        let startOfMonthWeekday = Calendar.current.component(.weekday, from: startOfMonth)
+        let numberFromPrevoiusMonth = startOfMonthWeekday - 1
+        return Calendar.current.date(byAdding: .day, value: -numberFromPrevoiusMonth, to: startOfMonth)!
+    }
 }
