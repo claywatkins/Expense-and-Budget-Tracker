@@ -42,24 +42,42 @@ struct SettingsView: View {
             }
             
             Section {
-                    SettingsSupportCell(image: "hand.thumbsup",
-                                        text: "Leave a rating",
-                                        subtext: "Support my app by leaving a review!") {
-                        requestReview()
+                VStack(spacing: 12) {
+                    LabeledContent("Calendar Color") {
+                        ColorPicker("",
+                                    selection: $settingsService.calendarColor,
+                                    supportsOpacity: false)
                     }
-    
-                    SettingsSupportCell(image: "paperplane",
-                                        text: "Share the app",
-                                        subtext: "Know someone with bills? Send this app their way!"){
-                        showingActivitySheet.toggle()
+                    Divider()
+                    LabeledContent("Current Day Color") {
+                        ColorPicker("",
+                                    selection: $settingsService.currendDayColor,
+                                    supportsOpacity: false)
                     }
+                }
+            } header: {
+                Text("App Settings")
+            }
+            
+            Section {
+                SettingsSupportCell(image: "hand.thumbsup",
+                                    text: "Leave a rating",
+                                    subtext: "Support my app by leaving a review!") {
+                    requestReview()
+                }
                 
-
-                    SettingsSupportCell(image: "envelope",
-                                        text: "Send feedback",
-                                        subtext: "Email thoughts, bugs, or questions.") {
-                        showingMailSheet.toggle()
-                    }
+                SettingsSupportCell(image: "paperplane",
+                                    text: "Share the app",
+                                    subtext: "Know someone with bills? Send this app their way!"){
+                    showingActivitySheet.toggle()
+                }
+                
+                
+                SettingsSupportCell(image: "envelope",
+                                    text: "Send feedback",
+                                    subtext: "Email thoughts, bugs, or questions.") {
+                    showingMailSheet.toggle()
+                }
             } header: {
                 Text("Support the Developer")
             }
@@ -79,7 +97,9 @@ struct SettingsView: View {
 
 #Preview {
     @StateObject var userService = UserController()
+    @StateObject var settingsService = SettingsService()
     
     return SettingsView()
         .environmentObject(userService)
+        .environmentObject(settingsService)
 }
