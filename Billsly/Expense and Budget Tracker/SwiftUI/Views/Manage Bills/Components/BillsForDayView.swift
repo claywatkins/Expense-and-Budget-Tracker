@@ -8,11 +8,35 @@
 import SwiftUI
 
 struct BillsForDayView: View {
+    @EnvironmentObject var userService: UserController
+    let bills: [Bill?]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            List {
+                ForEach(bills, id: \.?.identifier) { bill in
+                    if let bill = bill {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(bill.name)
+                                    .foregroundStyle(.primary)
+                                Text("Due: " + userService.mediumDf.string(from: bill.dueByDate))
+                                    .foregroundStyle(.primary)
+                            }
+                            Spacer()
+                            Text("\(bill.dollarAmount as NSNumber, formatter: userService.currencyNf)")
+                                .foregroundStyle(.primary)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    BillsForDayView()
+    @StateObject var userService = UserController()
+    
+    return BillsForDayView(bills: [nil])
+            .environmentObject(userService)
 }
