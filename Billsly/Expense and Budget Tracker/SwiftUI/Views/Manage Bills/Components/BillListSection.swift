@@ -9,16 +9,18 @@ import SwiftUI
 
 struct BillListSection: View {
     @EnvironmentObject var userService: UserController
-    @State var billList: [Bill]
+    @State private var billList: [Bill] = []
+    @State private var showEditBill = false
+    @State private var tappedBill: Bill?
+    @Binding var billType: BillSelection
     @Binding var expandListView: Bool
-    @Binding var date: Date
-    var sectionTitle: String
     
     var body: some View {
         Section {
             List(billList, id: \.identifier) { bill in
                 Button {
-                    self.date = bill.dueByDate
+                    showEditBill.toggle()
+                    tappedBill = bill
                 } label: {
                     HStack {
                         VStack(alignment: .leading) {
@@ -36,7 +38,7 @@ struct BillListSection: View {
             .listStyle(.plain)
         } header: {
             HStack {
-                Text(sectionTitle)
+                Text(billType.rawValue)
                 Spacer()
                 Button {
                     userService.currentList = billList
@@ -46,6 +48,16 @@ struct BillListSection: View {
                 }
             }
             .padding(.horizontal, 12)
+        }
+        .cornerRadius(12)
+        .onAppear {
+            billList = userService.getCorrectList(selection: billType)
+        }
+        .onChange(of: billType) {
+            billList = userService.getCorrectList(selection: billType)
+        }
+        .fullScreenCover(isPresented:$showEditBill) {
+            EditAddBillView(isEdit: true, bill: tappedBill)
         }
     }
 }
