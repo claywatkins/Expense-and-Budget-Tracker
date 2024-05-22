@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B0A17FD2BFDAD8E003EA471 /* MiddleButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0A17FC2BFDAD8E003EA471 /* MiddleButtonsView.swift */; };
 		0B18D660260D85F2004F908D /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B18D65F260D85F2004F908D /* IAPManager.swift */; };
 		0B1FEBA225F6B2BE00F0FC87 /* AddBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1FEBA125F6B2BE00F0FC87 /* AddBillViewController.swift */; };
 		0B3C9F3C2BEC805900778495 /* BillListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3C9F3B2BEC805900778495 /* BillListSection.swift */; };
 		0B3C9F3E2BFD022900778495 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3C9F3D2BFD022900778495 /* CalendarView.swift */; };
 		0B3C9F412BFD037F00778495 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3C9F402BFD037F00778495 /* Date+Extension.swift */; };
 		0B3C9F432BFD0D8D00778495 /* CalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3C9F422BFD0D8D00778495 /* CalendarHeaderView.swift */; };
+		0B3C9F452BFD210400778495 /* BillsForDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3C9F442BFD210400778495 /* BillsForDayView.swift */; };
+		0B3C9F472BFD323600778495 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3C9F462BFD323600778495 /* Color+Extension.swift */; };
+		0B3C9F492BFD33EA00778495 /* EditAddBillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3C9F482BFD33EA00778495 /* EditAddBillView.swift */; };
 		0B4E71E725F95BE000461B15 /* CategoryPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4E71E625F95BE000461B15 /* CategoryPopoverViewController.swift */; };
 		0B53E94C25FE81C9001DD4FB /* BillPaidPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B53E94B25FE81C9001DD4FB /* BillPaidPopoverViewController.swift */; };
 		0B57467F25F690F500EC81DA /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 0B57467E25F690F500EC81DA /* FSCalendar */; };
@@ -103,12 +107,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0B0A17FC2BFDAD8E003EA471 /* MiddleButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddleButtonsView.swift; sourceTree = "<group>"; };
 		0B18D65F260D85F2004F908D /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
 		0B1FEBA125F6B2BE00F0FC87 /* AddBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBillViewController.swift; sourceTree = "<group>"; };
 		0B3C9F3B2BEC805900778495 /* BillListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillListSection.swift; sourceTree = "<group>"; };
 		0B3C9F3D2BFD022900778495 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		0B3C9F402BFD037F00778495 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		0B3C9F422BFD0D8D00778495 /* CalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeaderView.swift; sourceTree = "<group>"; };
+		0B3C9F442BFD210400778495 /* BillsForDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillsForDayView.swift; sourceTree = "<group>"; };
+		0B3C9F462BFD323600778495 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
+		0B3C9F482BFD33EA00778495 /* EditAddBillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddBillView.swift; sourceTree = "<group>"; };
 		0B4E71E625F95BE000461B15 /* CategoryPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPopoverViewController.swift; sourceTree = "<group>"; };
 		0B53E94B25FE81C9001DD4FB /* BillPaidPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillPaidPopoverViewController.swift; sourceTree = "<group>"; };
 		0B6884132BD2F5C400574E4B /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
@@ -193,6 +201,8 @@
 				0B3C9F3B2BEC805900778495 /* BillListSection.swift */,
 				0B3C9F3D2BFD022900778495 /* CalendarView.swift */,
 				0B3C9F422BFD0D8D00778495 /* CalendarHeaderView.swift */,
+				0B3C9F442BFD210400778495 /* BillsForDayView.swift */,
+				0B0A17FC2BFDAD8E003EA471 /* MiddleButtonsView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -201,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				0B3C9F402BFD037F00778495 /* Date+Extension.swift */,
+				0B3C9F462BFD323600778495 /* Color+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -286,6 +297,7 @@
 				0B3C9F3A2BEC804700778495 /* Components */,
 				0B6C482A2BE9643800D4CB9C /* ManageBillsView.swift */,
 				0B7D91F12BEC074700FB91B3 /* BillsView.swift */,
+				0B3C9F482BFD33EA00778495 /* EditAddBillView.swift */,
 			);
 			path = "Manage Bills";
 			sourceTree = "<group>";
@@ -564,6 +576,7 @@
 				0BD846322BEAA10200139ED5 /* HomeScreenListView.swift in Sources */,
 				0B6C482B2BE9643800D4CB9C /* ManageBillsView.swift in Sources */,
 				0BD97F6F2BEB376400C7A222 /* MailView.swift in Sources */,
+				0B0A17FD2BFDAD8E003EA471 /* MiddleButtonsView.swift in Sources */,
 				0BF254F325F0CF510078BD9F /* BillTableViewCell.swift in Sources */,
 				0B9EE7E32605AACE005DCE6C /* UIVewExtension.swift in Sources */,
 				0BD8462C2BEA8AD400139ED5 /* ShadowViewModifier.swift in Sources */,
@@ -572,6 +585,7 @@
 				0B18D660260D85F2004F908D /* IAPManager.swift in Sources */,
 				0B6884142BD2F5C400574E4B /* HomeScreenView.swift in Sources */,
 				0B3C9F3E2BFD022900778495 /* CalendarView.swift in Sources */,
+				0B3C9F452BFD210400778495 /* BillsForDayView.swift in Sources */,
 				0BF254E925F0C5A90078BD9F /* Bill.swift in Sources */,
 				0B3C9F412BFD037F00778495 /* Date+Extension.swift in Sources */,
 				0B4E71E725F95BE000461B15 /* CategoryPopoverViewController.swift in Sources */,
@@ -591,8 +605,10 @@
 				0B6AB4C82605D5F6005F2CF6 /* ColorsHelper.swift in Sources */,
 				0BF2A16525F9873800308C04 /* Category.swift in Sources */,
 				0BD8462A2BE994F400139ED5 /* MainView.swift in Sources */,
+				0B3C9F472BFD323600778495 /* Color+Extension.swift in Sources */,
 				0B968E3725FE91A700B7AE84 /* DateExtension.swift in Sources */,
 				0B3C9F3C2BEC805900778495 /* BillListSection.swift in Sources */,
+				0B3C9F492BFD33EA00778495 /* EditAddBillView.swift in Sources */,
 				0BD846382BEAC15900139ED5 /* SettingsView.swift in Sources */,
 				0BD8463F2BEAD5EF00139ED5 /* SettingsSupportCell.swift in Sources */,
 				0B6EA1A9260D0F6C0020060C /* UIDeviceExtension.swift in Sources */,
