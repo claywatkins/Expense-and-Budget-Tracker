@@ -22,24 +22,14 @@ struct HomeScreenView: View {
                 .environmentObject(userService)
             HomeScreenListView(headerText: "Your next few bills at a glance")
                 .environmentObject(userService)
-            HomeScreenListView(headerText: "Your last few expenses at a glance")
-                .environmentObject(userService)
             Spacer()
         }
         .padding(.horizontal, horizontalPadding)
         .background(.quaternary)
-        .sheet(isPresented: $showingPaidBills) {
-            QuickPaidBillView(counter: $counter)
-                .environmentObject(userService)
-                .presentationDetents(
-                    [.fraction(0.3)],
-                    selection: $presentationDetent
-                )
-        }
         .task {
             await userService.loadDefaultCategories()
             self.colors = await userService.getColors()
-            await userService.generateTestBills()
+//            await userService.generateTestBills()
         }
         .onAppear {
             userService.loadBillData()

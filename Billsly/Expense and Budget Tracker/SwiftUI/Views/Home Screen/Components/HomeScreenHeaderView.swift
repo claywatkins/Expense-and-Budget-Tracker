@@ -50,9 +50,10 @@ struct HomeScreenHeaderView: View {
                                 .modifier(ShadowViewModifier())
                                 .overlay {
                                     VStack(alignment: .center, spacing: 9) {
-                                        Text("Expenses tracked this month:")
+                                        Text("Bills paid since you've started using Billsly:")
                                             .foregroundStyle(.primary)
                                             .multilineTextAlignment(.center)
+                                            .padding(.horizontal, 4)
                                         Text("\(userService.unpaidBills.count)")
                                             .font(.title)
                                             .fontWeight(.bold)
@@ -69,6 +70,8 @@ struct HomeScreenHeaderView: View {
                                         Text("Bills left to pay this month:")
                                             .multilineTextAlignment(.center)
                                             .foregroundStyle(.primary)
+                                            .padding(.horizontal, 4)
+
                                         Text("\(userService.unpaidBills.count)")
                                             .font(.title)
                                             .fontWeight(.bold)
@@ -93,33 +96,21 @@ struct HomeScreenHeaderView: View {
             .frame(height: 220)
             .modifier(ShadowViewModifier())
         
-        HStack {
-            Button {
-                showingPaidBills.toggle()
-            } label: {
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundStyle(.secondary)
-                    .overlay {
-                        Text("Add new expense")
-                            .foregroundStyle(Color(.label))
-                    }
-                    .frame(height: 50)
-                    .modifier(ShadowViewModifier())
-            }
-            
-            Button {
-                showingPaidBills.toggle()
-            } label: {
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundStyle(.secondary)
-                    .overlay {
-                        Text("I paid a bill")
-                            .foregroundStyle(Color(.label))
-                    }
-                    .frame(height: 50)
-                    .modifier(ShadowViewModifier())
-            }
-        }
+//        HStack {
+//            Button {
+//                showingPaidBills.toggle()
+//            } label: {
+//                RoundedRectangle(cornerRadius: 12)
+//                    .foregroundStyle(.secondary)
+//                    .overlay {
+//                        Text("Add new expense")
+//                            .foregroundStyle(Color(.label))
+//                    }
+//                    .frame(height: 50)
+//                    .modifier(ShadowViewModifier())
+//            }
+//
+//        }
     }
 }
 

@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct Category: Codable, Equatable {
+struct Category: Codable, Equatable, Hashable {
     var name: String
     
     init(name: String) {

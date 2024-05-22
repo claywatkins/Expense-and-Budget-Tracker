@@ -7,16 +7,24 @@
 
 import SwiftUI
 
+enum BillSelection: String, CaseIterable {
+    case unpaid = "Unpaid Bills"
+    case all = "All Bills"
+    case paid = "Paid Bills"
+}
+
 class UserController: ObservableObject {
     // MARK: - Properties
     static let shared = UserController()
     let df = DateFormatter()
     let nf = NumberFormatter()
     @Published var userBills: [Bill] = []
-    var userCategories: [Category] = []
+    @Published var userCategories: [Category] = []
     let defaults = UserDefaults.standard
     var isLoggedIn: Bool?
     @Published var username: String?
+    @Published var currentList: [Bill] = []
+    @Published var billType: BillSelection = .unpaid
     var persistentBillsFileURL: URL? {
         let fm = FileManager.default
         guard let documents = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
@@ -110,7 +118,52 @@ class UserController: ObservableObject {
         return nf
     }
     
+    var billsInYear: [Int] {
+        var yearInts: [Int] = []
+        for bill in userBills {
+            yearInts.append(bill.dueByDate.yearInt)
+        }
+        return Array(Set(yearInts).sorted())
+    }
+    
     // MARK: - Methods
+    func setupCounts(selection: BillSelection) -> [Int: Int] {
+        switch selection {
+        case .all:
+            let mappedItems = userBills.map{($0.dueByDate.dayInt, 1)}
+            return Dictionary(mappedItems, uniquingKeysWith: +)
+        case .paid:
+            let mappedItems = paidBills.map{($0.dueByDate.dayInt, 1)}
+            return Dictionary(mappedItems, uniquingKeysWith: +)
+        case .unpaid:
+            let mappedItems = unpaidBills.map{($0.dueByDate.dayInt, 1)}
+            return Dictionary(mappedItems, uniquingKeysWith: +)
+        }
+    }
+    
+    func getCorrectList(selection: BillSelection) -> [Bill] {
+        switch selection {
+        case .all:
+            return userBills.sorted(by: { $0.dueByDate < $1.dueByDate })
+        case .unpaid:
+            return unpaidBills
+        case .paid:
+            return paidBills
+        }
+    }
+    
+    func getBillsForDay(dayInt: Int) -> [Bill?] {
+        let mappedBills = userBills.map{
+            var bill: Bill?
+            if $0.dueByDate.dayInt == dayInt {
+                bill = $0
+            }
+            return bill
+        }
+        return mappedBills
+    }
+    
+    
     func setUsername(_ username: String) {
         UserDefaults.standard.setValue(username, forKey: "username")
     }
@@ -130,10 +183,13 @@ class UserController: ObservableObject {
                 Category(name: "Loan"),
                 Category(name: "Credit Card"),
                 Category(name: "Insurance"),
-                Category(name: "Car Loan")
+                Category(name: "Car Loan"),
+                Category(name: "Other"),
             ]
             for i in defaultCategories {
-                userCategories.append(i)
+                DispatchQueue.main.async {
+                    self.userCategories.append(i)                    
+                }
             }
             saveCategoriesToPersistentStore()
         }
@@ -158,7 +214,6 @@ class UserController: ObservableObject {
         }
         DispatchQueue.main.async {
             self.userBills = bills
-            
         }
     }
     
@@ -205,8 +260,10 @@ class UserController: ObservableObject {
                 colors.append(.teal)
             case "Car Loan":
                 colors.append(.yellow)
+            case "Other":
+                colors.append(.blue)
             default:
-                colors.append(.indigo)
+                colors.append(.red)
             }
         }
         return colors

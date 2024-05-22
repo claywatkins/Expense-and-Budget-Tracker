@@ -19,4 +19,7 @@ class SettingsService: ObservableObject {
             return ""
         }
     }
+    
+    @AppStorage("calendarColor") var calendarColor: Color = .blue
+    @AppStorage("currentDayColor") var currendDayColor: Color = .red
 }

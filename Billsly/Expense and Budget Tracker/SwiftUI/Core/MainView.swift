@@ -24,6 +24,16 @@ struct MainView: View {
             .tag(0)
             
             NavigationStack() {
+                BillsView()
+                    .environmentObject(userService)
+                    .environmentObject(settingsService)
+            }
+            .tabItem {
+                Label("Bills", systemImage: "doc.text")
+            }
+            .tag(1)
+            
+            NavigationStack() {
                 SettingsView()
                     .navigationTitle("Settings")
                     .environmentObject(userService)
