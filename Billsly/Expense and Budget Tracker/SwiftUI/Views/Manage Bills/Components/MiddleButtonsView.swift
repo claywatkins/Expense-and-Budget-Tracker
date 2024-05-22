@@ -8,11 +8,41 @@
 import SwiftUI
 
 struct MiddleButtonsView: View {
+    @Binding var showingAddBill: Bool
+    @Binding var showingPaidBills: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Button {
+                showingAddBill.toggle()
+            } label: {
+                RoundedRectangle(cornerRadius: 12)
+                    .foregroundStyle(.secondary)
+                    .overlay {
+                        Text("Add a bill")
+                            .foregroundStyle(Color(.label))
+                    }
+                    .frame(height: 50)
+                    .modifier(ShadowViewModifier())
+            }
+            
+            Button {
+                showingPaidBills.toggle()
+            } label: {
+                RoundedRectangle(cornerRadius: 12)
+                    .foregroundStyle(.secondary)
+                    .overlay {
+                        Text("I paid a bill")
+                            .foregroundStyle(Color(.label))
+                    }
+                    .frame(height: 50)
+                    .modifier(ShadowViewModifier())
+            }
+        }
     }
 }
 
 #Preview {
-    MiddleButtonsView()
+    MiddleButtonsView(showingAddBill: .constant(false),
+                      showingPaidBills: .constant(false))
 }
