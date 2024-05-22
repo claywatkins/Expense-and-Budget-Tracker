@@ -9,8 +9,13 @@ import SwiftUI
 
 struct CalendarView: View {
     @EnvironmentObject var settingsService: SettingsService
-    let date: Date
+    @EnvironmentObject var userService: UserController
     @State private var days: [Date] = []
+    @State private var counts: [Int: Int] = [:]
+    @State private var tappedOnDay = false
+    @State private var tappedDayInt = 0
+    let date: Date
+    @Binding var billType: BillSelection
     let daysOfWeek = Date.capitalizedFirstLettersOfWeekdays
     let coloums = Array(repeating: GridItem(.flexible()), count: 7)
 
@@ -38,10 +43,28 @@ struct CalendarView: View {
                                 Circle()
                                     .foregroundStyle(
                                         Date.now.startOfDay == day.startOfDay
-                                        ? settingsService.currendDayColor.opacity(0.3)
-                                        : settingsService.calendarColor.opacity(0.3)
+                                        ? settingsService.currendDayColor.opacity(counts[day.dayInt] != nil ? 0.8 : 0.3)
+                                        : settingsService.calendarColor.opacity(counts[day.dayInt] != nil ? 0.8 : 0.3)
                                     )
                             )
+                            .overlay(alignment: .bottomTrailing) {
+                                if let count = counts[day.dayInt] {
+                                    Image(systemName: count <= 50 ? "\(count).circle.fill" : "plus.circle.fill")
+                                        .foregroundColor(.secondary)
+                                        .imageScale(.medium)
+                                        .background(
+                                            Color(.systemBackground)
+                                                .clipShape(.circle)
+                                        )
+                                        .offset(x: 5, y: 5)
+                                }
+                            }
+                            .onTapGesture {
+                                if let _ = counts[day.dayInt] {
+                                    tappedOnDay.toggle()
+                                    tappedDayInt = day.dayInt
+                                }
+                            }
                     }
                 }
             })
@@ -49,16 +72,27 @@ struct CalendarView: View {
         .padding()
         .onAppear {
             days = date.calendarDisplayDays
+            counts = userService.setupCounts(selection: billType)
         }
         .onChange(of: date) {
             days = date.calendarDisplayDays
+            counts = userService.setupCounts(selection: billType)
         }
+        .onChange(of: billType) {
+            counts = userService.setupCounts(selection: billType)
+        }
+        .sheet(isPresented: $tappedOnDay, content: {
+            BillsForDayView(bills: userService.getBillsForDay(dayInt: tappedDayInt))
+                .presentationDetents([.fraction(0.3)])
+        })
     }
 }
 
 #Preview {
     @StateObject var settingsService = SettingsService()
+    @StateObject var userService = UserController()
     
-    return CalendarView(date: Date.now)
+    return CalendarView(date: Date.now, billType: .constant(.all))
             .environmentObject(settingsService)
+            .environmentObject(userService)
 }
