@@ -14,6 +14,7 @@ struct CalendarHeaderView: View {
     @State private var years: [Int] = []
     @State private var selectedMonth = Date.now.monthInt
     @State private var selectedYear = Date.now.yearInt
+
     let months = Date.fullMonthNames
     
     var body: some View {
@@ -31,10 +32,17 @@ struct CalendarHeaderView: View {
                             Text(String(years[idx])).tag(idx + 1)
                         }
                     }
+                    
+                    Picker("", selection: $userService.billType) {
+                        ForEach(BillSelection.allCases, id: \.self) { billType in
+                            Text(billType.rawValue).tag(billType)
+                        }
+                    }
                 }
                 .buttonStyle(.bordered)
-                CalendarView(date: monthDate)
+                CalendarView(date: monthDate, billType: $userService.billType)
                     .environmentObject(settingsService)
+                    .environmentObject(userService)
                 Spacer()
             }
             .onAppear {
