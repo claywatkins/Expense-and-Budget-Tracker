@@ -12,16 +12,24 @@ struct BillsView: View {
     @EnvironmentObject var settingsService: SettingsService
     @State private var date = Date()
     @State private var expandListView = false
+    @State private var showingPaidBills = false
+    @State private var showingAddBill = false
+    @State private var counter: Int = 0
+    @State private var presentationDetent = PresentationDetent.fraction(0.3)
     
     var body: some View {
         VStack {
             CalendarHeaderView()
                 .environmentObject(userService)
                 .environmentObject(settingsService)
-            BillListSection(billList: userService.unpaidBills,
-                            expandListView: $expandListView,
-                            date: $date,
-                            sectionTitle: "Unpaid Bills")
+            
+            MiddleButtonsView(showingAddBill: $showingAddBill,
+                              showingPaidBills: $showingPaidBills)
+                .background(.clear)
+                .padding(8)
+            
+            BillListSection(billType: $userService.billType,
+                            expandListView: $expandListView)
                 .environmentObject(userService)
         }
         .background(.quaternary)
@@ -29,6 +37,17 @@ struct BillsView: View {
             ManageBillsView(billList: $userService.currentList)
                 .environmentObject(userService)
         })
+        .sheet(isPresented: $showingPaidBills) {
+            QuickPaidBillView(counter: $counter)
+                .environmentObject(userService)
+                .presentationDetents(
+                    [.fraction(0.3)],
+                    selection: $presentationDetent)
+        }
+        .fullScreenCover(isPresented: $showingAddBill) {
+            EditAddBillView(isEdit: false)
+                .environmentObject(userService)
+        }
     }
 }
 
