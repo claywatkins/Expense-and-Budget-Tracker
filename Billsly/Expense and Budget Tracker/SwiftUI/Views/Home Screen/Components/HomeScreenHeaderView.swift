@@ -25,7 +25,8 @@ struct HomeScreenHeaderView: View {
                     VStack {
                         HStack {
                             Text("Billsly")
-                                .font(.title2)
+                                .font(.title)
+                                .fontWeight(.bold)
                                 .foregroundStyle(.primary)
                             Spacer()
                         }
@@ -51,6 +52,8 @@ struct HomeScreenHeaderView: View {
                                 .overlay {
                                     VStack(alignment: .center, spacing: 9) {
                                         Text("Bills paid since you've started using Billsly:")
+                                            .font(.subheadline)
+                                            .minimumScaleFactor(0.75)
                                             .foregroundStyle(.primary)
                                             .multilineTextAlignment(.center)
                                             .padding(.horizontal, 4)
@@ -68,6 +71,8 @@ struct HomeScreenHeaderView: View {
                                 .overlay {
                                     VStack(alignment: .center, spacing: 9) {
                                         Text("Bills left to pay this month:")
+                                            .font(.subheadline)
+                                            .minimumScaleFactor(0.75)
                                             .multilineTextAlignment(.center)
                                             .foregroundStyle(.primary)
                                             .padding(.horizontal, 4)
