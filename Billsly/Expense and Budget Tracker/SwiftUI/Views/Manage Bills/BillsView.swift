@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ConfettiSwiftUI
 
 struct BillsView: View {
     @EnvironmentObject var userService: UserController
@@ -48,6 +49,7 @@ struct BillsView: View {
             EditAddBillView(isEdit: false)
                 .environmentObject(userService)
         }
+        .confettiCannon(counter: $counter, confettiSize: 20, rainHeight: 750, radius: 400)
     }
 }
 
