@@ -6,36 +6,39 @@
 //
 
 import SwiftUI
-import ConfettiSwiftUI
 
 struct HomeScreenView: View {
     @EnvironmentObject var userService: UserController
     @State private var showingPaidBills = false
     @State private var presentationDetent = PresentationDetent.fraction(0.3)
     @State private var colors: [Color] = []
+    @State private var progressFloat: CGFloat = 0.23
     @State var counter: Int = 0
     var horizontalPadding: CGFloat = 12
     
     var body: some View {
-        VStack(spacing: 20) {
-            HomeScreenHeaderView(colors: $colors, showingPaidBills: $showingPaidBills)
-                .environmentObject(userService)
-            HomeScreenListView(headerText: "Your next few bills at a glance")
-                .environmentObject(userService)
-            Spacer()
+        ScrollView {
+            VStack(spacing: 20) {
+                HomeScreenHeaderView(colors: $colors, showingPaidBills: $showingPaidBills)
+                    .environmentObject(userService)
+                HomeScreenListView(headerText: "Your next few bills at a glance")
+                    .environmentObject(userService)
+                CircularBillProgressView(colors: colors)
+                    .environmentObject(userService)
+                
+            }
+            .padding(.horizontal, horizontalPadding)
+            .task {
+                await userService.loadDefaultCategories()
+                self.colors = await userService.getColors()
+                await userService.generateTestBills()
+            }
+            .onAppear {
+                userService.loadBillData()
+                userService.loadUsername()
+            }
         }
-        .padding(.horizontal, horizontalPadding)
         .background(.quaternary)
-        .task {
-            await userService.loadDefaultCategories()
-            self.colors = await userService.getColors()
-//            await userService.generateTestBills()
-        }
-        .onAppear {
-            userService.loadBillData()
-            userService.loadUsername()
-        }
-        .confettiCannon(counter: $counter, confettiSize: 20, rainHeight: 750, radius: 400)
     }
 }
 
