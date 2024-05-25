@@ -32,6 +32,7 @@ struct HomeScreenListView: View {
             .listStyle(.inset)
             .cornerRadius(12)
             .modifier(ShadowViewModifier())
+            .frame(height: 200)
         }
     }
 }
