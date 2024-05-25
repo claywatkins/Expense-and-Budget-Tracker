@@ -14,15 +14,12 @@ struct MainView: View {
     
     var body: some View {
         TabView(selection: $selectedIndex) {
-            NavigationStack() {
-                HomeScreenView()
-                    .environmentObject(userService)
-            }
-            .tabItem {
-                Label("Home", systemImage: "house")
-            }
-            .tag(0)
-            
+            HomeScreenView()
+                .environmentObject(userService)
+                .tabItem {
+                    Label("Home", systemImage: "house")
+                }
+                .tag(0)
             NavigationStack() {
                 BillsView()
                     .environmentObject(userService)
