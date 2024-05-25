@@ -95,16 +95,13 @@ class UserController: ObservableObject {
         let alphabetizeCategories = categories.sorted { $0.name.lowercased() < $1.name.lowercased() }
         return alphabetizeCategories
     }
-    var amountSpentOnBills: String {
+    var amountSpentOnBills: Double {
         var count = 0.0
         for bill in paidBills {
             count += bill.dollarAmount
         }
-        nf.numberStyle = .currency
-        guard let numberStr = nf.string(from: NSNumber(value: count)) else {
-            return "$0.00"
-        }
-        return numberStr
+        return count
+
     }
     var mediumDf: DateFormatter {
         let df = DateFormatter()
@@ -127,6 +124,15 @@ class UserController: ObservableObject {
     }
     
     // MARK: - Methods
+    func getProgressFloat() -> CGFloat {
+        if paidBills.count == 0 || userBills.count == 0 {
+            return 0
+        }
+        let paidBillsCount = CGFloat(paidBills.count)
+        let totalBillsCount = CGFloat(userBills.count)
+        return paidBillsCount/totalBillsCount.rounded()
+    }
+    
     func setupCounts(selection: BillSelection) -> [Int: Int] {
         switch selection {
         case .all:
@@ -199,9 +205,7 @@ class UserController: ObservableObject {
         return Int.random(in: 0...7)
     }
     
-    func generateTestBills() async {
-        var bills: [Bill] = []
-        
+    func generateTestBills() async {        
         for i in 0..<200 {
             let bill = Bill(identifier: UUID().uuidString,
                             name: "Test \(i)",
@@ -210,10 +214,9 @@ class UserController: ObservableObject {
                             category: userCategories[getRandomInt()],
                             isOn30th: false,
                             hasImage: nil)
-            bills.append(bill)
-        }
-        DispatchQueue.main.async {
-            self.userBills = bills
+            DispatchQueue.main.async {
+                self.userBills.append(bill)
+            }
         }
     }
     
@@ -240,32 +243,40 @@ class UserController: ObservableObject {
     }
     
     func getColors() async -> [Color]{
-        var colors: [Color] = []
-        
-        for category in userCategories {
-            switch category.name {
-            case "Subscription":
-                colors.append(.cyan)
-            case "Utility":
-                colors.append(.green)
-            case "Rent":
-                colors.append(.orange)
-            case "Mortgage":
-                colors.append(.purple)
-            case "Loan":
-                colors.append(.mint)
-            case "Credit Card":
-                colors.append(.pink)
-            case "Insurance":
-                colors.append(.teal)
-            case "Car Loan":
-                colors.append(.yellow)
-            case "Other":
-                colors.append(.blue)
-            default:
-                colors.append(.red)
-            }
-        }
+        var colors: [Color] = [.cyan,
+                               .green,
+                               .orange,
+                               .purple,
+                               .pink,
+                               .mint,
+                               .teal,
+                               .yellow,
+                               .blue,
+                               .red]
+//        for category in userCategories {
+//            switch category.name {
+//            case "Subscription":
+//                colors.append(.cyan)
+//            case "Utility":
+//                colors.append(.green)
+//            case "Rent":
+//                colors.append(.orange)
+//            case "Mortgage":
+//                colors.append(.purple)
+//            case "Loan":
+//                colors.append(.mint)
+//            case "Credit Card":
+//                colors.append(.pink)
+//            case "Insurance":
+//                colors.append(.teal)
+//            case "Car Loan":
+//                colors.append(.yellow)
+//            case "Other":
+//                colors.append(.blue)
+//            default:
+//                colors.append(.red)
+//            }
+//        }
         return colors
     }
     
