@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import SwiftData
 
-struct Category: Codable, Equatable, Hashable {
+@Model
+struct Category: Equatable, Hashable {
     var name: String
     
     init(name: String) {

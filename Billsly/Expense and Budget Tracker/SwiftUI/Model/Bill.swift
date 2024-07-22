@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import SwiftData
 
-struct Bill: Codable, Equatable, Hashable {
+@Model
+struct Bill: Equatable, Hashable {
     var identifier: String
     var name: String
     var dollarAmount: Double
