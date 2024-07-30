@@ -11,6 +11,7 @@
 		0B0A18012BFE6E78003EA471 /* CircularBillProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0A18002BFE6E78003EA471 /* CircularBillProgressView.swift */; };
 		0B18D660260D85F2004F908D /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B18D65F260D85F2004F908D /* IAPManager.swift */; };
 		0B1FEBA225F6B2BE00F0FC87 /* AddBillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1FEBA125F6B2BE00F0FC87 /* AddBillViewController.swift */; };
+		0B31EA212C599E6400E6FAB2 /* BillService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B31EA202C599E6400E6FAB2 /* BillService.swift */; };
 		0B3C9F3C2BEC805900778495 /* BillListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3C9F3B2BEC805900778495 /* BillListSection.swift */; };
 		0B3C9F3E2BFD022900778495 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3C9F3D2BFD022900778495 /* CalendarView.swift */; };
 		0B3C9F412BFD037F00778495 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3C9F402BFD037F00778495 /* Date+Extension.swift */; };
@@ -113,6 +114,7 @@
 		0B0A18002BFE6E78003EA471 /* CircularBillProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularBillProgressView.swift; sourceTree = "<group>"; };
 		0B18D65F260D85F2004F908D /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
 		0B1FEBA125F6B2BE00F0FC87 /* AddBillViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBillViewController.swift; sourceTree = "<group>"; };
+		0B31EA202C599E6400E6FAB2 /* BillService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillService.swift; sourceTree = "<group>"; };
 		0B3C9F3B2BEC805900778495 /* BillListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillListSection.swift; sourceTree = "<group>"; };
 		0B3C9F3D2BFD022900778495 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		0B3C9F402BFD037F00778495 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -432,6 +434,7 @@
 			children = (
 				0BF254E425F0C5430078BD9F /* userController.swift */,
 				0BD846412BEAD92900139ED5 /* SettingsService.swift */,
+				0B31EA202C599E6400E6FAB2 /* BillService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -641,6 +644,7 @@
 				0B3C9F432BFD0D8D00778495 /* CalendarHeaderView.swift in Sources */,
 				0B727306270CDA8F00704549 /* WidgetDataBills.swift in Sources */,
 				0B1FEBA225F6B2BE00F0FC87 /* AddBillViewController.swift in Sources */,
+				0B31EA212C599E6400E6FAB2 /* BillService.swift in Sources */,
 				0BF2A16925F9CBFC00308C04 /* CategoryTableViewCell.swift in Sources */,
 				0BF254F025F0CCEB0078BD9F /* BillsViewController.swift in Sources */,
 			);
