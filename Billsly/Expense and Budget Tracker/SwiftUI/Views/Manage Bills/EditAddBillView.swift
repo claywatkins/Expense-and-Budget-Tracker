@@ -11,7 +11,7 @@ struct EditAddBillView: View {
     @EnvironmentObject var userService: UserController
     @Environment(\.dismiss) var dismiss
     @State var isEdit: Bool
-    @State var bill: Bill?
+    @State var bill: NewBill?
     @State private var billName: String = ""
     @State private var billCost: String = ""
     @State private var categorySelection: Category?
@@ -49,7 +49,7 @@ struct EditAddBillView: View {
                             .font(.title)
                         
                         Picker("", selection: $categorySelection) {
-                            Text(isEdit ? bill?.category.name ?? "" : "Choose a catagory").tag(nil as Category?)
+                            Text(isEdit ? bill?.category ?? "" : "Choose a catagory").tag(nil as String?)
                             ForEach(userService.userCategories.indices, id: \.self) { idx in
                                 Text(userService.userCategories[idx].name).tag(userService.userCategories[idx] as Category?)
                             }
@@ -89,7 +89,7 @@ struct EditAddBillView: View {
                         if let bill = bill {
                             billName = bill.name
                             billCost = userService.currencyNf.string(from: bill.dollarAmount as NSNumber) ?? ""
-                            categorySelection = bill.category
+                            categorySelection = Category(name: bill.category)
                             billDueDate = bill.dueByDate
                         }
                     }
@@ -113,16 +113,16 @@ struct EditAddBillView: View {
 
 
 
-#Preview {
-    @StateObject var userService = UserController()
-    
-    return EditAddBillView(isEdit: true,
-                           bill: Bill(identifier: UUID().uuidString,
-                                      name: "Bill Name",
-                                      dollarAmount: 10.50,
-                                      dueByDate: Date.now,
-                                      category: .init(name: "Test Category"),
-                                      isOn30th: false,
-                                      hasImage: nil))
-    .environmentObject(userService)
-}
+//#Preview {
+//    @StateObject var userService = UserController()
+//    
+//    return EditAddBillView(isEdit: true,
+//                           bill: Bill(identifier: UUID().uuidString,
+//                                      name: "Bill Name",
+//                                      dollarAmount: 10.50,
+//                                      dueByDate: Date.now,
+//                                      category: .init(name: "Test Category"),
+//                                      isOn30th: false,
+//                                      hasImage: nil))
+//    .environmentObject(userService)
+//}
