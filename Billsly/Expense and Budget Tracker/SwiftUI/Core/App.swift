@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct Billsly: App {
@@ -18,5 +19,6 @@ struct Billsly: App {
                 .environmentObject(userService)
                 .environmentObject(settingsService)
         }
+        .modelContainer(for: [Bill.self, Category.self])
     }
 }
