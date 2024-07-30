@@ -25,12 +25,10 @@ struct BillListSection: View {
     @Query(filter: #Predicate<NewBill> { bill in
         bill.hasBeenPaid == true
     }, sort: \NewBill.dueByDate, order: .forward) var paidBills: [NewBill]
-    
-    @State var currentList: [NewBill] = []
-    
+        
     var body: some View {
         Section {
-            List(currentList, id: \.identifier) { bill in
+            List(getCurrentList(selection: billType), id: \.identifier) { bill in
                 Button {
                     showEditBill.toggle()
                     //                    tappedBill = bill
@@ -63,25 +61,19 @@ struct BillListSection: View {
             .padding(.horizontal, 12)
         }
         .cornerRadius(12)
-        .onAppear {
-            getCurrentList(selection: billType)
-        }
-        .onChange(of: billType) {
-           getCurrentList(selection: billType)
-        }
         .fullScreenCover(isPresented:$showEditBill) {
             EditAddBillView(isEdit: true, bill: tappedBill)
         }
     }
     
-    func getCurrentList(selection: BillSelection) {
+    private func getCurrentList(selection: BillSelection) -> [NewBill] {
         switch selection {
         case .unpaid:
-            currentList = unpaidBills
+            return unpaidBills
         case .all:
-            currentList = allBills
+            return allBills
         case .paid:
-            currentList = paidBills
+            return paidBills
         }
     }
 }
