@@ -9,28 +9,7 @@ import SwiftUI
 import SwiftData
 
 class BillService: ObservableObject {
-    @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
-    
-    @Query(filter: #Predicate<NewBill> { bill in
-        bill.hasBeenPaid == false
-    }, sort: \NewBill.dueByDate, order: .forward) var unpaidBills: [NewBill]
 
-    @Query(filter: #Predicate<NewBill> { bill in
-        bill.hasBeenPaid == true
-    }, sort: \NewBill.dueByDate, order: .forward) var paidBills: [NewBill]
-    
-    @Published var currentList: [NewBill] = []
-    
-    func getCurrentList(selection: BillSelection) {
-        switch selection {
-        case .unpaid:
-            currentList = unpaidBills
-        case .all:
-            currentList = allBills
-        case .paid:
-            currentList = paidBills
-        }
-    }
     
 //    func moveBillsToNextMonth() {
 //        billsPaidThisMonth()
