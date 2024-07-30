@@ -258,30 +258,6 @@ class UserController: ObservableObject {
                                .yellow,
                                .blue,
                                .red]
-//        for category in userCategories {
-//            switch category.name {
-//            case "Subscription":
-//                colors.append(.cyan)
-//            case "Utility":
-//                colors.append(.green)
-//            case "Rent":
-//                colors.append(.orange)
-//            case "Mortgage":
-//                colors.append(.purple)
-//            case "Loan":
-//                colors.append(.mint)
-//            case "Credit Card":
-//                colors.append(.pink)
-//            case "Insurance":
-//                colors.append(.teal)
-//            case "Car Loan":
-//                colors.append(.yellow)
-//            case "Other":
-//                colors.append(.blue)
-//            default:
-//                colors.append(.red)
-//            }
-//        }
         return colors
     }
     
@@ -290,7 +266,6 @@ class UserController: ObservableObject {
         if hasBeenConverted == false {
             await loadBillData()
             await loadCategoryData()
-            
             
             
         }
