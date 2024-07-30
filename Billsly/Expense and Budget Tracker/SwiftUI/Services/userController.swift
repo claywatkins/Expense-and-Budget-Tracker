@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 enum BillSelection: String, CaseIterable {
     case unpaid = "Unpaid Bills"
@@ -25,6 +26,10 @@ class UserController: ObservableObject {
     @Published var username: String?
     @Published var currentList: [Bill] = []
     @Published var billType: BillSelection = .unpaid
+    
+    @AppStorage("showingConversion") var showingConversion: Bool = false
+    @AppStorage("hasBeenConverted") var hasBeenConverted: Bool = false
+    
     var persistentBillsFileURL: URL? {
         let fm = FileManager.default
         guard let documents = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
@@ -174,7 +179,7 @@ class UserController: ObservableObject {
         UserDefaults.standard.setValue(username, forKey: "username")
     }
     
-    func loadUsername() {
+    func loadUsername() async {
         guard let username = UserDefaults.standard.value(forKey: "username") as? String else { return }
         self.username = username
     }
@@ -205,18 +210,34 @@ class UserController: ObservableObject {
         return Int.random(in: 0...7)
     }
     
-    func generateTestBills() async {        
-        for i in 0..<200 {
-            let bill = Bill(identifier: UUID().uuidString,
-                            name: "Test \(i)",
-                            dollarAmount: 12.22,
-                            dueByDate: Date.now,
-                            category: userCategories[getRandomInt()],
-                            isOn30th: false,
-                            hasImage: nil)
-            DispatchQueue.main.async {
-                self.userBills.append(bill)
+    func generateTestBills() async {      
+        if userBills.count >= 20 {
+            return
+        } else {
+            for i in 0..<20 {
+                let bill = Bill(identifier: UUID().uuidString,
+                                name: "Test \(i)",
+                                dollarAmount: 12.22,
+                                dueByDate: Date.now,
+                                category: userCategories[getRandomInt()],
+                                isOn30th: false,
+                                hasImage: nil)
+                DispatchQueue.main.async {
+                    self.userBills.append(bill)
+                }
             }
+        }
+    }
+    
+    func checkForExistingBills() async {
+        if hasBeenConverted {
+            return
+        } else {
+            if userBills.isEmpty {
+                showingConversion = false
+            } else {
+                showingConversion = true
+            }            
         }
     }
     
@@ -253,34 +274,11 @@ class UserController: ObservableObject {
                                .yellow,
                                .blue,
                                .red]
-//        for category in userCategories {
-//            switch category.name {
-//            case "Subscription":
-//                colors.append(.cyan)
-//            case "Utility":
-//                colors.append(.green)
-//            case "Rent":
-//                colors.append(.orange)
-//            case "Mortgage":
-//                colors.append(.purple)
-//            case "Loan":
-//                colors.append(.mint)
-//            case "Credit Card":
-//                colors.append(.pink)
-//            case "Insurance":
-//                colors.append(.teal)
-//            case "Car Loan":
-//                colors.append(.yellow)
-//            case "Other":
-//                colors.append(.blue)
-//            default:
-//                colors.append(.red)
-//            }
-//        }
         return colors
     }
     
     // MARK: - CRUD
+    
     func createBill(identifier: String, name: String, dollarAmount: Double, dueByDate: Date, category: Category, isOn30th: Bool) {
         let newBill = Bill(identifier: identifier,
                            name: name,
@@ -348,7 +346,7 @@ class UserController: ObservableObject {
             print(error.localizedDescription)
         }
     }
-    func loadBillData() {
+    func loadBillData() async {
         let fm = FileManager.default
         guard let url = persistentBillsFileURL, fm.fileExists(atPath: url.path) else { return }
         do{
@@ -370,7 +368,7 @@ class UserController: ObservableObject {
         }
     }
     
-    func loadCategoryData() {
+    func loadCategoryData() async {
         let fm = FileManager.default
         guard let url = persistentCategoriesFileURL, fm.fileExists(atPath: url.path) else { return }
         do {

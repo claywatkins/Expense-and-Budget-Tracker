@@ -20,7 +20,7 @@ class BillsViewController: UIViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        userController.loadBillData()
+//        userController.loadBillData()
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -22,6 +22,7 @@
 		0B53E94C25FE81C9001DD4FB /* BillPaidPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B53E94B25FE81C9001DD4FB /* BillPaidPopoverViewController.swift */; };
 		0B57467F25F690F500EC81DA /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 0B57467E25F690F500EC81DA /* FSCalendar */; };
 		0B575B4F270CEAA3006B5BE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B8B698125DB646200B9F55E /* Assets.xcassets */; };
+		0B6761DD2C5963B600B89A7A /* NewBill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6761DC2C5963B600B89A7A /* NewBill.swift */; };
 		0B6884142BD2F5C400574E4B /* HomeScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6884132BD2F5C400574E4B /* HomeScreenView.swift */; };
 		0B6884162BD2FA2C00574E4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B6884152BD2FA2C00574E4B /* Main.storyboard */; };
 		0B6884192BE2ACA300574E4B /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6884182BE2ACA300574E4B /* App.swift */; };
@@ -121,6 +122,7 @@
 		0B3C9F482BFD33EA00778495 /* EditAddBillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAddBillView.swift; sourceTree = "<group>"; };
 		0B4E71E625F95BE000461B15 /* CategoryPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPopoverViewController.swift; sourceTree = "<group>"; };
 		0B53E94B25FE81C9001DD4FB /* BillPaidPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillPaidPopoverViewController.swift; sourceTree = "<group>"; };
+		0B6761DC2C5963B600B89A7A /* NewBill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewBill.swift; sourceTree = "<group>"; };
 		0B6884132BD2F5C400574E4B /* HomeScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenView.swift; sourceTree = "<group>"; };
 		0B6884152BD2FA2C00574E4B /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0B6884182BE2ACA300574E4B /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -216,6 +218,24 @@
 				0B3C9F462BFD323600778495 /* Color+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0B6761DA2C59639100B89A7A /* Old Models */ = {
+			isa = PBXGroup;
+			children = (
+				0B727305270CDA8F00704549 /* WidgetDataBills.swift */,
+				0BF2A16425F9873800308C04 /* Category.swift */,
+				0BF254E825F0C5A90078BD9F /* Bill.swift */,
+			);
+			path = "Old Models";
+			sourceTree = "<group>";
+		};
+		0B6761DB2C5963A100B89A7A /* New Models */ = {
+			isa = PBXGroup;
+			children = (
+				0B6761DC2C5963B600B89A7A /* NewBill.swift */,
+			);
+			path = "New Models";
 			sourceTree = "<group>";
 		};
 		0B6884102BD2F5A100574E4B /* SwiftUI */ = {
@@ -419,9 +439,8 @@
 		0BF254DC25F0C46D0078BD9F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0BF254E825F0C5A90078BD9F /* Bill.swift */,
-				0BF2A16425F9873800308C04 /* Category.swift */,
-				0B727305270CDA8F00704549 /* WidgetDataBills.swift */,
+				0B6761DB2C5963A100B89A7A /* New Models */,
+				0B6761DA2C59639100B89A7A /* Old Models */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -613,6 +632,7 @@
 				0B968E3725FE91A700B7AE84 /* DateExtension.swift in Sources */,
 				0B3C9F3C2BEC805900778495 /* BillListSection.swift in Sources */,
 				0B3C9F492BFD33EA00778495 /* EditAddBillView.swift in Sources */,
+				0B6761DD2C5963B600B89A7A /* NewBill.swift in Sources */,
 				0BD846382BEAC15900139ED5 /* SettingsView.swift in Sources */,
 				0BD8463F2BEAD5EF00139ED5 /* SettingsSupportCell.swift in Sources */,
 				0B6EA1A9260D0F6C0020060C /* UIDeviceExtension.swift in Sources */,
@@ -658,7 +678,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XR5S8WV6LB;
 				INFOPLIST_FILE = BillslyWidgets/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -682,7 +702,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XR5S8WV6LB;
 				INFOPLIST_FILE = BillslyWidgets/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
