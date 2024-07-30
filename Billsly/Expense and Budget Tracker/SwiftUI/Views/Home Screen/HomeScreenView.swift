@@ -19,13 +19,18 @@ struct HomeScreenView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                HomeScreenHeaderView(colors: $colors, showingPaidBills: $showingPaidBills)
-                    .environmentObject(userService)
-                HomeScreenListView(headerText: "Your next few bills at a glance")
-                    .environmentObject(userService)
-                CircularBillProgressView(colors: colors)
-                    .environmentObject(userService)
-                
+                if userService.hasBeenConverted == false {
+                    ProgressView {
+                        Text("Converting saved data")
+                    }
+                } else {
+                    HomeScreenHeaderView(colors: $colors, showingPaidBills: $showingPaidBills)
+                        .environmentObject(userService)
+                    HomeScreenListView(headerText: "Your next few bills at a glance")
+                        .environmentObject(userService)
+                    CircularBillProgressView(colors: colors)
+                        .environmentObject(userService)
+                }
             }
             .padding(.horizontal, horizontalPadding)
             .task {
@@ -34,8 +39,12 @@ struct HomeScreenView: View {
                 await userService.generateTestBills()
             }
             .onAppear {
-                userService.loadBillData()
                 userService.loadUsername()
+            }
+            .task {
+                if userService.hasBeenConverted == false {
+                    await userService.convertToSwiftData()
+                }
             }
         }
         .background(.quaternary)
