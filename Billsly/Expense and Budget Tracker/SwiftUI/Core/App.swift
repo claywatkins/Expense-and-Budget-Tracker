@@ -19,6 +19,6 @@ struct Billsly: App {
                 .environmentObject(userService)
                 .environmentObject(settingsService)
         }
-//        .modelContainer(for: [Bill.self, Category.self])
+        .modelContainer(for: NewBill.self)
     }
 }
