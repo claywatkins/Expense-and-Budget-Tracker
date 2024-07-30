@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 enum BillSelection: String, CaseIterable {
     case unpaid = "Unpaid Bills"
@@ -25,6 +26,10 @@ class UserController: ObservableObject {
     @Published var username: String?
     @Published var currentList: [Bill] = []
     @Published var billType: BillSelection = .unpaid
+    
+    @AppStorage("hasBeenConverted") var hasBeenConverted: Bool = false
+    @Environment(\.modelContext) var modelContext
+    
     var persistentBillsFileURL: URL? {
         let fm = FileManager.default
         guard let documents = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
@@ -281,6 +286,17 @@ class UserController: ObservableObject {
     }
     
     // MARK: - CRUD
+    func convertToSwiftData() async {
+        if hasBeenConverted == false {
+            await loadBillData()
+            await loadCategoryData()
+            
+            
+            
+        }
+    }
+    
+    
     func createBill(identifier: String, name: String, dollarAmount: Double, dueByDate: Date, category: Category, isOn30th: Bool) {
         let newBill = Bill(identifier: identifier,
                            name: name,
@@ -348,7 +364,7 @@ class UserController: ObservableObject {
             print(error.localizedDescription)
         }
     }
-    func loadBillData() {
+    func loadBillData() async {
         let fm = FileManager.default
         guard let url = persistentBillsFileURL, fm.fileExists(atPath: url.path) else { return }
         do{
@@ -370,7 +386,7 @@ class UserController: ObservableObject {
         }
     }
     
-    func loadCategoryData() {
+    func loadCategoryData() async {
         let fm = FileManager.default
         guard let url = persistentCategoriesFileURL, fm.fileExists(atPath: url.path) else { return }
         do {
