@@ -12,8 +12,6 @@ struct MainView: View {
     @EnvironmentObject var settingsService: SettingsService
     @State private var selectedIndex = 0
     
-    @Environment (\.modelContext) var context
-    
     var body: some View {
         TabView(selection: $selectedIndex) {
             HomeScreenView()
