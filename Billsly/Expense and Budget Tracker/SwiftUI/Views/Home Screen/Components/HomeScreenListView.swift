@@ -10,9 +10,10 @@ import SwiftData
 
 struct HomeScreenListView: View {
     @EnvironmentObject var userService: UserController
+    @EnvironmentObject var billService: BillService
     var headerText: String
     
-    @Query(sort: \NewBill.dueByDate, order: .forward) var bills: [NewBill]
+    @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
     
     var body: some View {
         VStack {
@@ -22,7 +23,7 @@ struct HomeScreenListView: View {
                     .foregroundStyle(.foreground)
                 Spacer()
             }
-            List(bills.prefix(3), id: \.identifier) { bill in
+            List(allBills.prefix(3), id: \.identifier) { bill in
                 HStack {
                     VStack(alignment: .leading) {
                         Text(bill.name)
