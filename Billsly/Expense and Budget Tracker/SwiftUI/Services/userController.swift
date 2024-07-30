@@ -265,9 +265,22 @@ class UserController: ObservableObject {
     func convertToSwiftData() async {
         if hasBeenConverted == false {
             await loadBillData()
-            await loadCategoryData()
             
+            for bill in userBills {
+                let newBill = NewBill(identifier: bill.identifier,
+                                      name: bill.name,
+                                      dollarAmount: bill.dollarAmount,
+                                      dueByDate: bill.dueByDate,
+                                      hasBeenPaid: bill.hasBeenPaid,
+                                      category: bill.category.name,
+                                      isOn30th: bill.isOn30th,
+                                      isAutopay: false,
+                                      frequency: "monthly")
+                
+                modelContext.insert(newBill)
+            }
             
+            hasBeenConverted = true
         }
     }
     
