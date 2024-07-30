@@ -12,7 +12,7 @@ struct BillListSection: View {
     @EnvironmentObject var userService: UserController
     @State private var billList: [Bill] = []
     @State private var showEditBill = false
-    @State private var tappedBill: Bill?
+    @State private var tappedBill: NewBill?
     @Binding var billType: BillSelection
     @Binding var expandListView: Bool
     
@@ -21,17 +21,17 @@ struct BillListSection: View {
     @Query(filter: #Predicate<NewBill> { bill in
         bill.hasBeenPaid == false
     }, sort: \NewBill.dueByDate, order: .forward) var unpaidBills: [NewBill]
-
+    
     @Query(filter: #Predicate<NewBill> { bill in
         bill.hasBeenPaid == true
     }, sort: \NewBill.dueByDate, order: .forward) var paidBills: [NewBill]
-        
+    
     var body: some View {
         Section {
             List(getCurrentList(selection: billType), id: \.identifier) { bill in
                 Button {
                     showEditBill.toggle()
-                    //                    tappedBill = bill
+                    tappedBill = bill
                 } label: {
                     HStack {
                         VStack(alignment: .leading) {
@@ -46,7 +46,7 @@ struct BillListSection: View {
                     }
                 }
             }
-            .listStyle(.plain)            
+            .listStyle(.plain)
         } header: {
             HStack {
                 Text(billType.rawValue)
