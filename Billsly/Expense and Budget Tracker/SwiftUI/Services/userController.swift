@@ -138,19 +138,7 @@ class UserController: ObservableObject {
         return paidBillsCount/totalBillsCount.rounded()
     }
     
-    func setupCounts(selection: BillSelection) -> [Int: Int] {
-        switch selection {
-        case .all:
-            let mappedItems = userBills.map{($0.dueByDate.dayInt, 1)}
-            return Dictionary(mappedItems, uniquingKeysWith: +)
-        case .paid:
-            let mappedItems = paidBills.map{($0.dueByDate.dayInt, 1)}
-            return Dictionary(mappedItems, uniquingKeysWith: +)
-        case .unpaid:
-            let mappedItems = unpaidBills.map{($0.dueByDate.dayInt, 1)}
-            return Dictionary(mappedItems, uniquingKeysWith: +)
-        }
-    }
+
     
     func getCorrectList(selection: BillSelection) -> [Bill] {
         switch selection {
