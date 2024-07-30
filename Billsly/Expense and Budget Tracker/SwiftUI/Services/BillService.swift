@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-class BillService {
+class BillService: ObservableObject {
     @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
     
     @Query(filter: #Predicate<NewBill> { bill in
