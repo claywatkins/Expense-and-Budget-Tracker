@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HomeScreenView: View {
     @EnvironmentObject var userService: UserController
+    @EnvironmentObject var billService: BillService
     @State private var showingPaidBills = false
     @State private var presentationDetent = PresentationDetent.fraction(0.3)
     @State private var colors: [Color] = []
@@ -17,6 +19,11 @@ struct HomeScreenView: View {
     var horizontalPadding: CGFloat = 12
     
     @Environment(\.modelContext) var context
+    @Query(filter: #Predicate<NewBill> { bill in
+        bill.hasBeenPaid == true
+    }, sort: \NewBill.dueByDate, order: .forward) var paidBills: [NewBill]
+    @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
+
     
     var body: some View {
         ScrollView {
@@ -56,6 +63,9 @@ struct HomeScreenView: View {
                     userService.hasBeenConverted = true
                     userService.showingConversion = false
                 }
+                await billService.checkIfBillsShouldBeUpdated(paidBills: paidBills,
+                                                              allBills: allBills,
+                                                              context: context)
 
             }
             .fullScreenCover(isPresented: $userService.showingConversion) {
