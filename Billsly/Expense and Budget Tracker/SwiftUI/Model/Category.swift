@@ -6,9 +6,7 @@
 //
 
 import UIKit
-import SwiftData
-
-@Model
+ 
 class Category: Codable, Equatable, Hashable {
     var name: String
     

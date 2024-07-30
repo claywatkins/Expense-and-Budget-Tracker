@@ -6,16 +6,14 @@
 //
 
 import Foundation
-import SwiftData
 
-@Model
 class Bill: Codable, Equatable, Hashable {
     var identifier: String
     var name: String
     var dollarAmount: Double
     var dueByDate: Date
     var hasBeenPaid: Bool
-    var category: String
+    var category: Category
     var isOn30th: Bool
     var hasImage: Bool?
     
@@ -23,7 +21,7 @@ class Bill: Codable, Equatable, Hashable {
          name: String,
          dollarAmount: Double,
          dueByDate: Date,
-         category: String,
+         category: Category,
          isOn30th: Bool,
          hasImage: Bool?) {
         self.identifier = identifier
@@ -62,7 +60,7 @@ class Bill: Codable, Equatable, Hashable {
         self.dollarAmount = try container.decode(Double.self, forKey: .dollarAmount)
         self.dueByDate = try container.decode(Date.self, forKey: .dueByDate)
         self.hasBeenPaid = try container.decode(Bool.self, forKey: .hasBeenPaid)
-        self.category = try container.decode(String.self, forKey: .category)
+        self.category = try container.decode(Category.self, forKey: .category)
         self.isOn30th = try container.decode(Bool.self, forKey: .isOn30th)
         self.hasImage = try container.decodeIfPresent(Bool.self, forKey: .hasImage)
     }
