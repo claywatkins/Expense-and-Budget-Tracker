@@ -27,8 +27,8 @@ class UserController: ObservableObject {
     @Published var currentList: [Bill] = []
     @Published var billType: BillSelection = .unpaid
     
+    @AppStorage("showingConversion") var showingConversion: Bool = false
     @AppStorage("hasBeenConverted") var hasBeenConverted: Bool = false
-    @Environment(\.modelContext) var modelContext
     
     var persistentBillsFileURL: URL? {
         let fm = FileManager.default
@@ -179,7 +179,7 @@ class UserController: ObservableObject {
         UserDefaults.standard.setValue(username, forKey: "username")
     }
     
-    func loadUsername() {
+    func loadUsername() async {
         guard let username = UserDefaults.standard.value(forKey: "username") as? String else { return }
         self.username = username
     }
@@ -210,18 +210,34 @@ class UserController: ObservableObject {
         return Int.random(in: 0...7)
     }
     
-    func generateTestBills() async {        
-        for i in 0..<200 {
-            let bill = Bill(identifier: UUID().uuidString,
-                            name: "Test \(i)",
-                            dollarAmount: 12.22,
-                            dueByDate: Date.now,
-                            category: userCategories[getRandomInt()],
-                            isOn30th: false,
-                            hasImage: nil)
-            DispatchQueue.main.async {
-                self.userBills.append(bill)
+    func generateTestBills() async {      
+        if userBills.count >= 20 {
+            return
+        } else {
+            for i in 0..<20 {
+                let bill = Bill(identifier: UUID().uuidString,
+                                name: "Test \(i)",
+                                dollarAmount: 12.22,
+                                dueByDate: Date.now,
+                                category: userCategories[getRandomInt()],
+                                isOn30th: false,
+                                hasImage: nil)
+                DispatchQueue.main.async {
+                    self.userBills.append(bill)
+                }
             }
+        }
+    }
+    
+    func checkForExistingBills() async {
+        if hasBeenConverted {
+            return
+        } else {
+            if userBills.isEmpty {
+                showingConversion = false
+            } else {
+                showingConversion = true
+            }            
         }
     }
     
@@ -262,28 +278,6 @@ class UserController: ObservableObject {
     }
     
     // MARK: - CRUD
-    func convertToSwiftData() async {
-        if hasBeenConverted == false {
-            await loadBillData()
-            
-            for bill in userBills {
-                let newBill = NewBill(identifier: bill.identifier,
-                                      name: bill.name,
-                                      dollarAmount: bill.dollarAmount,
-                                      dueByDate: bill.dueByDate,
-                                      hasBeenPaid: bill.hasBeenPaid,
-                                      category: bill.category.name,
-                                      isOn30th: bill.isOn30th,
-                                      isAutopay: false,
-                                      frequency: "monthly")
-                
-                modelContext.insert(newBill)
-            }
-            
-            hasBeenConverted = true
-        }
-    }
-    
     
     func createBill(identifier: String, name: String, dollarAmount: Double, dueByDate: Date, category: Category, isOn30th: Bool) {
         let newBill = Bill(identifier: identifier,
