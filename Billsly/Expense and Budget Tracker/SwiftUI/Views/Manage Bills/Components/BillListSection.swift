@@ -16,11 +16,21 @@ struct BillListSection: View {
     @Binding var billType: BillSelection
     @Binding var expandListView: Bool
     
-    @Query(sort: \NewBill.dueByDate, order: .forward) var bills: [NewBill]
+    @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
+    
+    @Query(filter: #Predicate<NewBill> { bill in
+        bill.hasBeenPaid == false
+    }, sort: \NewBill.dueByDate, order: .forward) var unpaidBills: [NewBill]
+
+    @Query(filter: #Predicate<NewBill> { bill in
+        bill.hasBeenPaid == true
+    }, sort: \NewBill.dueByDate, order: .forward) var paidBills: [NewBill]
+    
+    @State var currentList: [NewBill] = []
     
     var body: some View {
         Section {
-            List(bills, id: \.identifier) { bill in
+            List(currentList, id: \.identifier) { bill in
                 Button {
                     showEditBill.toggle()
                     //                    tappedBill = bill
@@ -54,13 +64,24 @@ struct BillListSection: View {
         }
         .cornerRadius(12)
         .onAppear {
-            billList = userService.getCorrectList(selection: billType)
+            getCurrentList(selection: billType)
         }
         .onChange(of: billType) {
-            billList = userService.getCorrectList(selection: billType)
+           getCurrentList(selection: billType)
         }
         .fullScreenCover(isPresented:$showEditBill) {
             EditAddBillView(isEdit: true, bill: tappedBill)
+        }
+    }
+    
+    func getCurrentList(selection: BillSelection) {
+        switch selection {
+        case .unpaid:
+            currentList = unpaidBills
+        case .all:
+            currentList = allBills
+        case .paid:
+            currentList = paidBills
         }
     }
 }
