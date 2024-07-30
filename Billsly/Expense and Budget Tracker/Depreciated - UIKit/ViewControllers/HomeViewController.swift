@@ -44,8 +44,8 @@ class HomeViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        userController.loadBillData()
-        userController.loadCategoryData()
+//        userController.loadBillData()
+//        userController.loadCategoryData()
         displayDate()
         constructProgressCircle()
         checkDefaults()
