@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct BillListSection: View {
     @EnvironmentObject var userService: UserController
@@ -15,12 +16,14 @@ struct BillListSection: View {
     @Binding var billType: BillSelection
     @Binding var expandListView: Bool
     
+    @Query(sort: \NewBill.dueByDate, order: .forward) var bills: [NewBill]
+    
     var body: some View {
         Section {
-            List(billList, id: \.identifier) { bill in
+            List(bills, id: \.identifier) { bill in
                 Button {
                     showEditBill.toggle()
-                    tappedBill = bill
+                    //                    tappedBill = bill
                 } label: {
                     HStack {
                         VStack(alignment: .leading) {
@@ -35,7 +38,7 @@ struct BillListSection: View {
                     }
                 }
             }
-            .listStyle(.plain)
+            .listStyle(.plain)            
         } header: {
             HStack {
                 Text(billType.rawValue)
