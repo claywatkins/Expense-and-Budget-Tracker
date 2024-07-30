@@ -8,8 +8,12 @@
 import SwiftUI
 import SwiftData
 
-class BillService: ObservableObject {
 
+class BillService: ObservableObject {
+    func markBillAsPaid(bill: NewBill, context: ModelContext) {
+        bill.hasBeenPaid = true
+        try? context.save()
+    }
     
 //    func moveBillsToNextMonth() {
 //        billsPaidThisMonth()
