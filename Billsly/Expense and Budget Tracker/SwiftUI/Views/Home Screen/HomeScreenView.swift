@@ -37,7 +37,6 @@ struct HomeScreenView: View {
             }
             .padding(.horizontal, horizontalPadding)
             .task {
-                await userService.loadDefaultCategories()
 //                await userService.generateTestBills()
                 await userService.loadBillData()
                 await userService.checkForExistingBills()
