@@ -22,8 +22,8 @@ struct HomeScreenView: View {
     @Query(filter: #Predicate<NewBill> { bill in
         bill.hasBeenPaid == true
     }, sort: \NewBill.dueByDate, order: .forward) var paidBills: [NewBill]
-    @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
     
+    @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
     
     var body: some View {
         ScrollView {
