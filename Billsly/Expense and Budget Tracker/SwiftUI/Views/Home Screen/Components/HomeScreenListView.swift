@@ -13,30 +13,41 @@ struct HomeScreenListView: View {
     @EnvironmentObject var billService: BillService
     var headerText: String
     
-    @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
+    @Query(filter: #Predicate<NewBill> { bill in
+        bill.hasBeenPaid == false
+    }, sort: \NewBill.dueByDate, order: .forward) var unpaidBills: [NewBill]
     
     var body: some View {
         VStack {
-            HStack {
-                Text(headerText)
-                    .font(.subheadline)
-                    .foregroundStyle(.foreground)
-                Spacer()
-            }
-            List(allBills.prefix(3), id: \.identifier) { bill in
+            if unpaidBills.isEmpty {
+                ContentUnavailableView(billService.unpaidBillsEmptyString, systemImage: "dollarsign.circle")
+                    .frame(height: 200)
+                    .cornerRadius(12)
+                    .modifier(ShadowViewModifier())
+
+            } else {
                 HStack {
-                    VStack(alignment: .leading) {
-                        Text(bill.name)
-                        Text("Due: " + userService.mediumDf.string(from: bill.dueByDate))
-                    }
+                    Text(headerText)
+                        .font(.subheadline)
+                        .foregroundStyle(.foreground)
                     Spacer()
-                    Text("\(bill.dollarAmount as NSNumber, formatter: userService.currencyNf)")
                 }
+                
+                List(unpaidBills.prefix(3), id: \.identifier) { bill in
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text(bill.name)
+                            Text("Due: " + userService.mediumDf.string(from: bill.dueByDate))
+                        }
+                        Spacer()
+                        Text("\(bill.dollarAmount as NSNumber, formatter: userService.currencyNf)")
+                    }
+                }
+                .listStyle(.inset)
+                .cornerRadius(12)
+                .modifier(ShadowViewModifier())
+                .frame(height: 200)
             }
-            .listStyle(.inset)
-            .cornerRadius(12)
-            .modifier(ShadowViewModifier())
-            .frame(height: 200)
         }
     }
 }
