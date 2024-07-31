@@ -11,6 +11,7 @@ import ConfettiSwiftUI
 struct BillsView: View {
     @EnvironmentObject var userService: UserController
     @EnvironmentObject var settingsService: SettingsService
+    @EnvironmentObject var billService: BillService
     @State private var date = Date()
     @State private var expandListView = false
     @State private var showingPaidBills = false
@@ -30,7 +31,7 @@ struct BillsView: View {
                 .background(.clear)
                 .padding(8)
             
-            BillListSection(billType: $userService.billType,
+            BillListSection(billListType: $billService.billListType,
                             expandListView: $expandListView,
                             billList: $billList)
                 .environmentObject(userService)

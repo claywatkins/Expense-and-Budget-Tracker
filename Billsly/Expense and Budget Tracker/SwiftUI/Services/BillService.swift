@@ -8,10 +8,18 @@
 import SwiftUI
 import SwiftData
 
+enum BillSelection: String, CaseIterable {
+    case unpaid = "Unpaid Bills"
+    case all = "All Bills"
+    case paid = "Paid Bills"
+}
+
 @MainActor
 class BillService: ObservableObject {
     
-    @AppStorage("currentMonthInt") var currentMonthInt: Int = Date().monthInt
+    @AppStorage("currentMonthInt") var currentMonthInt: Int = Date().monthInt    
+    @AppStorage("billListType") var billListType: BillSelection = .unpaid
+
     
     var unpaidBillsEmptyString = "There are no bills left to pay this month"
     var paidBillsEmptyString = "You do not have any bills paid yet this month"

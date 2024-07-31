@@ -8,11 +8,7 @@
 import SwiftUI
 import SwiftData
 
-enum BillSelection: String, CaseIterable {
-    case unpaid = "Unpaid Bills"
-    case all = "All Bills"
-    case paid = "Paid Bills"
-}
+
 
 class UserController: ObservableObject {
     // MARK: - Properties
@@ -25,7 +21,6 @@ class UserController: ObservableObject {
     var isLoggedIn: Bool?
     @Published var username: String?
     @Published var currentList: [Bill] = []
-    @Published var billType: BillSelection = .unpaid
     
     @AppStorage("showingConversion") var showingConversion: Bool = false
     @AppStorage("hasBeenConverted") var hasBeenConverted: Bool = false

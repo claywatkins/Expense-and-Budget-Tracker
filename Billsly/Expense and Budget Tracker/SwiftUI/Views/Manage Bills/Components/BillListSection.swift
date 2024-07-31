@@ -13,7 +13,7 @@ struct BillListSection: View {
     @EnvironmentObject var billService: BillService
     @State private var showEditBill = false
     @State private var tappedBill: NewBill?
-    @Binding var billType: BillSelection
+    @Binding var billListType: BillSelection
     @Binding var expandListView: Bool
     @Binding var billList: [NewBill]
     
@@ -29,8 +29,8 @@ struct BillListSection: View {
     
     var body: some View {
         Section {
-            if getCurrentList(selection: billType).isEmpty {
-                switch billType {
+            if getCurrentList(selection: billListType).isEmpty {
+                switch billListType {
                 case .unpaid:
                     ContentUnavailableView(billService.unpaidBillsEmptyString, systemImage: "dollarsign.circle")
                 case .all:
@@ -39,7 +39,7 @@ struct BillListSection: View {
                     ContentUnavailableView(billService.paidBillsEmptyString, systemImage: "dollarsign.circle")
                 }
             } else {
-                List(getCurrentList(selection: billType), id: \.identifier) { bill in
+                List(getCurrentList(selection: billListType), id: \.identifier) { bill in
                     Button {
                         showEditBill.toggle()
                         tappedBill = bill
@@ -62,10 +62,10 @@ struct BillListSection: View {
             
         } header: {
             HStack {
-                Text(billType.rawValue)
+                Text(billListType.rawValue)
                 Spacer()
                 Button {
-                    billList = getCurrentList(selection: billType)
+                    billList = getCurrentList(selection: billListType)
                     expandListView.toggle()
                 } label: {
                     Image(systemName: "rectangle.expand.vertical")
