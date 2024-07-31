@@ -45,9 +45,6 @@ struct CircularBillProgressView: View {
             .padding(.bottom, 8)
             .animation(.linear(duration: 2), value: progress)
             .modifier(ShadowViewModifier())
-            .onAppear {
-                progress = billService.getProgressFloat(paidBills: paidBills, allBills: allBills)
-            }
             
             HStack(spacing: 5) {
                 Text("You have paid")
