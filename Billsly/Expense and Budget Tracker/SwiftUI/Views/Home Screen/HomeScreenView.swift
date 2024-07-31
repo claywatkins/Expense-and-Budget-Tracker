@@ -23,7 +23,7 @@ struct HomeScreenView: View {
         bill.hasBeenPaid == true
     }, sort: \NewBill.dueByDate, order: .forward) var paidBills: [NewBill]
     @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
-
+    
     
     var body: some View {
         ScrollView {
@@ -37,27 +37,25 @@ struct HomeScreenView: View {
             }
             .padding(.horizontal, horizontalPadding)
             .task {
-//                await userService.generateTestBills()
+                await userService.loadUsername()
                 await userService.loadBillData()
                 await userService.checkForExistingBills()
                 self.colors = await userService.getColors()
-                await userService.loadUsername()
                 
                 if userService.hasBeenConverted == false {
-                    
                     for bill in userService.userBills {
-                            let newBill = NewBill(identifier: bill.identifier,
-                                                  name: bill.name,
-                                                  dollarAmount: bill.dollarAmount,
-                                                  dueByDate: bill.dueByDate,
-                                                  hasBeenPaid: bill.hasBeenPaid,
-                                                  category: bill.category.name,
-                                                  isOn30th: bill.isOn30th,
-                                                  isAutopay: false,
-                                                  frequency: "monthly")
-
-                            context.insert(newBill)
-                        }
+                        let newBill = NewBill(identifier: bill.identifier,
+                                              name: bill.name,
+                                              dollarAmount: bill.dollarAmount,
+                                              dueByDate: bill.dueByDate,
+                                              hasBeenPaid: bill.hasBeenPaid,
+                                              category: bill.category.name,
+                                              isOn30th: bill.isOn30th,
+                                              isAutopay: false,
+                                              frequency: "monthly")
+                        
+                        context.insert(newBill)
+                    }
                     
                     userService.hasBeenConverted = true
                     userService.showingConversion = false
@@ -65,7 +63,7 @@ struct HomeScreenView: View {
                 await billService.checkIfBillsShouldBeUpdated(paidBills: paidBills,
                                                               allBills: allBills,
                                                               context: context)
-
+                
             }
             .fullScreenCover(isPresented: $userService.showingConversion) {
                 ProgressView {
