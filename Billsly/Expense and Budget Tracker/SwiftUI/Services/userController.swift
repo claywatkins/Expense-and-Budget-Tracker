@@ -124,17 +124,6 @@ class UserController: ObservableObject {
     }
     
     // MARK: - Methods
-    func getProgressFloat() -> CGFloat {
-        if paidBills.count == 0 || userBills.count == 0 {
-            return 0
-        }
-        let paidBillsCount = CGFloat(paidBills.count)
-        let totalBillsCount = CGFloat(userBills.count)
-        return paidBillsCount/totalBillsCount.rounded()
-    }
-    
-
-    
     func getCorrectList(selection: BillSelection) -> [Bill] {
         switch selection {
         case .all:
@@ -164,7 +153,9 @@ class UserController: ObservableObject {
     
     func loadUsername() async {
         guard let username = UserDefaults.standard.value(forKey: "username") as? String else { return }
-        self.username = username
+        DispatchQueue.main.async {
+            self.username = username            
+        }
     }
     
     func getRandomInt() -> Int {

@@ -38,6 +38,15 @@ class BillService: ObservableObject {
     ]
     
     
+    func getProgressFloat(paidBills: [NewBill], allBills: [NewBill]) -> CGFloat {
+        if paidBills.count == 0 || allBills.count == 0 {
+            return 0
+        }
+        let paidBillsCount = CGFloat(paidBills.count)
+        let totalBillsCount = CGFloat(allBills.count)
+        return paidBillsCount/totalBillsCount.rounded()
+    }
+    
     func markBillAsPaid(bill: NewBill, context: ModelContext) {
         bill.hasBeenPaid = true
         try? context.save()

@@ -7,12 +7,20 @@
 
 import SwiftUI
 import FluidGradient
+import SwiftData
 
 struct CircularBillProgressView: View {
-    @EnvironmentObject var userService: UserController
+    @EnvironmentObject var billService: BillService
     @State private var toggleAnimation = false
     @State var progress: CGFloat = 0
     var colors: [Color]
+    
+    @Query(filter: #Predicate<NewBill> { bill in
+        bill.hasBeenPaid == true
+    }, sort: \NewBill.dueByDate, order: .forward) var paidBills: [NewBill]
+    
+    @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
+
     
     var body: some View {
         VStack(spacing: 30) {
@@ -38,7 +46,7 @@ struct CircularBillProgressView: View {
             .animation(.linear(duration: 2), value: progress)
             .modifier(ShadowViewModifier())
             .onAppear {
-                progress = userService.getProgressFloat()
+                progress = billService.getProgressFloat(paidBills: paidBills, allBills: allBills)
             }
             
             HStack(spacing: 5) {
@@ -49,7 +57,7 @@ struct CircularBillProgressView: View {
             .modifier(ShadowViewModifier())
             .onAppear {
                 withAnimation(.default) {
-                    progress = userService.getProgressFloat()
+                    progress = billService.getProgressFloat(paidBills: paidBills, allBills: allBills)
                 }
             }
         }
