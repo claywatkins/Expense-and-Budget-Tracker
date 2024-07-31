@@ -17,6 +17,7 @@ struct BillsView: View {
     @State private var showingAddBill = false
     @State private var counter: Int = 0
     @State private var presentationDetent = PresentationDetent.fraction(0.3)
+    @State private var billList: [NewBill] = []
     
     var body: some View {
         VStack {
@@ -30,13 +31,13 @@ struct BillsView: View {
                 .padding(8)
             
             BillListSection(billType: $userService.billType,
-                            expandListView: $expandListView)
+                            expandListView: $expandListView,
+                            billList: $billList)
                 .environmentObject(userService)
         }
         .background(.quaternary)
         .sheet(isPresented: $expandListView, content: {
-            ManageBillsView(billList: $userService.currentList)
-                .environmentObject(userService)
+            ManageBillsView(billList: $billList)
         })
         .sheet(isPresented: $showingPaidBills) {
             QuickPaidBillView(counter: $counter)

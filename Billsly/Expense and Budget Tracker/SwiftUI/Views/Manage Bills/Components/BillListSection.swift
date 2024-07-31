@@ -11,11 +11,11 @@ import SwiftData
 struct BillListSection: View {
     @EnvironmentObject var userService: UserController
     @EnvironmentObject var billService: BillService
-    @State private var billList: [Bill] = []
     @State private var showEditBill = false
     @State private var tappedBill: NewBill?
     @Binding var billType: BillSelection
     @Binding var expandListView: Bool
+    @Binding var billList: [NewBill]
     
     @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
     
@@ -65,7 +65,7 @@ struct BillListSection: View {
                 Text(billType.rawValue)
                 Spacer()
                 Button {
-                    userService.currentList = billList
+                    billList = getCurrentList(selection: billType)
                     expandListView.toggle()
                 } label: {
                     Image(systemName: "rectangle.expand.vertical")
