@@ -19,7 +19,7 @@ class BillService: ObservableObject {
     
     @AppStorage("currentMonthInt") var currentMonthInt: Int = Date().monthInt    
     @AppStorage("billListType") var billListType: BillSelection = .unpaid
-
+    @AppStorage("totalBillsPaid") var totalBillsPaid: Int = 0
     
     var unpaidBillsEmptyString = "There are no bills left to pay this month"
     var paidBillsEmptyString = "You do not have any bills paid yet this month"
@@ -49,6 +49,7 @@ class BillService: ObservableObject {
     
     func markBillAsPaid(bill: NewBill, context: ModelContext) {
         bill.hasBeenPaid = true
+        totalBillsPaid += 1
         try? context.save()
     }
     
