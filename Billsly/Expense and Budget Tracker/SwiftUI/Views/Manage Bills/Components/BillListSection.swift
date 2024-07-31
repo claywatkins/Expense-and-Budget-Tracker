@@ -28,25 +28,30 @@ struct BillListSection: View {
     
     var body: some View {
         Section {
-            List(getCurrentList(selection: billType), id: \.identifier) { bill in
-                Button {
-                    showEditBill.toggle()
-                    tappedBill = bill
-                } label: {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(bill.name)
-                                .foregroundStyle(.primary)
-                            Text("Due: " + userService.mediumDf.string(from: bill.dueByDate))
+            if getCurrentList(selection: billType).isEmpty {
+                ContentUnavailableView("There are no bills here", systemImage: "dollarsign.circle")
+            } else {
+                List(getCurrentList(selection: billType), id: \.identifier) { bill in
+                    Button {
+                        showEditBill.toggle()
+                        tappedBill = bill
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(bill.name)
+                                    .foregroundStyle(.primary)
+                                Text("Due: " + userService.mediumDf.string(from: bill.dueByDate))
+                                    .foregroundStyle(.primary)
+                            }
+                            Spacer()
+                            Text("\(bill.dollarAmount as NSNumber, formatter: userService.currencyNf)")
                                 .foregroundStyle(.primary)
                         }
-                        Spacer()
-                        Text("\(bill.dollarAmount as NSNumber, formatter: userService.currencyNf)")
-                            .foregroundStyle(.primary)
                     }
                 }
+                .listStyle(.plain)
             }
-            .listStyle(.plain)
+            
         } header: {
             HStack {
                 Text(billType.rawValue)
