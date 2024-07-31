@@ -12,6 +12,10 @@ import SwiftData
 class BillService: ObservableObject {
     
     @AppStorage("currentMonthInt") var currentMonthInt: Int = Date().monthInt
+    
+    var unpaidBillsEmptyString = "There are no bills left to pay this month"
+    var paidBillsEmptyString = "You do not have any bills paid yet this month"
+    var allBillsEmptyString = "You have not added any bills yet"
 
     func markBillAsPaid(bill: NewBill, context: ModelContext) {
         bill.hasBeenPaid = true
