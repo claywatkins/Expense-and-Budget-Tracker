@@ -10,6 +10,7 @@ import SwiftData
 
 struct BillListSection: View {
     @EnvironmentObject var userService: UserController
+    @EnvironmentObject var billService: BillService
     @State private var billList: [Bill] = []
     @State private var showEditBill = false
     @State private var tappedBill: NewBill?
@@ -29,7 +30,14 @@ struct BillListSection: View {
     var body: some View {
         Section {
             if getCurrentList(selection: billType).isEmpty {
-                ContentUnavailableView("There are no bills here", systemImage: "dollarsign.circle")
+                switch billType {
+                case .unpaid:
+                    ContentUnavailableView(billService.unpaidBillsEmptyString, systemImage: "dollarsign.circle")
+                case .all:
+                    ContentUnavailableView(billService.allBillsEmptyString, systemImage: "dollarsign.circle")
+                case .paid:
+                    ContentUnavailableView(billService.paidBillsEmptyString, systemImage: "dollarsign.circle")
+                }
             } else {
                 List(getCurrentList(selection: billType), id: \.identifier) { bill in
                     Button {
