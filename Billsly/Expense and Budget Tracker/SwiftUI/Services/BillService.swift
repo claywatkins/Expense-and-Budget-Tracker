@@ -16,7 +16,20 @@ class BillService: ObservableObject {
     var unpaidBillsEmptyString = "There are no bills left to pay this month"
     var paidBillsEmptyString = "You do not have any bills paid yet this month"
     var allBillsEmptyString = "You have not added any bills yet"
-
+    
+    @Published var defaultCategories: [String] = [
+        "Subscription",
+        "Utility",
+        "Rent",
+        "Mortgage",
+        "Loan",
+        "Credit Card",
+        "Insurance",
+        "Car Loan",
+        "Other",
+    ]
+    
+    
     func markBillAsPaid(bill: NewBill, context: ModelContext) {
         bill.hasBeenPaid = true
         try? context.save()
@@ -41,7 +54,7 @@ class BillService: ObservableObject {
             moveBillsToNextMonth(allBills: allBills, context: context)
         }
     }
-        
+    
     private func resetBills(paidBills: [NewBill], context: ModelContext) {
         for bill in paidBills {
             bill.hasBeenPaid = false
@@ -63,7 +76,7 @@ class BillService: ObservableObject {
                 try? context.save()
                 continue
             }
-
+            
             switch currentMonthInt {
             case 1, 2, 4, 6, 8, 9, 11:
                 dateComponents.month = monthsToAdd
@@ -71,7 +84,7 @@ class BillService: ObservableObject {
                 bill.dueByDate = moveForwardOneMonth
                 try? context.save()
                 continue
-
+                
             case 5, 7, 10, 12:
                 if bill.isOn30th == true {
                     dateComponents.month = monthsToAdd
@@ -87,7 +100,7 @@ class BillService: ObservableObject {
                     try? context.save()
                     continue
                 }
-
+                
             case 3:
                 if dateNum < 28 {
                     dateComponents.month = monthsToAdd
@@ -117,7 +130,7 @@ class BillService: ObservableObject {
                     try? context.save()
                     continue
                 }
-
+                
             default:
                 fatalError()
             }

@@ -172,28 +172,6 @@ class UserController: ObservableObject {
         self.username = username
     }
     
-    func loadDefaultCategories() async {
-        if userCategories.isEmpty {
-            let defaultCategories: [Category] = [
-                Category(name: "Subscription"),
-                Category(name: "Utility"),
-                Category(name: "Rent"),
-                Category(name: "Mortgage"),
-                Category(name: "Loan"),
-                Category(name: "Credit Card"),
-                Category(name: "Insurance"),
-                Category(name: "Car Loan"),
-                Category(name: "Other"),
-            ]
-            for i in defaultCategories {
-                DispatchQueue.main.async {
-                    self.userCategories.append(i)                    
-                }
-            }
-            saveCategoriesToPersistentStore()
-        }
-    }
-    
     func getRandomInt() -> Int {
         return Int.random(in: 0...7)
     }
