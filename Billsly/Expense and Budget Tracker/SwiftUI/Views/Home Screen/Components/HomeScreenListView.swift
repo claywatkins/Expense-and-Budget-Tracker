@@ -21,10 +21,7 @@ struct HomeScreenListView: View {
         VStack {
             if unpaidBills.isEmpty {
                 ContentUnavailableView(billService.unpaidBillsEmptyString, systemImage: "dollarsign.circle")
-                    .frame(height: 200)
-                    .cornerRadius(12)
-                    .modifier(ShadowViewModifier())
-
+                    .frame(height: 300)
             } else {
                 HStack {
                     Text(headerText)
