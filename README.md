@@ -14,6 +14,9 @@
 * Keeps running count of amount of money spent on bills
 * Congratulates users with confetti for paying bills
 
+## Future of Billsly
+I am currently hard at work modernizing and overhauling the app into Billsly 2.0! I am currently working on updating the app to work on the SwiftUI Lifecycle and use Swift data instead of the previous way of persistence. You can track my progress on my notion site [here](https://flint-pen-30e.notion.site/169ccd9a17844619933a1d3ef1c8eea4?v=a8f759b3a064407382851f0a4de6a45d)
+
 ## Libraries
 [FSCalendar](https://github.com/WenchaoD/FSCalendar)
 
