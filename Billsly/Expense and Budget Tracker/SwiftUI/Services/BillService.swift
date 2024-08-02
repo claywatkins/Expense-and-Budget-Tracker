@@ -46,13 +46,7 @@ class BillService: ObservableObject {
         let totalBillsCount = CGFloat(allBills.count)
         return paidBillsCount/totalBillsCount.rounded()
     }
-    
-    func markBillAsPaid(bill: NewBill, context: ModelContext) {
-        bill.hasBeenPaid = true
-        totalBillsPaid += 1
-        try? context.save()
-    }
-    
+
     private func determineIfResetIsNeeded(allBills: [NewBill]) -> Bool {
         if let firstBill = allBills.first {
             let firstBillMonthInt = firstBill.dueByDate.monthInt
@@ -153,6 +147,25 @@ class BillService: ObservableObject {
                 fatalError()
             }
         }
+    }
+    
+    func updateBillPaidStatus(bill: NewBill, context: ModelContext) {
+        bill.hasBeenPaid.toggle()
+        if bill.hasBeenPaid {
+            totalBillsPaid += 1
+        } else {
+            totalBillsPaid -= 1
+        }
+        
+        try? context.save()
+    }
+    
+    func saveBill(bill: NewBill, context: ModelContext) {
+        context.insert(bill)
+    }
+    
+    func deleteBill(bill: NewBill, context: ModelContext) {
+        context.delete(bill)
     }
 }
 
