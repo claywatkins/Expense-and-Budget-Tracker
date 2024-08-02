@@ -11,6 +11,7 @@ import SwiftData
 
 struct HomeScreenHeaderView: View {
     @EnvironmentObject var userService: UserController
+    @EnvironmentObject var billService: BillService
     @Binding var colors: [Color]
     @Binding var showingPaidBills: Bool
     var horizontalPadding: CGFloat = 12
@@ -62,7 +63,7 @@ struct HomeScreenHeaderView: View {
                                             .foregroundStyle(.primary)
                                             .multilineTextAlignment(.center)
                                             .padding(.horizontal, 4)
-                                        Text("\(userService.unpaidBills.count)")
+                                        Text("\(billService.totalBillsPaid)")
                                             .font(.title)
                                             .fontWeight(.bold)
                                             .foregroundStyle(.primary)
