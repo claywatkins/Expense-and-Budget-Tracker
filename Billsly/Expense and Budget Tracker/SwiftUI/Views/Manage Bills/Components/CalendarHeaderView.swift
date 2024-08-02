@@ -28,12 +28,6 @@ struct CalendarHeaderView: View {
                         }
                     }
                     
-                    Picker("", selection: $selectedYear) {
-                        ForEach(years.indices, id:  \.self) { idx in
-                            Text(String(years[idx])).tag(idx + 1)
-                        }
-                    }
-                    
                     Picker("", selection: $billService.billListType) {
                         ForEach(BillSelection.allCases, id: \.self) { billType in
                             Text(billType.rawValue).tag(billType)
