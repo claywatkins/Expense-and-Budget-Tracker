@@ -38,11 +38,12 @@ struct HomeScreenView: View {
             .padding(.horizontal, horizontalPadding)
             .task {
                 await userService.loadUsername()
-                await userService.loadBillData()
-                await userService.checkForExistingBills()
                 self.colors = await userService.getColors()
                 
                 if userService.hasBeenConverted == false {
+                    await userService.loadBillData()
+                    await userService.checkForExistingBills()
+                    
                     for bill in userService.userBills {
                         let newBill = NewBill(identifier: bill.identifier,
                                               name: bill.name,
@@ -56,14 +57,12 @@ struct HomeScreenView: View {
                         
                         context.insert(newBill)
                     }
-                    
                     userService.hasBeenConverted = true
                     userService.showingConversion = false
                 }
                 await billService.checkIfBillsShouldBeUpdated(paidBills: paidBills,
                                                               allBills: allBills,
                                                               context: context)
-                
             }
             .fullScreenCover(isPresented: $userService.showingConversion) {
                 ProgressView {
