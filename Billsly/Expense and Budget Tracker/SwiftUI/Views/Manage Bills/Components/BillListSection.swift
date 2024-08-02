@@ -11,6 +11,7 @@ import SwiftData
 struct BillListSection: View {
     @EnvironmentObject var userService: UserController
     @EnvironmentObject var billService: BillService
+    @Environment(\.modelContext) var context
     @State private var showEditBill = false
     @State private var tappedBill: NewBill?
     @Binding var billListType: BillSelection
@@ -56,10 +57,19 @@ struct BillListSection: View {
                                 .foregroundStyle(.primary)
                         }
                     }
+                    .swipeActions(allowsFullSwipe: false) {
+                        Button(bill.hasBeenPaid ? "Mark unpaid" : "Mark paid") {
+                            billService.updateBillPaidStatus(bill: bill, context: context)
+                        }
+                        .tint(.indigo)
+                        
+                        Button("Delete", role: .destructive) {
+                            billService.deleteBill(bill: bill, context: context)
+                        }
+                    }
                 }
                 .listStyle(.plain)
             }
-            
         } header: {
             HStack {
                 Text(billListType.rawValue)
