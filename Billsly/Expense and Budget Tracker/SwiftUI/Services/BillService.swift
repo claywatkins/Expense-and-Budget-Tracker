@@ -37,6 +37,16 @@ class BillService: ObservableObject {
         "Other",
     ]
     
+    func getBillsForDay(allBills: [NewBill], dayInt: Int) -> [NewBill?] {
+        let mappedBills = allBills.map{
+            var bill: NewBill?
+            if $0.dueByDate.dayInt == dayInt {
+                bill = $0
+            }
+            return bill
+        }
+        return mappedBills
+    }
     
     func getProgressFloat(paidBills: [NewBill], allBills: [NewBill]) -> CGFloat {
         if paidBills.count == 0 || allBills.count == 0 {
@@ -69,7 +79,7 @@ class BillService: ObservableObject {
     
     func resetBills(paidBills: [NewBill], context: ModelContext) async {
         for bill in paidBills {
-            markBillUnpaid(bill: bill, context: context)
+            updatePaidBillStatus(bill: bill, context: context)
         }
         try? context.save()
     }
@@ -149,24 +159,14 @@ class BillService: ObservableObject {
         }
     }
     
-    func markBillPaid(bill: NewBill, context: ModelContext) {
-        bill.hasBeenPaid = true
-        totalBillsPaid += 1
-        do {
-            try context.save()
-        } catch {
-            print(error.localizedDescription)
+    func updatePaidBillStatus(bill: NewBill, context: ModelContext) {
+        bill.hasBeenPaid.toggle()
+        if bill.hasBeenPaid {
+            totalBillsPaid += 1
+        } else {
+            totalBillsPaid -= 1
         }
-    }
-    
-    func markBillUnpaid(bill: NewBill, context: ModelContext) {
-        bill.hasBeenPaid = false
-        totalBillsPaid -= 1
-        do {
-            try context.save()
-        } catch {
-            print(error.localizedDescription)
-        }
+        try? context.save()
     }
     
     func saveBill(bill: NewBill, context: ModelContext) {
