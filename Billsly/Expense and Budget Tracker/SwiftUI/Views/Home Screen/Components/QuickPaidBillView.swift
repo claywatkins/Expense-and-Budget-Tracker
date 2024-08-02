@@ -38,7 +38,7 @@ struct QuickPaidBillView: View {
                 
                 Button {
                     if let selectedBill = selectedBill {
-                        billService.updateBillPaidStatus(bill: selectedBill, context: context)
+                        billService.updatePaidBillStatus(bill: selectedBill, context: context)
                         counter += 1
                     }
                     dismiss()
