@@ -62,19 +62,19 @@ class BillService: ObservableObject {
     func checkIfBillsShouldBeUpdated(paidBills: [NewBill], allBills: [NewBill], context: ModelContext) async {
         if determineIfResetIsNeeded(allBills: allBills) {
             currentMonthInt = Date().monthInt
-            resetBills(paidBills: paidBills, context: context)
-            moveBillsToNextMonth(allBills: allBills, context: context)
+            await resetBills(paidBills: paidBills, context: context)
+            await moveBillsToNextMonth(allBills: allBills, context: context)
         }
     }
     
-    private func resetBills(paidBills: [NewBill], context: ModelContext) {
+    func resetBills(paidBills: [NewBill], context: ModelContext) async {
         for bill in paidBills {
-            bill.hasBeenPaid = false
-            try? context.save()
+            markBillUnpaid(bill: bill, context: context)
         }
+        try? context.save()
     }
     
-    private func moveBillsToNextMonth(allBills: [NewBill], context: ModelContext) {
+    private func moveBillsToNextMonth(allBills: [NewBill], context: ModelContext) async {
         guard let currentBillMonthDate = allBills.first?.dueByDate.monthInt else { return }
         let monthsToAdd = currentMonthInt - currentBillMonthDate
         
@@ -149,15 +149,24 @@ class BillService: ObservableObject {
         }
     }
     
-    func updateBillPaidStatus(bill: NewBill, context: ModelContext) {
-        bill.hasBeenPaid.toggle()
-        if bill.hasBeenPaid {
-            totalBillsPaid += 1
-        } else {
-            totalBillsPaid -= 1
+    func markBillPaid(bill: NewBill, context: ModelContext) {
+        bill.hasBeenPaid = true
+        totalBillsPaid += 1
+        do {
+            try context.save()
+        } catch {
+            print(error.localizedDescription)
         }
-        
-        try? context.save()
+    }
+    
+    func markBillUnpaid(bill: NewBill, context: ModelContext) {
+        bill.hasBeenPaid = false
+        totalBillsPaid -= 1
+        do {
+            try context.save()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     func saveBill(bill: NewBill, context: ModelContext) {
