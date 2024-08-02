@@ -10,7 +10,7 @@ import SwiftData
 
 struct CalendarView: View {
     @EnvironmentObject var settingsService: SettingsService
-    @EnvironmentObject var userService: UserController
+    @EnvironmentObject var billService: BillService
     @State private var days: [Date] = []
     @State private var counts: [Int: Int] = [:]
     @State private var tappedOnDay = false
@@ -92,8 +92,14 @@ struct CalendarView: View {
         .onChange(of: billType) {
             counts = setupCounts(selection: billType)
         }
+        .onChange(of: unpaidBills.count) {
+            counts = setupCounts(selection: billType)
+        }
+        .onChange(of: paidBills.count) {
+            counts = setupCounts(selection: billType)
+        }
         .sheet(isPresented: $tappedOnDay, content: {
-            BillsForDayView(bills: userService.getBillsForDay(dayInt: tappedDayInt))
+            BillsForDayView(bills: billService.getBillsForDay(allBills: allBills, dayInt: tappedDayInt))
                 .presentationDetents([.fraction(0.3)])
         })
     }
@@ -115,9 +121,9 @@ struct CalendarView: View {
 
 #Preview {
     @StateObject var settingsService = SettingsService()
-    @StateObject var userService = UserController()
+    @StateObject var billService = BillService()
     
     return CalendarView(date: Date.now, billType: .constant(.all))
             .environmentObject(settingsService)
-            .environmentObject(userService)
+            .environmentObject(billService)
 }
