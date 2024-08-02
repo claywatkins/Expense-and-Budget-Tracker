@@ -59,7 +59,7 @@ struct BillListSection: View {
                     }
                     .swipeActions(allowsFullSwipe: false) {
                         Button(bill.hasBeenPaid ? "Mark unpaid" : "Mark paid") {
-                            billService.updateBillPaidStatus(bill: bill, context: context)
+                            billService.updatePaidBillStatus(bill: bill, context: context)
                         }
                         .tint(.indigo)
                         
