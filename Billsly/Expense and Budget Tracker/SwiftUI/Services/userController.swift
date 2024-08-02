@@ -124,29 +124,6 @@ class UserController: ObservableObject {
     }
     
     // MARK: - Methods
-    func getCorrectList(selection: BillSelection) -> [Bill] {
-        switch selection {
-        case .all:
-            return userBills.sorted(by: { $0.dueByDate < $1.dueByDate })
-        case .unpaid:
-            return unpaidBills
-        case .paid:
-            return paidBills
-        }
-    }
-    
-    func getBillsForDay(dayInt: Int) -> [Bill?] {
-        let mappedBills = userBills.map{
-            var bill: Bill?
-            if $0.dueByDate.dayInt == dayInt {
-                bill = $0
-            }
-            return bill
-        }
-        return mappedBills
-    }
-    
-    
     func setUsername(_ username: String) {
         UserDefaults.standard.setValue(username, forKey: "username")
     }
