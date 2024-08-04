@@ -17,6 +17,7 @@ struct BillListSection: View {
     @Binding var billListType: BillSelection
     @Binding var expandListView: Bool
     @Binding var billList: [NewBill]
+    @State private var showingDeleteConfirmation: Bool = false
     
     @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
     
@@ -63,9 +64,11 @@ struct BillListSection: View {
                         }
                         .tint(.indigo)
                         
-                        Button("Delete", role: .destructive) {
-                            billService.deleteBill(bill: bill, context: context)
+                        Button("Delete") {
+                            tappedBill = bill
+                            showingDeleteConfirmation.toggle()
                         }
+                        .tint(.red)
                     }
                 }
                 .listStyle(.plain)
@@ -84,9 +87,11 @@ struct BillListSection: View {
             .padding(.horizontal, 12)
         }
         .cornerRadius(12)
+        .modifier(DeleteAlertViewModifier(showingAlert: $showingDeleteConfirmation, bill: tappedBill))
         .fullScreenCover(isPresented:$showEditBill) {
             EditAddBillView(isEdit: true, bill: tappedBill)
         }
+        
     }
     
     private func getCurrentList(selection: BillSelection) -> [NewBill] {
