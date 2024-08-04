@@ -7,12 +7,18 @@
 
 import SwiftUI
 import FluidGradient
+import SwiftData
 
 struct HomeScreenHeaderView: View {
     @EnvironmentObject var userService: UserController
+    @EnvironmentObject var billService: BillService
     @Binding var colors: [Color]
     @Binding var showingPaidBills: Bool
     var horizontalPadding: CGFloat = 12
+    
+    @Query(filter: #Predicate<NewBill> { bill in
+        bill.hasBeenPaid == false
+    }, sort: \NewBill.dueByDate, order: .forward) var unpaidBills: [NewBill]
     
     var body: some View {
         Rectangle()
@@ -57,7 +63,7 @@ struct HomeScreenHeaderView: View {
                                             .foregroundStyle(.primary)
                                             .multilineTextAlignment(.center)
                                             .padding(.horizontal, 4)
-                                        Text("\(userService.unpaidBills.count)")
+                                        Text("\(billService.totalBillsPaid)")
                                             .font(.title)
                                             .fontWeight(.bold)
                                             .foregroundStyle(.primary)
@@ -77,7 +83,7 @@ struct HomeScreenHeaderView: View {
                                             .foregroundStyle(.primary)
                                             .padding(.horizontal, 4)
 
-                                        Text("\(userService.unpaidBills.count)")
+                                        Text("\(unpaidBills.count)")
                                             .font(.title)
                                             .fontWeight(.bold)
                                             .foregroundStyle(.primary)

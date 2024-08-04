@@ -11,12 +11,14 @@ import ConfettiSwiftUI
 struct BillsView: View {
     @EnvironmentObject var userService: UserController
     @EnvironmentObject var settingsService: SettingsService
+    @EnvironmentObject var billService: BillService
     @State private var date = Date()
     @State private var expandListView = false
     @State private var showingPaidBills = false
     @State private var showingAddBill = false
     @State private var counter: Int = 0
     @State private var presentationDetent = PresentationDetent.fraction(0.3)
+    @State private var billList: [NewBill] = []
     
     var body: some View {
         VStack {
@@ -29,14 +31,14 @@ struct BillsView: View {
                 .background(.clear)
                 .padding(8)
             
-            BillListSection(billType: $userService.billType,
-                            expandListView: $expandListView)
+            BillListSection(billListType: $billService.billListType,
+                            expandListView: $expandListView,
+                            billList: $billList)
                 .environmentObject(userService)
         }
         .background(.quaternary)
         .sheet(isPresented: $expandListView, content: {
-            ManageBillsView(billList: $userService.currentList)
-                .environmentObject(userService)
+            ManageBillsView(billList: $billList)
         })
         .sheet(isPresented: $showingPaidBills) {
             QuickPaidBillView(counter: $counter)

@@ -10,12 +10,14 @@ import SwiftUI
 struct MainView: View {
     @EnvironmentObject var userService: UserController
     @EnvironmentObject var settingsService: SettingsService
+    @EnvironmentObject var billService: BillService
     @State private var selectedIndex = 0
     
     var body: some View {
         TabView(selection: $selectedIndex) {
             HomeScreenView()
                 .environmentObject(userService)
+                .environmentObject(billService)
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
@@ -24,6 +26,7 @@ struct MainView: View {
                 BillsView()
                     .environmentObject(userService)
                     .environmentObject(settingsService)
+                    .environmentObject(billService)
             }
             .tabItem {
                 Label("Bills", systemImage: "doc.text")

@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CalendarView: View {
     @EnvironmentObject var settingsService: SettingsService
-    @EnvironmentObject var userService: UserController
+    @EnvironmentObject var billService: BillService
     @State private var days: [Date] = []
     @State private var counts: [Int: Int] = [:]
     @State private var tappedOnDay = false
@@ -18,6 +19,16 @@ struct CalendarView: View {
     @Binding var billType: BillSelection
     let daysOfWeek = Date.capitalizedFirstLettersOfWeekdays
     let coloums = Array(repeating: GridItem(.flexible()), count: 7)
+    
+    @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
+    
+    @Query(filter: #Predicate<NewBill> { bill in
+        bill.hasBeenPaid == false
+    }, sort: \NewBill.dueByDate, order: .forward) var unpaidBills: [NewBill]
+    
+    @Query(filter: #Predicate<NewBill> { bill in
+        bill.hasBeenPaid == true
+    }, sort: \NewBill.dueByDate, order: .forward) var paidBills: [NewBill]
 
     var body: some View {
         VStack {
@@ -72,27 +83,47 @@ struct CalendarView: View {
         .padding()
         .onAppear {
             days = date.calendarDisplayDays
-            counts = userService.setupCounts(selection: billType)
+            counts = setupCounts(selection: billType)
         }
         .onChange(of: date) {
             days = date.calendarDisplayDays
-            counts = userService.setupCounts(selection: billType)
+            counts = setupCounts(selection: billType)
         }
         .onChange(of: billType) {
-            counts = userService.setupCounts(selection: billType)
+            counts = setupCounts(selection: billType)
+        }
+        .onChange(of: unpaidBills.count) {
+            counts = setupCounts(selection: billType)
+        }
+        .onChange(of: paidBills.count) {
+            counts = setupCounts(selection: billType)
         }
         .sheet(isPresented: $tappedOnDay, content: {
-            BillsForDayView(bills: userService.getBillsForDay(dayInt: tappedDayInt))
+            BillsForDayView(bills: billService.getBillsForDay(allBills: allBills, dayInt: tappedDayInt))
                 .presentationDetents([.fraction(0.3)])
         })
+    }
+    
+    private func setupCounts(selection: BillSelection) -> [Int: Int] {
+        switch selection {
+        case .all:
+            let mappedItems = allBills.map{($0.dueByDate.dayInt, 1)}
+            return Dictionary(mappedItems, uniquingKeysWith: +)
+        case .paid:
+            let mappedItems = paidBills.map{($0.dueByDate.dayInt, 1)}
+            return Dictionary(mappedItems, uniquingKeysWith: +)
+        case .unpaid:
+            let mappedItems = unpaidBills.map{($0.dueByDate.dayInt, 1)}
+            return Dictionary(mappedItems, uniquingKeysWith: +)
+        }
     }
 }
 
 #Preview {
     @StateObject var settingsService = SettingsService()
-    @StateObject var userService = UserController()
+    @StateObject var billService = BillService()
     
     return CalendarView(date: Date.now, billType: .constant(.all))
             .environmentObject(settingsService)
-            .environmentObject(userService)
+            .environmentObject(billService)
 }

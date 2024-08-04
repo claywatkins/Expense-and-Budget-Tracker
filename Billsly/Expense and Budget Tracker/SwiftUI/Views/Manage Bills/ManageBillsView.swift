@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ManageBillsView: View {
     @EnvironmentObject var userService: UserController
-    @Binding var billList: [Bill]
+    @Binding var billList: [NewBill]
     
     var body: some View {
         List(billList, id: \.identifier) { bill in

@@ -8,11 +8,7 @@
 import SwiftUI
 import SwiftData
 
-enum BillSelection: String, CaseIterable {
-    case unpaid = "Unpaid Bills"
-    case all = "All Bills"
-    case paid = "Paid Bills"
-}
+
 
 class UserController: ObservableObject {
     // MARK: - Properties
@@ -25,7 +21,6 @@ class UserController: ObservableObject {
     var isLoggedIn: Bool?
     @Published var username: String?
     @Published var currentList: [Bill] = []
-    @Published var billType: BillSelection = .unpaid
     
     @AppStorage("showingConversion") var showingConversion: Bool = false
     @AppStorage("hasBeenConverted") var hasBeenConverted: Bool = false
@@ -129,80 +124,14 @@ class UserController: ObservableObject {
     }
     
     // MARK: - Methods
-    func getProgressFloat() -> CGFloat {
-        if paidBills.count == 0 || userBills.count == 0 {
-            return 0
-        }
-        let paidBillsCount = CGFloat(paidBills.count)
-        let totalBillsCount = CGFloat(userBills.count)
-        return paidBillsCount/totalBillsCount.rounded()
-    }
-    
-    func setupCounts(selection: BillSelection) -> [Int: Int] {
-        switch selection {
-        case .all:
-            let mappedItems = userBills.map{($0.dueByDate.dayInt, 1)}
-            return Dictionary(mappedItems, uniquingKeysWith: +)
-        case .paid:
-            let mappedItems = paidBills.map{($0.dueByDate.dayInt, 1)}
-            return Dictionary(mappedItems, uniquingKeysWith: +)
-        case .unpaid:
-            let mappedItems = unpaidBills.map{($0.dueByDate.dayInt, 1)}
-            return Dictionary(mappedItems, uniquingKeysWith: +)
-        }
-    }
-    
-    func getCorrectList(selection: BillSelection) -> [Bill] {
-        switch selection {
-        case .all:
-            return userBills.sorted(by: { $0.dueByDate < $1.dueByDate })
-        case .unpaid:
-            return unpaidBills
-        case .paid:
-            return paidBills
-        }
-    }
-    
-    func getBillsForDay(dayInt: Int) -> [Bill?] {
-        let mappedBills = userBills.map{
-            var bill: Bill?
-            if $0.dueByDate.dayInt == dayInt {
-                bill = $0
-            }
-            return bill
-        }
-        return mappedBills
-    }
-    
-    
     func setUsername(_ username: String) {
         UserDefaults.standard.setValue(username, forKey: "username")
     }
     
     func loadUsername() async {
         guard let username = UserDefaults.standard.value(forKey: "username") as? String else { return }
-        self.username = username
-    }
-    
-    func loadDefaultCategories() async {
-        if userCategories.isEmpty {
-            let defaultCategories: [Category] = [
-                Category(name: "Subscription"),
-                Category(name: "Utility"),
-                Category(name: "Rent"),
-                Category(name: "Mortgage"),
-                Category(name: "Loan"),
-                Category(name: "Credit Card"),
-                Category(name: "Insurance"),
-                Category(name: "Car Loan"),
-                Category(name: "Other"),
-            ]
-            for i in defaultCategories {
-                DispatchQueue.main.async {
-                    self.userCategories.append(i)                    
-                }
-            }
-            saveCategoriesToPersistentStore()
+        DispatchQueue.main.async {
+            self.username = username            
         }
     }
     

@@ -10,6 +10,7 @@ import SwiftUI
 struct CalendarHeaderView: View {
     @EnvironmentObject var userService: UserController
     @EnvironmentObject var settingsService: SettingsService
+    @EnvironmentObject var billService: BillService
     @State private var monthDate = Date.now
     @State private var years: [Int] = []
     @State private var selectedMonth = Date.now.monthInt
@@ -27,20 +28,14 @@ struct CalendarHeaderView: View {
                         }
                     }
                     
-                    Picker("", selection: $selectedYear) {
-                        ForEach(years.indices, id:  \.self) { idx in
-                            Text(String(years[idx])).tag(idx + 1)
-                        }
-                    }
-                    
-                    Picker("", selection: $userService.billType) {
+                    Picker("", selection: $billService.billListType) {
                         ForEach(BillSelection.allCases, id: \.self) { billType in
                             Text(billType.rawValue).tag(billType)
                         }
                     }
                 }
                 .buttonStyle(.bordered)
-                CalendarView(date: monthDate, billType: $userService.billType)
+                CalendarView(date: monthDate, billType: $billService.billListType)
                     .environmentObject(settingsService)
                     .environmentObject(userService)
                 Spacer()

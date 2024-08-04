@@ -10,41 +10,72 @@ import SwiftData
 
 struct BillListSection: View {
     @EnvironmentObject var userService: UserController
-    @State private var billList: [Bill] = []
+    @EnvironmentObject var billService: BillService
+    @Environment(\.modelContext) var context
     @State private var showEditBill = false
-    @State private var tappedBill: Bill?
-    @Binding var billType: BillSelection
+    @State private var tappedBill: NewBill?
+    @Binding var billListType: BillSelection
     @Binding var expandListView: Bool
+    @Binding var billList: [NewBill]
     
-    @Query(sort: \NewBill.dueByDate, order: .forward) var bills: [NewBill]
+    @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
+    
+    @Query(filter: #Predicate<NewBill> { bill in
+        bill.hasBeenPaid == false
+    }, sort: \NewBill.dueByDate, order: .forward) var unpaidBills: [NewBill]
+    
+    @Query(filter: #Predicate<NewBill> { bill in
+        bill.hasBeenPaid == true
+    }, sort: \NewBill.dueByDate, order: .forward) var paidBills: [NewBill]
     
     var body: some View {
         Section {
-            List(bills, id: \.identifier) { bill in
-                Button {
-                    showEditBill.toggle()
-                    //                    tappedBill = bill
-                } label: {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(bill.name)
-                                .foregroundStyle(.primary)
-                            Text("Due: " + userService.mediumDf.string(from: bill.dueByDate))
+            if getCurrentList(selection: billListType).isEmpty {
+                switch billListType {
+                case .unpaid:
+                    ContentUnavailableView(billService.unpaidBillsEmptyString, systemImage: "dollarsign.circle")
+                case .all:
+                    ContentUnavailableView(billService.allBillsEmptyString, systemImage: "dollarsign.circle")
+                case .paid:
+                    ContentUnavailableView(billService.paidBillsEmptyString, systemImage: "dollarsign.circle")
+                }
+            } else {
+                List(getCurrentList(selection: billListType), id: \.identifier) { bill in
+                    Button {
+                        showEditBill.toggle()
+                        tappedBill = bill
+                    } label: {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(bill.name)
+                                    .foregroundStyle(.primary)
+                                Text("Due: " + userService.mediumDf.string(from: bill.dueByDate))
+                                    .foregroundStyle(.primary)
+                            }
+                            Spacer()
+                            Text("\(bill.dollarAmount as NSNumber, formatter: userService.currencyNf)")
                                 .foregroundStyle(.primary)
                         }
-                        Spacer()
-                        Text("\(bill.dollarAmount as NSNumber, formatter: userService.currencyNf)")
-                            .foregroundStyle(.primary)
+                    }
+                    .swipeActions(allowsFullSwipe: false) {
+                        Button(bill.hasBeenPaid ? "Mark unpaid" : "Mark paid") {
+                            billService.updatePaidBillStatus(bill: bill, context: context)
+                        }
+                        .tint(.indigo)
+                        
+                        Button("Delete", role: .destructive) {
+                            billService.deleteBill(bill: bill, context: context)
+                        }
                     }
                 }
+                .listStyle(.plain)
             }
-            .listStyle(.plain)            
         } header: {
             HStack {
-                Text(billType.rawValue)
+                Text(billListType.rawValue)
                 Spacer()
                 Button {
-                    userService.currentList = billList
+                    billList = getCurrentList(selection: billListType)
                     expandListView.toggle()
                 } label: {
                     Image(systemName: "rectangle.expand.vertical")
@@ -53,14 +84,19 @@ struct BillListSection: View {
             .padding(.horizontal, 12)
         }
         .cornerRadius(12)
-        .onAppear {
-            billList = userService.getCorrectList(selection: billType)
-        }
-        .onChange(of: billType) {
-            billList = userService.getCorrectList(selection: billType)
-        }
         .fullScreenCover(isPresented:$showEditBill) {
             EditAddBillView(isEdit: true, bill: tappedBill)
+        }
+    }
+    
+    private func getCurrentList(selection: BillSelection) -> [NewBill] {
+        switch selection {
+        case .unpaid:
+            return unpaidBills
+        case .all:
+            return allBills
+        case .paid:
+            return paidBills
         }
     }
 }
