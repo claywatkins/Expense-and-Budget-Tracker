@@ -16,7 +16,6 @@ struct BillListSection: View {
     @State private var tappedBill: NewBill?
     @Binding var billListType: BillSelection
     @Binding var expandListView: Bool
-    @Binding var billList: [NewBill]
     @Binding var counter: Int
     @State private var showingDeleteConfirmation: Bool = false
     
@@ -82,11 +81,11 @@ struct BillListSection: View {
                 Text(billListType.rawValue)
                 Spacer()
                 Button {
-                    billList = getCurrentList(selection: billListType)
                     expandListView.toggle()
                 } label: {
                     Image(systemName: "rectangle.expand.vertical")
                 }
+                .disabled(getCurrentList(selection: billListType).isEmpty)
             }
             .padding(.horizontal, 12)
         }
