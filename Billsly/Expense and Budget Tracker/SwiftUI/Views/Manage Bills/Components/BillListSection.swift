@@ -17,6 +17,7 @@ struct BillListSection: View {
     @Binding var billListType: BillSelection
     @Binding var expandListView: Bool
     @Binding var billList: [NewBill]
+    @Binding var counter: Int
     @State private var showingDeleteConfirmation: Bool = false
     
     @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
@@ -60,6 +61,9 @@ struct BillListSection: View {
                     }
                     .swipeActions(allowsFullSwipe: false) {
                         Button(bill.hasBeenPaid ? "Mark unpaid" : "Mark paid") {
+                            if bill.hasBeenPaid == false {
+                                counter += 1
+                            }
                             billService.updatePaidBillStatus(bill: bill, context: context)
                         }
                         .tint(.indigo)
