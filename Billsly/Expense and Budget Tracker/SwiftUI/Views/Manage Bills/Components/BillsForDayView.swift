@@ -30,18 +30,6 @@ struct BillsForDayView: View {
                             Text("\(bill.dollarAmount as NSNumber, formatter: userService.currencyNf)")
                                 .foregroundStyle(.primary)
                         }
-                        .swipeActions(allowsFullSwipe: false) {
-                            Button(bill.hasBeenPaid ? "Mark unpaid" : "Mark paid") {
-                                billService.updatePaidBillStatus(bill: bill, context: context)
-                                dismiss()
-                            }
-                            .tint(.indigo)
-                            
-                            Button("Delete", role: .destructive) {
-                                billService.deleteBill(bill: bill, context: context)
-                                dismiss()
-                            }
-                        }
                     }
                 }
             }
