@@ -33,13 +33,12 @@ struct BillsView: View {
             
             BillListSection(billListType: $billService.billListType,
                             expandListView: $expandListView,
-                            billList: $billList,
                             counter: $counter)
             .environmentObject(userService)
         }
         .background(.quaternary)
         .sheet(isPresented: $expandListView, content: {
-            ManageBillsView(billList: $billList)
+            ManageBillsView(counter: $counter)
         })
         .sheet(isPresented: $showingPaidBills) {
             QuickPaidBillView(counter: $counter)
