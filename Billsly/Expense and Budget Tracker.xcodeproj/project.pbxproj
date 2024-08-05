@@ -212,6 +212,7 @@
 				0B3C9F442BFD210400778495 /* BillsForDayView.swift */,
 				0B0A17FC2BFDAD8E003EA471 /* MiddleButtonsView.swift */,
 				0B72C3AC2C5F37FA00765EC8 /* DeleteAlertViewModifier.swift */,
+				0BD8462D2BEA8ED400139ED5 /* QuickPaidBillView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -394,7 +395,6 @@
 			isa = PBXGroup;
 			children = (
 				0BD8462B2BEA8AD400139ED5 /* ShadowViewModifier.swift */,
-				0BD8462D2BEA8ED400139ED5 /* QuickPaidBillView.swift */,
 				0BD8462F2BEA9FE500139ED5 /* HomeScreenHeaderView.swift */,
 				0BD846312BEAA10200139ED5 /* HomeScreenListView.swift */,
 				0B0A18002BFE6E78003EA471 /* CircularBillProgressView.swift */,
