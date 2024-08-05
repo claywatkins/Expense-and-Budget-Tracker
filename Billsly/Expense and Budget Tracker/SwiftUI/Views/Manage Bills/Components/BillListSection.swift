@@ -16,7 +16,8 @@ struct BillListSection: View {
     @State private var tappedBill: NewBill?
     @Binding var billListType: BillSelection
     @Binding var expandListView: Bool
-    @Binding var billList: [NewBill]
+    @Binding var counter: Int
+    @State private var showingDeleteConfirmation: Bool = false
     
     @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
     
@@ -59,13 +60,18 @@ struct BillListSection: View {
                     }
                     .swipeActions(allowsFullSwipe: false) {
                         Button(bill.hasBeenPaid ? "Mark unpaid" : "Mark paid") {
+                            if bill.hasBeenPaid == false {
+                                counter += 1
+                            }
                             billService.updatePaidBillStatus(bill: bill, context: context)
                         }
                         .tint(.indigo)
                         
-                        Button("Delete", role: .destructive) {
-                            billService.deleteBill(bill: bill, context: context)
+                        Button("Delete") {
+                            tappedBill = bill
+                            showingDeleteConfirmation.toggle()
                         }
+                        .tint(.red)
                     }
                 }
                 .listStyle(.plain)
@@ -75,15 +81,16 @@ struct BillListSection: View {
                 Text(billListType.rawValue)
                 Spacer()
                 Button {
-                    billList = getCurrentList(selection: billListType)
                     expandListView.toggle()
                 } label: {
                     Image(systemName: "rectangle.expand.vertical")
                 }
+                .disabled(getCurrentList(selection: billListType).isEmpty)
             }
             .padding(.horizontal, 12)
         }
         .cornerRadius(12)
+        .modifier(DeleteAlertViewModifier(showingAlert: $showingDeleteConfirmation, bill: tappedBill))
         .fullScreenCover(isPresented:$showEditBill) {
             EditAddBillView(isEdit: true, bill: tappedBill)
         }
