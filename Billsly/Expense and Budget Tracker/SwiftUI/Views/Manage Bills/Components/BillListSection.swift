@@ -91,7 +91,6 @@ struct BillListSection: View {
         .fullScreenCover(isPresented:$showEditBill) {
             EditAddBillView(isEdit: true, bill: tappedBill)
         }
-        
     }
     
     private func getCurrentList(selection: BillSelection) -> [NewBill] {
