@@ -28,13 +28,14 @@ struct BillsView: View {
             
             MiddleButtonsView(showingAddBill: $showingAddBill,
                               showingPaidBills: $showingPaidBills)
-                .background(.clear)
-                .padding(8)
+            .background(.clear)
+            .padding(8)
             
             BillListSection(billListType: $billService.billListType,
                             expandListView: $expandListView,
-                            billList: $billList)
-                .environmentObject(userService)
+                            billList: $billList,
+                            counter: $counter)
+            .environmentObject(userService)
         }
         .background(.quaternary)
         .sheet(isPresented: $expandListView, content: {
