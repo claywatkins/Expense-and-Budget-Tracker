@@ -79,7 +79,7 @@ struct EditAddBillView: View {
                         RoundedRectangle(cornerRadius: 12)
                             .foregroundStyle(Color("buttonColor", bundle: Bundle.main))
                             .overlay {
-                                Text("Save Bill")
+                                Text(isEdit ? "Update Bill" : "Save Bill")
                                     .foregroundStyle(Color(.label))
                             }
                             .frame(height: 50)
