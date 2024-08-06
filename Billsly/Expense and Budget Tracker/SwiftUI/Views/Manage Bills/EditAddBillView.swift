@@ -10,14 +10,22 @@ import SwiftUI
 struct EditAddBillView: View {
     @EnvironmentObject var userService: UserController
     @EnvironmentObject var billService: BillService
+    @Environment(\.modelContext) var context
     @Environment(\.dismiss) var dismiss
     @State var isEdit: Bool
     @State var bill: NewBill?
     @State private var billName: String = ""
-    @State private var billCost: String = ""
+    @State private var billCost: Double = 0.0
+    @State private var billCostString: String = "\(Locale().currencySymbol ?? "") 0.00"
     @State private var categorySelection: String?
     @State private var billDueDate: Date = Date.now
     @State private var removedCategory: String = ""
+    
+    private let amountFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 2
+        return formatter
+    }()
     
     var body: some View {
         NavigationStack {
@@ -34,14 +42,25 @@ struct EditAddBillView: View {
                             .textFieldStyle(.roundedBorder)
                     }
                     Section {
-                        Text("Bill cost")
-                            .foregroundStyle(.primary)
-                            .fontWeight(.semibold)
-                            .font(.title)
+                        HStack(alignment: .firstTextBaseline) {
+                            Text("Bill cost is:")
+                                .foregroundStyle(.primary)
+                                .fontWeight(.semibold)
+                                .font(.title)
+                            
+                            Text(billCostString)
+                                .foregroundStyle(.primary)
+                                .fontWeight(.semibold)
+                                .font(.title2)
+                        }
                         
-                        TextField("Bill cost", text: $billCost)
+                        TextField("Bill cost", value: $billCost, formatter: amountFormatter)
+                            .keyboardType(.decimalPad)
                             .foregroundStyle(.secondary)
                             .textFieldStyle(.roundedBorder)
+                            .onChange(of: billCost) {
+                                billCostString = userService.currencyNf.string(from: billCost as NSNumber) ?? ""
+                            }
                     }
                     
                     Section {
@@ -73,7 +92,28 @@ struct EditAddBillView: View {
                     
                     
                     Button {
-                        // Save
+                        guard let category = categorySelection else { return }
+                        let isOn30thBool = billDueDate.dayInt == 30
+
+                        if let bill = bill {
+                            bill.name = billName
+                            bill.dollarAmount = billCost
+                            bill.dueByDate = billDueDate
+                            bill.category = category
+                            bill.isOn30th = isOn30thBool
+                        } else {
+                            let newBill = NewBill(identifier: UUID().uuidString,
+                                                  name: billName,
+                                                  dollarAmount: billCost,
+                                                  dueByDate: billDueDate,
+                                                  hasBeenPaid: false,
+                                                  category: category,
+                                                  isOn30th: isOn30thBool,
+                                                  isAutopay: false,
+                                                  frequency: "monthly")
+                            billService.saveBill(bill: newBill, context: context )
+                        }
+                        
                         dismiss()
                     } label: {
                         RoundedRectangle(cornerRadius: 12)
@@ -92,7 +132,7 @@ struct EditAddBillView: View {
                     if isEdit {
                         if let bill = bill {
                             billName = bill.name
-                            billCost = userService.currencyNf.string(from: bill.dollarAmount as NSNumber) ?? ""
+                            billCost = bill.dollarAmount
                             categorySelection = bill.category
                             billDueDate = bill.dueByDate
                             if let billidx = billService.defaultCategories.firstIndex(of: bill.category) {
