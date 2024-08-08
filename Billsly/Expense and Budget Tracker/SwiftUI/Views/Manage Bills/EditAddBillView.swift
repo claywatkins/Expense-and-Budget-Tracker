@@ -21,6 +21,13 @@ struct EditAddBillView: View {
     @State private var billDueDate: Date = Date.now
     @State private var removedCategory: String = ""
     
+    var disabledButton: Bool {
+        if billName.isEmpty || billCost == 0.0 || categorySelection == nil {
+            return true
+        }
+        return false
+    }
+    
     private let amountFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 2
@@ -117,7 +124,7 @@ struct EditAddBillView: View {
                         dismiss()
                     } label: {
                         RoundedRectangle(cornerRadius: 12)
-                            .foregroundStyle(Color("buttonColor", bundle: Bundle.main))
+                            .foregroundStyle(disabledButton ? Color("foreground", bundle: Bundle.main) : Color("buttonColor", bundle: Bundle.main))
                             .overlay {
                                 Text(isEdit ? "Update Bill" : "Save Bill")
                                     .foregroundStyle(Color(.label))
@@ -125,6 +132,7 @@ struct EditAddBillView: View {
                             .frame(height: 50)
                             .modifier(ShadowViewModifier())
                     }
+                    .disabled(disabledButton)
                 }
                 .padding()
                 .navigationTitle(isEdit ? "Edit Bill" : "Add a Bill")
