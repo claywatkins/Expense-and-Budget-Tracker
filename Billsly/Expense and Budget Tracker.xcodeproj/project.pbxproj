@@ -851,7 +851,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Expense and Budget Tracker/Expense and Budget Tracker.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = XR5S8WV6LB;
 				INFOPLIST_FILE = "Expense and Budget Tracker/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -877,7 +877,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Expense and Budget Tracker/Expense and Budget Tracker.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = XR5S8WV6LB;
 				INFOPLIST_FILE = "Expense and Budget Tracker/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
