@@ -163,10 +163,14 @@ class UserController: ObservableObject {
             return
         } else {
             if userBills.isEmpty {
-                showingConversion = false
+                DispatchQueue.main.async {
+                    self.showingConversion = false
+                }
             } else {
-                showingConversion = true
-            }            
+                DispatchQueue.main.async {
+                    self.showingConversion = true
+                }
+            }
         }
     }
     
