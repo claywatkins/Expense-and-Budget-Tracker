@@ -70,8 +70,8 @@ class BillService: ObservableObject {
     }
     
     func checkIfBillsShouldBeUpdated(paidBills: [NewBill], allBills: [NewBill], context: ModelContext) async {
+        currentMonthInt = Date().monthInt
         if determineIfResetIsNeeded(allBills: allBills) {
-            currentMonthInt = Date().monthInt
             await resetBills(paidBills: paidBills, context: context)
             await moveBillsToNextMonth(allBills: allBills, context: context)
         }
