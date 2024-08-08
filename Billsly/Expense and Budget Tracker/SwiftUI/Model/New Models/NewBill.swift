@@ -10,15 +10,15 @@ import SwiftData
 
 @Model
 class NewBill: Equatable, Hashable {
-    var identifier: String
-    var name: String
-    var dollarAmount: Double
-    var dueByDate: Date
-    var hasBeenPaid: Bool
-    var category: String
-    var isOn30th: Bool
-    var isAutopay: Bool
-    var frequency: String
+    var identifier: String = UUID().uuidString
+    var name: String = ""
+    var dollarAmount: Double = 0.0
+    var dueByDate: Date = Date.now
+    var hasBeenPaid: Bool = false
+    var category: String = ""
+    var isOn30th: Bool = false
+    var isAutopay: Bool = false
+    var frequency: String = ""
 
     init(identifier: String, name: String, dollarAmount: Double, dueByDate: Date, hasBeenPaid: Bool, category: String, isOn30th: Bool, isAutopay: Bool, frequency: String) {
         self.identifier = identifier
