@@ -21,6 +21,8 @@ class BillService: ObservableObject {
     @AppStorage("billListType") var billListType: BillSelection = .unpaid
     @AppStorage("totalBillsPaid") var totalBillsPaid: Int = 0
     
+    @Published var billWasUpdatedTrigger: Bool = false
+    
     var unpaidBillsEmptyString = "There are no bills left to pay this month"
     var paidBillsEmptyString = "You do not have any bills paid yet this month"
     var allBillsEmptyString = "You have not added any bills yet"
@@ -70,8 +72,8 @@ class BillService: ObservableObject {
     }
     
     func checkIfBillsShouldBeUpdated(paidBills: [NewBill], allBills: [NewBill], context: ModelContext) async {
+        currentMonthInt = Date().monthInt
         if determineIfResetIsNeeded(allBills: allBills) {
-            currentMonthInt = Date().monthInt
             await resetBills(paidBills: paidBills, context: context)
             await moveBillsToNextMonth(allBills: allBills, context: context)
         }
