@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 enum BillSelection: String, CaseIterable {
     case unpaid = "Unpaid Bills"
@@ -177,6 +178,36 @@ class BillService: ObservableObject {
     
     func deleteBill(bill: NewBill, context: ModelContext) {
         context.delete(bill)
+    }
+    
+    func scheduleNotifications(with unpaidBills: [NewBill]) {
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        for bill in unpaidBills {
+            let content = UNMutableNotificationContent()
+            content.title = "Upcoming bill due!"
+            content.subtitle = "Don't forget to pay \(bill.name) tomorrow and mark it as paid in billsly!"
+            content.sound = UNNotificationSound.default
+            
+            let dayInt = bill.dueByDate.dayInt
+            var dateComponents = DateComponents()
+            if dayInt == 1 {
+                dateComponents.calendar = Calendar.current
+                dateComponents.timeZone = TimeZone.current
+                dateComponents.day = dayInt
+                dateComponents.hour = 11
+            } else {
+                dateComponents.calendar = Calendar.current
+                dateComponents.timeZone = TimeZone.current
+                dateComponents.day = dayInt - 1
+                dateComponents.hour = 11
+            }
+            
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+            let request = UNNotificationRequest(identifier: bill.identifier,
+                                                content: content,
+                                                trigger: trigger)
+            UNUserNotificationCenter.current().add(request)
+        }
     }
 }
 
