@@ -65,6 +65,13 @@ struct EditAddBillView: View {
                             .keyboardType(.decimalPad)
                             .foregroundStyle(.secondary)
                             .textFieldStyle(.roundedBorder)
+                            .onAppear {
+                                if billCost.isZero {
+                                    billCostString = "0.00"
+                                } else {
+                                    billCostString = userService.currencyNf.string(from: billCost as NSNumber) ?? ""
+                                }
+                            }
                             .onChange(of: billCost) {
                                 if billCost.isZero {
                                     billCostString = "0.00"
