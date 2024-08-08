@@ -22,9 +22,6 @@ class UserController: ObservableObject {
     @Published var username: String?
     @Published var currentList: [Bill] = []
     
-    @AppStorage("showingConversion") var showingConversion: Bool = false
-    @AppStorage("hasBeenConverted") var hasBeenConverted: Bool = false
-    
     var persistentBillsFileURL: URL? {
         let fm = FileManager.default
         guard let documents = fm.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
@@ -101,7 +98,7 @@ class UserController: ObservableObject {
             count += bill.dollarAmount
         }
         return count
-
+        
     }
     var mediumDf: DateFormatter {
         let df = DateFormatter()
@@ -131,7 +128,7 @@ class UserController: ObservableObject {
     func loadUsername() async {
         guard let username = UserDefaults.standard.value(forKey: "username") as? String else { return }
         DispatchQueue.main.async {
-            self.username = username            
+            self.username = username
         }
     }
     
@@ -139,7 +136,7 @@ class UserController: ObservableObject {
         return Int.random(in: 0...7)
     }
     
-    func generateTestBills() async {      
+    func generateTestBills() async {
         if userBills.count >= 20 {
             return
         } else {
@@ -153,22 +150,6 @@ class UserController: ObservableObject {
                                 hasImage: nil)
                 DispatchQueue.main.async {
                     self.userBills.append(bill)
-                }
-            }
-        }
-    }
-    
-    func checkForExistingBills() async {
-        if hasBeenConverted {
-            return
-        } else {
-            if userBills.isEmpty {
-                DispatchQueue.main.async {
-                    self.showingConversion = false
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.showingConversion = true
                 }
             }
         }
@@ -266,12 +247,11 @@ class UserController: ObservableObject {
     
     // MARK: - Persistence
     func saveBillsToPersistentStore() {
-        //        guard let url = persistentBillsFileURL else { return }
+        guard let url = persistentBillsFileURL else { return }
         do{
             let data = try PropertyListEncoder().encode(self.userBills)
             if let billsURL = persistentBillsFileURL {
                 try data.write(to: billsURL)
-                getValidBillAndSend()
             }
             print("Bill Saved Succesfully")
         } catch {
