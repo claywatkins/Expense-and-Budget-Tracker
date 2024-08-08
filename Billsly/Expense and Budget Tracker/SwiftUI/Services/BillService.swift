@@ -185,7 +185,7 @@ class BillService: ObservableObject {
         for bill in unpaidBills {
             let content = UNMutableNotificationContent()
             content.title = "Upcoming bill due!"
-            content.subtitle = "Don't forget to pay \(bill.name) tomorrow and mark it as paid in billsly!"
+            content.body = "Don't forget to pay \(bill.name) tomorrow and mark it as paid in billsly!"
             content.sound = UNNotificationSound.default
             
             let dayInt = bill.dueByDate.dayInt
