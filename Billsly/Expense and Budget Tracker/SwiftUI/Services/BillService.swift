@@ -57,7 +57,7 @@ class BillService: ObservableObject {
         }
         let paidBillsCount = CGFloat(paidBills.count)
         let totalBillsCount = CGFloat(allBills.count)
-        return paidBillsCount/totalBillsCount.rounded()
+        return paidBillsCount/totalBillsCount.rounded(.up)
     }
 
     private func determineIfResetIsNeeded(allBills: [NewBill]) -> Bool {

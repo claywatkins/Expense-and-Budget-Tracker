@@ -48,7 +48,7 @@ struct CircularBillProgressView: View {
             
             HStack(spacing: 5) {
                 Text("You have paid")
-                Text("\(progress, format: .percent)")
+                Text("\(progress, format: .percent.precision(.fractionLength(0)))")
                 Text("of this month's bills")
             }
             .modifier(ShadowViewModifier())
