@@ -15,7 +15,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BillslyAppLogo" translatesAutoresizingMaskIntoConstraints="NO" id="qWR-Om-xp1">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NewBillslyAppLogo" translatesAutoresizingMaskIntoConstraints="NO" id="qWR-Om-xp1">
                                 <rect key="frame" x="87" y="328" width="240" height="240"/>
                                 <color key="backgroundColor" red="0.16244554520000001" green="0.1598599255" blue="0.22762790320000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -38,6 +38,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BillslyAppLogo" width="720" height="720"/>
+        <image name="NewBillslyAppLogo" width="720" height="720"/>
     </resources>
 </document>

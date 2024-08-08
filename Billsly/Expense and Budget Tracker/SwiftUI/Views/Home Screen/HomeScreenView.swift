@@ -17,6 +17,7 @@ struct HomeScreenView: View {
     @State private var presentationDetent = PresentationDetent.fraction(0.3)
     @State private var colors: [Color] = []
     @State private var progressFloat: CGFloat = 0.23
+    @State private var showingConversion: Bool = false
     @State var counter: Int = 0
     var horizontalPadding: CGFloat = 12
     
@@ -44,10 +45,12 @@ struct HomeScreenView: View {
             .task {
                 await userService.loadUsername()
                 self.colors = await userService.getColors()
+                await userService.loadBillData()
                 
-                if userService.hasBeenConverted == false {
-                    await userService.loadBillData()
-                    await userService.checkForExistingBills()
+                if !userService.userBills.isEmpty {
+                    DispatchQueue.main.async {
+                        showingConversion.toggle()
+                    }
                     
                     for bill in userService.userBills {
                         let newBill = NewBill(identifier: bill.identifier,
@@ -62,14 +65,17 @@ struct HomeScreenView: View {
                         
                         context.insert(newBill)
                     }
-                    userService.hasBeenConverted = true
-                    userService.showingConversion = false
+                    userService.userBills.removeAll()
+                    userService.saveBillsToPersistentStore()
+                    DispatchQueue.main.async {
+                        showingConversion.toggle()
+                    }
                 }
                 await billService.checkIfBillsShouldBeUpdated(paidBills: paidBills,
                                                               allBills: allBills,
                                                               context: context)
             }
-            .fullScreenCover(isPresented: $userService.showingConversion) {
+            .fullScreenCover(isPresented: $showingConversion) {
                 ProgressView {
                     Text("Converting to Swift Data.. This may take a moment")
                 }
