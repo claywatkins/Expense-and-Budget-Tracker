@@ -22,7 +22,7 @@ struct EditAddBillView: View {
     @State private var removedCategory: String = ""
     
     var disabledButton: Bool {
-        if billName.isEmpty || billCost == 0.0 || categorySelection == nil {
+        if billName.isEmpty || billCost.isZero || categorySelection == nil {
             return true
         }
         return false
@@ -66,7 +66,11 @@ struct EditAddBillView: View {
                             .foregroundStyle(.secondary)
                             .textFieldStyle(.roundedBorder)
                             .onChange(of: billCost) {
-                                billCostString = userService.currencyNf.string(from: billCost as NSNumber) ?? ""
+                                if billCost.isZero {
+                                    billCostString = "0.00"
+                                } else {
+                                    billCostString = userService.currencyNf.string(from: billCost as NSNumber) ?? ""
+                                }
                             }
                     }
                     
@@ -93,7 +97,7 @@ struct EditAddBillView: View {
                             .font(.title)
                         
                         DatePicker("", selection: $billDueDate, displayedComponents: .date)
-                            .datePickerStyle(.graphical)
+                            .datePickerStyle(.compact)
                             .labelsHidden()
                     }
                     
