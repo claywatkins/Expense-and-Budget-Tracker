@@ -157,6 +157,7 @@ struct EditAddBillView: View {
                     if isEdit {
                         billService.defaultCategories.append(removedCategory)
                         removedCategory = ""
+                        billService.billWasUpdatedTrigger.toggle()
                     }
                 }
                 .toolbar {

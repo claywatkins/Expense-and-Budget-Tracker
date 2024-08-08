@@ -98,6 +98,9 @@ struct CalendarView: View {
         .onChange(of: paidBills.count) {
             counts = setupCounts(selection: billType)
         }
+        .onChange(of: billService.billWasUpdatedTrigger) {
+            counts = setupCounts(selection: billType)
+        }
         .sheet(isPresented: $tappedOnDay, content: {
             BillsForDayView(bills: billService.getBillsForDay(allBills: allBills, dayInt: tappedDayInt))
                 .presentationDetents([.fraction(0.3)])
