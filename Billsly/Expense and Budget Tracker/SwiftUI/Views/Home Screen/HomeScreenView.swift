@@ -7,10 +7,12 @@
 
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 struct HomeScreenView: View {
     @EnvironmentObject var userService: UserController
     @EnvironmentObject var billService: BillService
+    @Environment(\.modelContext) var context
     @State private var showingPaidBills = false
     @State private var presentationDetent = PresentationDetent.fraction(0.3)
     @State private var colors: [Color] = []
@@ -18,7 +20,10 @@ struct HomeScreenView: View {
     @State var counter: Int = 0
     var horizontalPadding: CGFloat = 12
     
-    @Environment(\.modelContext) var context
+    @Query(filter: #Predicate<NewBill> { bill in
+        bill.hasBeenPaid == false
+    }, sort: \NewBill.dueByDate, order: .forward) var unpaidBills: [NewBill]
+    
     @Query(filter: #Predicate<NewBill> { bill in
         bill.hasBeenPaid == true
     }, sort: \NewBill.dueByDate, order: .forward) var paidBills: [NewBill]
@@ -68,6 +73,10 @@ struct HomeScreenView: View {
                 ProgressView {
                     Text("Converting to Swift Data.. This may take a moment")
                 }
+            }
+            .onAppear {
+                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { _, _ in }
+                billService.scheduleNotifications(with: unpaidBills)
             }
         }
         .background(.quaternary)
