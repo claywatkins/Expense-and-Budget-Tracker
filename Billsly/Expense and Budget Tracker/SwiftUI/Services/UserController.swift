@@ -15,7 +15,7 @@ class UserController: ObservableObject {
     static let shared = UserController()
     let df = DateFormatter()
     let nf = NumberFormatter()
-    @Published var userBills: [Bill] = []
+    var userBills: [Bill] = []
     @Published var userCategories: [Category] = []
     let defaults = UserDefaults.standard
     var isLoggedIn: Bool?
