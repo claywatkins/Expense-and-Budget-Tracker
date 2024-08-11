@@ -83,7 +83,6 @@ struct HomeScreenView: View {
             }
             .onAppear {
                 UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { _, _ in }
-                billService.scheduleNotifications(with: unpaidBills)
             }
         }
         .background(.quaternary)
