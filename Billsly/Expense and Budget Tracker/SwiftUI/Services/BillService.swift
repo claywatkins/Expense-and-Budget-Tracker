@@ -15,6 +15,24 @@ enum BillSelection: String, CaseIterable {
     case paid = "Paid Bills"
 }
 
+enum BillFrequency: String, CaseIterable {
+    case monthly = "Monthly"
+    case quarterly = "Quarterly"
+    case annually = "Annually"
+}
+
+enum BillCategories: String, CaseIterable {
+    case subscription = "Subscription"
+    case utility = "Utility"
+    case rent = "Rent"
+    case mortgage = "Mortgage"
+    case loan = "Loan"
+    case creditCard = "Credit Card"
+    case insurance = "Insurance"
+    case carLoan = "Car Loan"
+    case other = "Other"
+}
+
 @MainActor
 class BillService: ObservableObject {
     
@@ -27,18 +45,6 @@ class BillService: ObservableObject {
     var unpaidBillsEmptyString = "There are no bills left to pay this month"
     var paidBillsEmptyString = "You do not have any bills paid yet this month"
     var allBillsEmptyString = "You have not added any bills yet"
-    
-    @Published var defaultCategories: [String] = [
-        "Subscription",
-        "Utility",
-        "Rent",
-        "Mortgage",
-        "Loan",
-        "Credit Card",
-        "Insurance",
-        "Car Loan",
-        "Other",
-    ]
     
     func getBillsForDay(allBills: [NewBill], dayInt: Int) -> [NewBill?] {
         let mappedBills = allBills.map{
