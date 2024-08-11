@@ -192,13 +192,28 @@ class BillService: ObservableObject {
         context.delete(bill)
     }
     
+    func checkForAutoPay(unpaidBills: [NewBill], context: ModelContext) {
+        for bill in unpaidBills {
+            if bill.isAutopay {
+                if bill.dueByDate.dayInt == Date().dayInt {
+                    bill.hasBeenPaid.toggle()
+                    totalBillsPaid += 1
+                }
+            }
+        }
+    }
+    
     func scheduleNotifications(with unpaidBills: [NewBill]) {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         for bill in unpaidBills {
             if currentMonthInt == bill.dueByDate.monthInt {
                 let content = UNMutableNotificationContent()
                 content.title = "Upcoming bill due!"
-                content.body = "Don't forget to pay \(bill.name) tomorrow and mark it as paid in billsly!"
+                if bill.isAutopay {
+                    content.body = "\(bill.name) is marked for autopay. The bill will automatically update on it's due date."
+                } else {
+                    content.body = "Don't forget to pay \(bill.name) tomorrow and mark it as paid in billsly!"
+                }
                 content.sound = UNNotificationSound.default
                 
                 let dayInt = bill.dueByDate.dayInt
@@ -222,6 +237,7 @@ class BillService: ObservableObject {
                                                     trigger: trigger)
                 
                 UNUserNotificationCenter.current().add(request)
+                print("Request added! : \(request.identifier)")
             }
         }
     }
