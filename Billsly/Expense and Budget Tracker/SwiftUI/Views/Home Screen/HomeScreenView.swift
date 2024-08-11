@@ -61,7 +61,8 @@ struct HomeScreenView: View {
                                               category: bill.category.name,
                                               isOn30th: bill.isOn30th,
                                               isAutopay: false,
-                                              frequency: "monthly")
+                                              frequency: "monthly",
+                                              monthCount: 1)
                         
                         context.insert(newBill)
                     }
