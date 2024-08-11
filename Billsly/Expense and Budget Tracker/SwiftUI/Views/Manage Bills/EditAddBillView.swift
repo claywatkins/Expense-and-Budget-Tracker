@@ -138,7 +138,16 @@ struct EditAddBillView: View {
                     
                     Button {
                         let isOn30thBool = billDueDate.dayInt == 30
-
+                        var monthCount: Int {
+                            switch frequency {
+                            case .monthly:
+                               return 1
+                            case .quarterly:
+                                return 3
+                            case .annually:
+                                return 12
+                            }
+                        }
                         if let bill = bill {
                             bill.name = billName
                             bill.dollarAmount = billCost
@@ -147,6 +156,7 @@ struct EditAddBillView: View {
                             bill.isOn30th = isOn30thBool
                             bill.isAutopay = isAutopay
                             bill.frequency = frequency.rawValue
+                            bill.monthCount = monthCount
                         } else {
                             let newBill = NewBill(identifier: UUID().uuidString,
                                                   name: billName,
@@ -156,7 +166,8 @@ struct EditAddBillView: View {
                                                   category: category.rawValue,
                                                   isOn30th: isOn30thBool,
                                                   isAutopay: isAutopay,
-                                                  frequency: frequency.rawValue)
+                                                  frequency: frequency.rawValue,
+                                                  monthCount: monthCount)
                             billService.saveBill(bill: newBill, context: context )
                         }
                         
