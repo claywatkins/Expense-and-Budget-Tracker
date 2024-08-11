@@ -88,19 +88,21 @@ class BillService: ObservableObject {
     
     func resetBills(paidBills: [NewBill], context: ModelContext) async {
         for bill in paidBills {
-            updatePaidBillStatus(bill: bill, context: context)
+            bill.monthCount -= 1
+            if bill.monthCount == 0 {
+                updatePaidBillStatus(bill: bill, context: context)
+            }
         }
         try? context.save()
     }
     
     private func moveBillsToNextMonth(allBills: [NewBill], context: ModelContext) async {
         guard let currentBillMonthDate = allBills.first?.dueByDate.monthInt else { return }
-        let monthsToAdd = currentMonthInt - currentBillMonthDate
         
         for bill in allBills {
             let dateNum = bill.dueByDate.dayInt
             var dateComponents = DateComponents()
-            dateComponents.month = monthsToAdd
+            dateComponents.month = currentMonthInt
             if dateNum < 30 && currentMonthInt != 3{
                 let moveForwardOneMonth = Calendar.current.date(byAdding: dateComponents, to: bill.dueByDate)!
                 bill.dueByDate = moveForwardOneMonth
@@ -110,7 +112,7 @@ class BillService: ObservableObject {
             
             switch currentMonthInt {
             case 1, 2, 4, 6, 8, 9, 11:
-                dateComponents.month = monthsToAdd
+                dateComponents.month = currentMonthInt
                 let moveForwardOneMonth = Calendar.current.date(byAdding: dateComponents, to: bill.dueByDate)!
                 bill.dueByDate = moveForwardOneMonth
                 try? context.save()
@@ -118,13 +120,13 @@ class BillService: ObservableObject {
                 
             case 5, 7, 10, 12:
                 if bill.isOn30th == true {
-                    dateComponents.month = monthsToAdd
+                    dateComponents.month = currentMonthInt
                     let moveForwardOneMonth = Calendar.current.date(byAdding: dateComponents, to: bill.dueByDate)!
                     bill.dueByDate = moveForwardOneMonth
                     try? context.save()
                     continue
                 } else {
-                    dateComponents.month = monthsToAdd
+                    dateComponents.month = currentMonthInt
                     dateComponents.day = 1
                     let moveForwardOneMonth = Calendar.current.date(byAdding: dateComponents, to: bill.dueByDate)!
                     bill.dueByDate = moveForwardOneMonth
@@ -134,7 +136,7 @@ class BillService: ObservableObject {
                 
             case 3:
                 if dateNum < 28 {
-                    dateComponents.month = monthsToAdd
+                    dateComponents.month = currentMonthInt
                     let moveForwardOneMonth = Calendar.current.date(byAdding: dateComponents, to: bill.dueByDate)!
                     bill.dueByDate = moveForwardOneMonth
                     try? context.save()
@@ -145,7 +147,7 @@ class BillService: ObservableObject {
                     } else {
                         dateComponents.day = 3
                     }
-                    dateComponents.month = monthsToAdd
+                    dateComponents.month = currentMonthInt
                     let moveForwardOneMonth = Calendar.current.date(byAdding: dateComponents, to: bill.dueByDate)!
                     bill.dueByDate = moveForwardOneMonth
                     try? context.save()
@@ -170,10 +172,16 @@ class BillService: ObservableObject {
     
     func updatePaidBillStatus(bill: NewBill, context: ModelContext) {
         bill.hasBeenPaid.toggle()
-        if bill.hasBeenPaid {
-            totalBillsPaid += 1
-        } else {
-            totalBillsPaid -= 1
+        let frequency = BillFrequency(rawValue: bill.frequency)
+        switch frequency {
+        case .monthly:
+            bill.monthCount = 1
+        case .quarterly:
+            bill.monthCount = 3
+        case .annually:
+            bill.monthCount = 12
+        case nil:
+            bill.monthCount = 1
         }
         try? context.save()
     }
