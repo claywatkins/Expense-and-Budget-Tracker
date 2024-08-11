@@ -96,9 +96,7 @@ class BillService: ObservableObject {
         try? context.save()
     }
     
-    private func moveBillsToNextMonth(allBills: [NewBill], context: ModelContext) async {
-        guard let currentBillMonthDate = allBills.first?.dueByDate.monthInt else { return }
-        
+    private func moveBillsToNextMonth(allBills: [NewBill], context: ModelContext) async {        
         for bill in allBills {
             let dateNum = bill.dueByDate.dayInt
             var dateComponents = DateComponents()
