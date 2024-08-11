@@ -6,12 +6,25 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MainView: View {
     @EnvironmentObject var userService: UserController
     @EnvironmentObject var settingsService: SettingsService
     @EnvironmentObject var billService: BillService
+    @Environment(\.scenePhase) var scenePhase
+    @Environment(\.modelContext) var context
     @State private var selectedIndex = 0
+    
+    @Query(filter: #Predicate<NewBill> { bill in
+        bill.hasBeenPaid == false
+    }, sort: \NewBill.dueByDate, order: .forward) var unpaidBills: [NewBill]
+    
+    @Query(filter: #Predicate<NewBill> { bill in
+        bill.hasBeenPaid == true
+    }, sort: \NewBill.dueByDate, order: .forward) var paidBills: [NewBill]
+    
+    @Query(sort: \NewBill.dueByDate, order: .forward) var allBills: [NewBill]
     
     var body: some View {
         TabView(selection: $selectedIndex) {
@@ -43,6 +56,13 @@ struct MainView: View {
                 Label("Settings", systemImage: "gearshape")
             }
             .tag(3)
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                billService.checkForAutoPay(unpaidBills: unpaidBills, context: context)
+            } else if newPhase == .background {
+                billService.scheduleNotifications(with: unpaidBills)
+            }
         }
     }
 }
