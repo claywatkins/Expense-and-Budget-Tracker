@@ -79,14 +79,14 @@ class BillService: ObservableObject {
     }
     
     func checkIfBillsShouldBeUpdated(paidBills: [NewBill], allBills: [NewBill], context: ModelContext) async {
-        currentMonthInt = Date().monthInt
         if determineIfResetIsNeeded(allBills: allBills) {
+            currentMonthInt = Date().monthInt
             await resetBills(paidBills: paidBills, context: context)
             await moveBillsToNextMonth(allBills: allBills, context: context)
         }
     }
     
-    func resetBills(paidBills: [NewBill], context: ModelContext) async {
+   private func resetBills(paidBills: [NewBill], context: ModelContext) async {
         for bill in paidBills {
             bill.monthCount -= 1
             if bill.monthCount == 0 {
@@ -98,70 +98,56 @@ class BillService: ObservableObject {
     
     private func moveBillsToNextMonth(allBills: [NewBill], context: ModelContext) async {        
         for bill in allBills {
-            let dateNum = bill.dueByDate.dayInt
+            let dayNum = bill.dueByDate.dayInt
+            var newDayNum = 1
             var dateComponents = DateComponents()
-            dateComponents.month = currentMonthInt
-            if dateNum < 30 && currentMonthInt != 3{
-                let moveForwardOneMonth = Calendar.current.date(byAdding: dateComponents, to: bill.dueByDate)!
-                bill.dueByDate = moveForwardOneMonth
-                try? context.save()
-                continue
-            }
             
-            switch currentMonthInt {
-            case 1, 2, 4, 6, 8, 9, 11:
+            switch bill.dueByDate.monthInt {
+            case 1, 3, 5, 7, 8, 10, 12:
+                if bill.dueByDate.monthInt == 1 && bill.isOn30th || bill.dueByDate.dayInt == 31 {
+                    newDayNum = 28
+                } else if dayNum == 31 {
+                    newDayNum = bill.dueByDate.dayInt - 1
+                } else {
+                    newDayNum = bill.dueByDate.dayInt
+                }
                 dateComponents.month = currentMonthInt
-                let moveForwardOneMonth = Calendar.current.date(byAdding: dateComponents, to: bill.dueByDate)!
-                bill.dueByDate = moveForwardOneMonth
+                dateComponents.year = Date().yearInt
+                
+                bill.dueByDate = Calendar.current.date(from: .init(calendar: .current, year: Date().yearInt, month: currentMonthInt, day: newDayNum))!
                 try? context.save()
                 continue
                 
-            case 5, 7, 10, 12:
-                if bill.isOn30th == true {
-                    dateComponents.month = currentMonthInt
-                    let moveForwardOneMonth = Calendar.current.date(byAdding: dateComponents, to: bill.dueByDate)!
-                    bill.dueByDate = moveForwardOneMonth
-                    try? context.save()
-                    continue
+            case 4, 6, 9, 11:
+                if dayNum == 30 && !bill.isOn30th {
+                    newDayNum = bill.dueByDate.dayInt + 1
                 } else {
-                    dateComponents.month = currentMonthInt
-                    dateComponents.day = 1
-                    let moveForwardOneMonth = Calendar.current.date(byAdding: dateComponents, to: bill.dueByDate)!
-                    bill.dueByDate = moveForwardOneMonth
-                    try? context.save()
-                    continue
+                    newDayNum = bill.dueByDate.dayInt
                 }
                 
-            case 3:
-                if dateNum < 28 {
-                    dateComponents.month = currentMonthInt
-                    let moveForwardOneMonth = Calendar.current.date(byAdding: dateComponents, to: bill.dueByDate)!
-                    bill.dueByDate = moveForwardOneMonth
-                    try? context.save()
-                    continue
-                } else if dateNum == 28 {
-                    if bill.isOn30th == true {
-                        dateComponents.day = 2
-                    } else {
-                        dateComponents.day = 3
-                    }
-                    dateComponents.month = currentMonthInt
-                    let moveForwardOneMonth = Calendar.current.date(byAdding: dateComponents, to: bill.dueByDate)!
-                    bill.dueByDate = moveForwardOneMonth
-                    try? context.save()
-                    continue
-                } else if dateNum == 29 {
-                    if bill.isOn30th == true {
-                        dateComponents.day = 1
-                    } else {
-                        dateComponents.day = 2
-                    }
-                    let moveForwardOneMonth = Calendar.current.date(byAdding: dateComponents, to: bill.dueByDate)!
-                    bill.dueByDate = moveForwardOneMonth
-                    try? context.save()
-                    continue
+                dateComponents.month = currentMonthInt
+                dateComponents.year = Date().yearInt
+                
+//                let moveForwardOneMonth = Calendar.current.date(byAdding: dateComponents, to: bill.dueByDate)!
+                bill.dueByDate = Calendar.current.date(from: .init(calendar: .current, year: Date().yearInt, month: currentMonthInt, day: newDayNum))!
+                try? context.save()
+                continue
+                
+            case 2:
+                if dayNum == 28 && bill.isOn30th {
+                    newDayNum = 30
+                } else if dayNum == 28 {
+                    newDayNum = 31
+                } else {
+                    newDayNum = bill.dueByDate.dayInt
                 }
                 
+                dateComponents.month = currentMonthInt
+                dateComponents.year = Date().yearInt
+                bill.dueByDate = Calendar.current.date(from: .init(calendar: .current, year: Date().yearInt, month: currentMonthInt, day: newDayNum))!
+
+                try? context.save()
+                continue
             default:
                 fatalError()
             }
