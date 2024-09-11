@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 class SettingsService: ObservableObject {
-    
+    @AppStorage("username") var username: String = ""
     let appURLForSharing = URL(string: "https://apps.apple.com/us/app/billsly/id1560270556")!
     
     var appVersionString: String {

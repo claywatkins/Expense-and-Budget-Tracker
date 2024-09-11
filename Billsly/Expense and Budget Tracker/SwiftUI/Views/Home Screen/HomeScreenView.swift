@@ -43,7 +43,6 @@ struct HomeScreenView: View {
             }
             .padding(.horizontal, horizontalPadding)
             .task {
-                await userService.loadUsername()
                 self.colors = await userService.getColors()
                 await userService.loadBillData()
                 
