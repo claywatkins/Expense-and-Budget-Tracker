@@ -17,16 +17,18 @@ struct SettingsView: View {
     @State private var showingActivitySheet: Bool = false
     @State private var showingMailSheet: Bool = false
     @State private var result: Result<MFMailComposeResult, Error>? = nil
+    @State private var showingConfirmation: Bool = false
     
     var body: some View {
         List {
             Section {
                 HStack {
-                    TextField((userService.username != nil ? "Your name is \(userService.username ?? "unknown")" : "Enter your name"), text: $username)
+                    TextField(settingsService.username.isEmpty ? "Enter your name here" : "Hello, \(settingsService.username)", text: $username)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     
                     Button {
-                        userService.setUsername(username)
+                        settingsService.username = username
+                        showingConfirmation.toggle()
                     } label : {
                         RoundedRectangle(cornerRadius: 12)
                             .foregroundStyle(.secondary)
@@ -91,6 +93,10 @@ struct SettingsView: View {
         }
         .sheet(isPresented: $showingMailSheet) {
             MailView(result: $result)
+        }
+        .alert("Name updated!",
+               isPresented: $showingConfirmation) {
+            Button("Ok") {}
         }
     }
 }
