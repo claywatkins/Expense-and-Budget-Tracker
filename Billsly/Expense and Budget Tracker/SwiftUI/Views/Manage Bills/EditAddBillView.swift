@@ -17,12 +17,15 @@ struct EditAddBillView: View {
     @State private var billName: String = ""
     @State private var billCost: Double = 0.0
     @State private var billCostString: String = "\(Locale().currencySymbol ?? "") 0.00"
-    @State private var categorySelection: String?
+    @State private var category: BillCategories = .subscription
     @State private var billDueDate: Date = Date.now
     @State private var removedCategory: String = ""
+    @State private var isAutopay: Bool = false
+    @State private var frequency: BillFrequency = .monthly
+    
     
     var disabledButton: Bool {
-        if billName.isEmpty || billCost.isZero || categorySelection == nil {
+        if billName.isEmpty || billCost.isZero {
             return true
         }
         return false
@@ -37,7 +40,7 @@ struct EditAddBillView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 20) {
                     Section {
                         Text("Bill name")
                             .foregroundStyle(.primary)
@@ -87,14 +90,39 @@ struct EditAddBillView: View {
                             .fontWeight(.semibold)
                             .font(.title)
                         
-                        Picker("", selection: $categorySelection) {
-                            Text(isEdit ? bill?.category ?? "" : "Choose a catagory").tag(nil as String?)
-                            ForEach(billService.defaultCategories.indices, id: \.self) { idx in
-                                Text(billService.defaultCategories[idx])
-                                    .tag(billService.defaultCategories[idx] as String?)
+                        Picker("", selection: $category) {
+                            ForEach(BillCategories.allCases, id: \.self) { category in
+                                Text(category.rawValue)
+                                    .tag(category.rawValue)
                             }
                         }
                         .labelsHidden()
+                    }
+                    
+                    Section {
+                        HStack {
+                            Text("Autopay?")
+                                .foregroundStyle(.primary)
+                                .fontWeight(.semibold)
+                                .font(.title)
+                            Spacer ()
+                            Toggle("", isOn: $isAutopay)
+                        }
+                    }
+                    
+                    Section {
+                        Text("How of often is this bill due?")
+                            .foregroundStyle(.primary)
+                            .fontWeight(.semibold)
+                            .font(.title)
+                        
+                        Picker("frequency",
+                               selection: $frequency) {
+                            ForEach(BillFrequency.allCases, id: \.self) { frequency in
+                                Text(frequency.rawValue)
+                                    .tag(frequency.rawValue)
+                            }
+                        }
                     }
                     
                     Section {
@@ -108,27 +136,38 @@ struct EditAddBillView: View {
                             .labelsHidden()
                     }
                     
-                    
                     Button {
-                        guard let category = categorySelection else { return }
                         let isOn30thBool = billDueDate.dayInt == 30
-
+                        var monthCount: Int {
+                            switch frequency {
+                            case .monthly:
+                               return 1
+                            case .quarterly:
+                                return 3
+                            case .annually:
+                                return 12
+                            }
+                        }
                         if let bill = bill {
                             bill.name = billName
                             bill.dollarAmount = billCost
                             bill.dueByDate = billDueDate
-                            bill.category = category
+                            bill.category = category.rawValue
                             bill.isOn30th = isOn30thBool
+                            bill.isAutopay = isAutopay
+                            bill.frequency = frequency.rawValue
+                            bill.monthCount = monthCount
                         } else {
                             let newBill = NewBill(identifier: UUID().uuidString,
                                                   name: billName,
                                                   dollarAmount: billCost,
                                                   dueByDate: billDueDate,
                                                   hasBeenPaid: false,
-                                                  category: category,
+                                                  category: category.rawValue,
                                                   isOn30th: isOn30thBool,
-                                                  isAutopay: false,
-                                                  frequency: "monthly")
+                                                  isAutopay: isAutopay,
+                                                  frequency: frequency.rawValue,
+                                                  monthCount: monthCount)
                             billService.saveBill(bill: newBill, context: context )
                         }
                         
@@ -152,18 +191,15 @@ struct EditAddBillView: View {
                         if let bill = bill {
                             billName = bill.name
                             billCost = bill.dollarAmount
-                            categorySelection = bill.category
+                            category = BillCategories(rawValue: bill.category) ?? .subscription
                             billDueDate = bill.dueByDate
-                            if let billidx = billService.defaultCategories.firstIndex(of: bill.category) {
-                                removedCategory = billService.defaultCategories.remove(at: billidx)
-                            }
+                            isAutopay = bill.isAutopay
+                            frequency = BillFrequency(rawValue: bill.frequency) ?? .monthly
                         }
                     }
                 }
                 .onDisappear {
                     if isEdit {
-                        billService.defaultCategories.append(removedCategory)
-                        removedCategory = ""
                         billService.billWasUpdatedTrigger.toggle()
                     }
                 }

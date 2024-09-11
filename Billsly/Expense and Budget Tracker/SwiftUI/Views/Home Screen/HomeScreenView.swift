@@ -61,7 +61,8 @@ struct HomeScreenView: View {
                                               category: bill.category.name,
                                               isOn30th: bill.isOn30th,
                                               isAutopay: false,
-                                              frequency: "monthly")
+                                              frequency: "monthly",
+                                              monthCount: 1)
                         
                         context.insert(newBill)
                     }
@@ -82,7 +83,6 @@ struct HomeScreenView: View {
             }
             .onAppear {
                 UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { _, _ in }
-                billService.scheduleNotifications(with: unpaidBills)
             }
         }
         .background(.quaternary)

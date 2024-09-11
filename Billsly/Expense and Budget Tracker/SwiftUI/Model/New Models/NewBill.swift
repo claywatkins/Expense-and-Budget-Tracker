@@ -19,8 +19,9 @@ class NewBill: Equatable, Hashable {
     var isOn30th: Bool = false
     var isAutopay: Bool = false
     var frequency: String = ""
+    var monthCount: Int = 0
 
-    init(identifier: String, name: String, dollarAmount: Double, dueByDate: Date, hasBeenPaid: Bool, category: String, isOn30th: Bool, isAutopay: Bool, frequency: String) {
+    init(identifier: String, name: String, dollarAmount: Double, dueByDate: Date, hasBeenPaid: Bool, category: String, isOn30th: Bool, isAutopay: Bool, frequency: String, monthCount: Int) {
         self.identifier = identifier
         self.name = name
         self.dollarAmount = dollarAmount
@@ -30,6 +31,7 @@ class NewBill: Equatable, Hashable {
         self.isOn30th = isOn30th
         self.isAutopay = isAutopay
         self.frequency = frequency
+        self.monthCount = monthCount
     }
     
     static func == (lhs: NewBill, rhs: NewBill) -> Bool {
