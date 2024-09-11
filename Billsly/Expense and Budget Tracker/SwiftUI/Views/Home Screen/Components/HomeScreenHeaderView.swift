@@ -11,6 +11,7 @@ import SwiftData
 
 struct HomeScreenHeaderView: View {
     @EnvironmentObject var userService: UserController
+    @EnvironmentObject var settingsService: SettingsService
     @EnvironmentObject var billService: BillService
     @Binding var colors: [Color]
     @Binding var showingPaidBills: Bool
@@ -37,12 +38,12 @@ struct HomeScreenHeaderView: View {
                             Spacer()
                         }
                         HStack {
-                            if let username = userService.username {
-                                Text("Welcome back, \(username)!")
+                            if !settingsService.username.isEmpty {
+                                Text("Welcome back, \(settingsService.username)!")
                                     .font(.title2)
                                     .foregroundStyle(.primary)
                             } else {
-                                Text("Welcome back!")
+                                Text("Welcome to Billsly!")
                                     .font(.title2)
                                     .foregroundStyle(.primary)
                             }                                
