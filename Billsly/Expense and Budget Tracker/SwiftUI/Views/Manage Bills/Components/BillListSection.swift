@@ -62,6 +62,7 @@ struct BillListSection: View {
                         Button(bill.hasBeenPaid ? "Mark unpaid" : "Mark paid") {
                             if bill.hasBeenPaid == false {
                                 counter += 1
+                                billService.totalBillsPaid += 1
                             }
                             billService.updatePaidBillStatus(bill: bill, context: context)
                         }
