@@ -19,7 +19,6 @@ class UserController: ObservableObject {
     @Published var userCategories: [Category] = []
     let defaults = UserDefaults.standard
     var isLoggedIn: Bool?
-    @Published var username: String?
     @Published var currentList: [Bill] = []
     
     var persistentBillsFileURL: URL? {
@@ -121,16 +120,6 @@ class UserController: ObservableObject {
     }
     
     // MARK: - Methods
-    func setUsername(_ username: String) {
-        UserDefaults.standard.setValue(username, forKey: "username")
-    }
-    
-    func loadUsername() async {
-        guard let username = UserDefaults.standard.value(forKey: "username") as? String else { return }
-        DispatchQueue.main.async {
-            self.username = username
-        }
-    }
     
     func getRandomInt() -> Int {
         return Int.random(in: 0...7)
