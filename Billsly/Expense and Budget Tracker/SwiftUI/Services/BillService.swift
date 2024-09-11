@@ -98,7 +98,6 @@ class BillService: ObservableObject {
         for bill in allBills {
             let dayNum = bill.dueByDate.dayInt
             var newDayNum = 1
-            var dateComponents = DateComponents()
             
             switch bill.dueByDate.monthInt {
             case 1, 3, 5, 7, 8, 10, 12:
