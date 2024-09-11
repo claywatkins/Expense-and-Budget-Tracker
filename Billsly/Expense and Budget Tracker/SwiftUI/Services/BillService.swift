@@ -36,7 +36,6 @@ enum BillCategories: String, CaseIterable {
 @MainActor
 class BillService: ObservableObject {
     
-    @AppStorage("currentMonthInt") var currentMonthInt: Int = Date().monthInt    
     @AppStorage("billListType") var billListType: BillSelection = .unpaid
     @AppStorage("totalBillsPaid") var totalBillsPaid: Int = 0
     
@@ -69,7 +68,7 @@ class BillService: ObservableObject {
     private func determineIfResetIsNeeded(allBills: [NewBill]) -> Bool {
         if let firstBill = allBills.first {
             let firstBillMonthInt = firstBill.dueByDate.monthInt
-            if firstBillMonthInt != currentMonthInt {
+            if firstBillMonthInt != Date().monthInt {
                 return true
             } else {
                 return false
@@ -80,7 +79,6 @@ class BillService: ObservableObject {
     
     func checkIfBillsShouldBeUpdated(paidBills: [NewBill], allBills: [NewBill], context: ModelContext) async {
         if determineIfResetIsNeeded(allBills: allBills) {
-            currentMonthInt = Date().monthInt
             await resetBills(paidBills: paidBills, context: context)
             await moveBillsToNextMonth(allBills: allBills, context: context)
         }
@@ -111,10 +109,8 @@ class BillService: ObservableObject {
                 } else {
                     newDayNum = bill.dueByDate.dayInt
                 }
-                dateComponents.month = currentMonthInt
-                dateComponents.year = Date().yearInt
                 
-                bill.dueByDate = Calendar.current.date(from: .init(calendar: .current, year: Date().yearInt, month: currentMonthInt, day: newDayNum))!
+                bill.dueByDate = Calendar.current.date(from: .init(calendar: .current, year: Date().yearInt, month: Date().monthInt, day: newDayNum))!
                 try? context.save()
                 continue
                 
@@ -125,11 +121,9 @@ class BillService: ObservableObject {
                     newDayNum = bill.dueByDate.dayInt
                 }
                 
-                dateComponents.month = currentMonthInt
-                dateComponents.year = Date().yearInt
                 
 //                let moveForwardOneMonth = Calendar.current.date(byAdding: dateComponents, to: bill.dueByDate)!
-                bill.dueByDate = Calendar.current.date(from: .init(calendar: .current, year: Date().yearInt, month: currentMonthInt, day: newDayNum))!
+                bill.dueByDate = Calendar.current.date(from: .init(calendar: .current, year: Date().yearInt, month: Date().monthInt, day: newDayNum))!
                 try? context.save()
                 continue
                 
@@ -141,10 +135,8 @@ class BillService: ObservableObject {
                 } else {
                     newDayNum = bill.dueByDate.dayInt
                 }
-                
-                dateComponents.month = currentMonthInt
-                dateComponents.year = Date().yearInt
-                bill.dueByDate = Calendar.current.date(from: .init(calendar: .current, year: Date().yearInt, month: currentMonthInt, day: newDayNum))!
+
+                bill.dueByDate = Calendar.current.date(from: .init(calendar: .current, year: Date().yearInt, month: Date().monthInt, day: newDayNum))!
 
                 try? context.save()
                 continue
@@ -192,7 +184,7 @@ class BillService: ObservableObject {
     func scheduleNotifications(with unpaidBills: [NewBill]) {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         for bill in unpaidBills {
-            if currentMonthInt == bill.dueByDate.monthInt {
+            if Date().monthInt == bill.dueByDate.monthInt {
                 let content = UNMutableNotificationContent()
                 content.title = "Upcoming bill due!"
                 if bill.isAutopay {
