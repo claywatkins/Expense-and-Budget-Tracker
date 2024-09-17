@@ -40,6 +40,7 @@ struct QuickPaidBillView: View {
                     if let selectedBill = selectedBill {
                         billService.updatePaidBillStatus(bill: selectedBill, context: context)
                         counter += 1
+                        billService.totalBillsPaid += 1
                     }
                     dismiss()
                 } label: {
