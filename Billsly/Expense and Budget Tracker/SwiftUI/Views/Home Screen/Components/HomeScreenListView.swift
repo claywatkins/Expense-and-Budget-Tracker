@@ -32,12 +32,24 @@ struct HomeScreenListView: View {
                 
                 List(unpaidBills.prefix(3), id: \.identifier) { bill in
                     HStack {
-                        VStack(alignment: .leading) {
-                            Text(bill.name)
-                            Text("Due: " + userService.mediumDf.string(from: bill.dueByDate))
+                        if bill.dueByDate.dayInt < Date().dayInt {
+                            VStack(alignment: .leading) {
+                                Text(bill.name)
+                                    .foregroundStyle(.red)
+                                Text("Due: " + userService.mediumDf.string(from: bill.dueByDate))
+                                    .foregroundStyle(.red)
+                            }
+                            Spacer()
+                            Text("\(bill.dollarAmount as NSNumber, formatter: userService.currencyNf)")
+                                .foregroundStyle(.red)
+                        } else {
+                            VStack(alignment: .leading) {
+                                Text(bill.name)
+                                Text("Due: " + userService.mediumDf.string(from: bill.dueByDate))
+                            }
+                            Spacer()
+                            Text("\(bill.dollarAmount as NSNumber, formatter: userService.currencyNf)")
                         }
-                        Spacer()
-                        Text("\(bill.dollarAmount as NSNumber, formatter: userService.currencyNf)")
                     }
                 }
                 .listStyle(.inset)
