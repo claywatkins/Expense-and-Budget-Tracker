@@ -17,7 +17,7 @@ struct SettingsSupportCell: View {
         Button {
             self.action()
         } label: {
-            HStack {
+            HStack(spacing: 15) {
                 Image(systemName: image)
                     .font(.system(size: 30))
                     .foregroundStyle(Color(uiColor: .label))
