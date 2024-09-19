@@ -47,15 +47,27 @@ struct BillListSection: View {
                         tappedBill = bill
                     } label: {
                         HStack {
-                            VStack(alignment: .leading) {
-                                Text(bill.name)
-                                    .foregroundStyle(.primary)
-                                Text("Due: " + userService.mediumDf.string(from: bill.dueByDate))
+                            if bill.hasBeenPaid == false && bill.dueByDate.dayInt < Date().dayInt {
+                                VStack(alignment: .leading) {
+                                    Text(bill.name)
+                                        .foregroundStyle(.red)
+                                    Text("Due: " + userService.mediumDf.string(from: bill.dueByDate))
+                                        .foregroundStyle(.red)
+                                }
+                                Spacer()
+                                Text("\(bill.dollarAmount as NSNumber, formatter: userService.currencyNf)")
+                                    .foregroundStyle(.red)
+                            } else {
+                                VStack(alignment: .leading) {
+                                    Text(bill.name)
+                                        .foregroundStyle(.primary)
+                                    Text("Due: " + userService.mediumDf.string(from: bill.dueByDate))
+                                        .foregroundStyle(.primary)
+                                }
+                                Spacer()
+                                Text("\(bill.dollarAmount as NSNumber, formatter: userService.currencyNf)")
                                     .foregroundStyle(.primary)
                             }
-                            Spacer()
-                            Text("\(bill.dollarAmount as NSNumber, formatter: userService.currencyNf)")
-                                .foregroundStyle(.primary)
                         }
                     }
                     .swipeActions(allowsFullSwipe: false) {
