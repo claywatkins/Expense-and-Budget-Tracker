@@ -39,6 +39,8 @@ struct SettingsFooter: View {
                 Spacer()
             }
         }
+        .lineLimit(0)
+        .minimumScaleFactor(0.75)
     }
 }
 
