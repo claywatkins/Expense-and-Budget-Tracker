@@ -73,13 +73,19 @@ struct SettingsView: View {
                                     subtext: "Know someone with bills? Send this app their way!"){
                     showingActivitySheet.toggle()
                 }
-                
-                
+                            
                 SettingsSupportCell(image: "envelope",
                                     text: "Send feedback",
                                     subtext: "Email thoughts, bugs, or questions.") {
                     showingMailSheet.toggle()
                 }
+
+                SettingsSupportCell(image: "cup.and.saucer",
+                                    text: "Tip jar",
+                                    subtext: "Show some love and support an indie dev's coffee addiction!") {
+                    print("test")
+                }
+
             } header: {
                 Text("Support the Developer")
             }
